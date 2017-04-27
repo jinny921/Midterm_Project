@@ -2,14 +2,22 @@
 $(() => {
 
   function dishTemplate(dish) {
-    return `<div class="content">
-                <h3>${dish.name}</h3>
-                <img src='${dish.img_url}'>
-            </div>`
+    return `<section class='col-sm-4'>
+              <div class='dish'>
+                <img src='${dish.img_url}' alt='burrito'>
+                <div class='caption'>
+                  <h3>${dish.name}</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias molestiae ullam similique ipsa, ex modi,
+                    maxime, eum voluptates harum odit dolore saepe nemo nesc</p>
+                  <p><a href='#' class='btn btn-primary' role='button'>Button</a> <a href='#' class='btn btn-default' role='button'>Button</a></p>
+                </div>
+                <p>${dish.price}</p>
+              </div>
+            </section>`;
   };
 
   function paintPage(res) {
-    $('#dishes').append(res.map(dishTemplate));
+    $('.menu-wrapper').append(res.map(dishTemplate));
   };
 
 
