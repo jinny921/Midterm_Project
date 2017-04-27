@@ -14,9 +14,11 @@ var client = require('twilio')(accountSid, authToken);
 // });
 
 client.calls.create({
+  method: 'GET',
   url: "https://murmuring-river-48866.herokuapp.com/order.xml",
   to: "+17782324505",
   from: "+17786519742"
 }, function(err, call) {
   process.stdout.write(call.sid);
+  console.log("made the call here");
 });
