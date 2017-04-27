@@ -13,7 +13,7 @@ $(() => {
                 <p>\$${dish.price}</p>
                 <p><a href='#' class='btn btn-primary' role='button'>Button</a> <a href='#' class='btn btn-default' role='button'>Button</a></p>
               </div>
-            </section>`;
+            </section>`
   };
 
   function paintPage(res) {
