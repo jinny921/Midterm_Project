@@ -1,34 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <title>title</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="/styles/layout.css">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u'
+    crossorigin='anonymous'>
+
+  <link rel='stylesheet' type='text/css' href='public/styles/styles.css'>
+
 </head>
 
 <body>
-  <nav>
-
+  <nav class='navbar navbar-fixed-top'>
+    <div class='container-fluid'>
+      <div class='navbar-header'>
+        <a class='navbar-brand' href='#'>Maenam</a>
+      </div>
+      <div class='navbar-right'>
+        <a class='navbar-text' href='#'><i class='fa fa-shopping-cart fa-2x' aria-hidden='true'></i></a>
+      </div>
+    </div>
   </nav>
+<<<<<<< HEAD
   
   <main>
     <section>
       hello test
     </section>
-  </main>
-  
-  <footer>
+=======
 
-  </footer>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
+  <section>
+    <div class='landing text-center'>
+      <div class='container-fluid landing-content'>
+        <h1>Are you hungry?</h1>
+        <a href='#menu' class='btn-down'><i class='animated pulse infinite fa fa-arrow-circle-o-down fa-4x' aria-hidden='true'></i></a>
+      </div>
+    </div>
+  </section>
+
+  <main id='menu' class='container-fluid'>
+    <div class='row'>
+      <div class='col-md-8'>
+        <div class='row menu-wrapper'>
+          <section class='col-sm-4'>
+            <div class='thumbnail'>
+              <img src='./public/img/machocomboburrito.png' alt='burrito'>
+              <div class='caption'>
+                <h3>Food Name</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias molestiae ullam similique ipsa, ex modi,
+                  maxime, eum voluptates harum odit dolore saepe nemo nesc</p>
+                <p><a href='#' class='btn btn-primary' role='button'>Button</a> <a href='#' class='btn btn-default' role='button'>Button</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section class='col-sm-4'>
+            <div class='thumbnail'>
+              <img src='./public/img/machocomboburrito.png' alt='burrito'>
+              <div class='caption'>
+                <h3>Food Name</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias molestiae ullam similique ipsa, ex modi,
+                  maxime, eum voluptates harum odit dolore saepe nemo nesc</p>
+                <p><a href='#' class='btn btn-primary' role='button'>Button</a> <a href='#' class='btn btn-default' role='button'>Button</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section class='col-sm-4'>
+            <div class='thumbnail'>
+              <img src='./public/img/machocomboburrito.png' alt='burrito'>
+              <div class='caption'>
+                <h3>Food Name</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias molestiae ullam similique ipsa, ex modi,
+                  maxime, eum voluptates harum odit dolore saepe nemo nesc</p>
+                <p><a href='#' class='btn btn-primary' role='button'>Button</a> <a href='#' class='btn btn-default' role='button'>Button</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section class='col-sm-4'>
+            <div class='thumbnail'>
+              <img src='./public/img/machocomboburrito.png' alt='burrito'>
+              <div class='caption'>
+                <h3>Food Name</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias molestiae ullam similique ipsa, ex modi,
+                  maxime, eum voluptates harum odit dolore saepe nemo nesc</p>
+                <p><a href='#' class='btn btn-primary' role='button'>Button</a> <a href='#' class='btn btn-default' role='button'>Button</a></p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class='col-md-4'>
+        <div data-spy='affix' data-offset-top='650'>
+          <div class='row'>
+            <section class='cart-wrapper'>
+              <ul>
+                <h3>Your Cart</h3>
+                <li>Food Item 1: [placeholder]</li>
+                <li>Price: [$xx]</li>
+                <li>Quantity: [xx]</li>
+                <li>Total: [$xx]</li>
+              </ul>
+              <p><a href='#' class='btn btn-primary place-order' role='button'>Place Order</a><a href='#' class='btn btn-warning cancel-order'
+                  role='button'>Cancel</a></p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class='row'>
+      <div class='col-xs-12'>
+        <div>Address: 128 W. Hastings Ave, Vancouver, BC</div>
+        <div>Phone: 604-888-9999</div>
+        <div>Hours: 9am-9pm</div>
+      </div>
+    </footer>
+>>>>>>> master
+  </main>
+
+
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='
+    crossorigin='anonymous'></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa'
+    crossorigin='anonymous'></script>
 </body>
 
 </html>
