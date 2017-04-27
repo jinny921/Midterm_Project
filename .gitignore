@@ -3,5 +3,5 @@ public/styles
 .env
 *.log
 *.sqlite3
-
+.sass-cache/
 .DS_Store
