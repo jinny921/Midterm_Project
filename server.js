@@ -22,6 +22,8 @@ const orderRoutes = require("./routes/orders");
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
 
+
+
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
@@ -39,8 +41,10 @@ app.use(express.static("public"));
 app.use("/orders", orderRoutes(knex));
 
 // user goto Home page request get '/'
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/order2.xml", (req, res) => {
+  var templateVars = {info: "Elvis"}
+  res.set('Content-Type', 'text/xml');
+  res.render("order", templateVars);
 });
 
 app.listen(PORT, () => {
