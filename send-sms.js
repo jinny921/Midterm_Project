@@ -26,8 +26,8 @@ function sendSMS(smsbody){
 //to use this function require("./send-sms").callResturant;
 function callResturant() {
   client.calls.create({
-    method: 'GET',
-    url: "http://397cb175.ngrok.io/order2.xml",
+    method: 'POST',
+    url: "http://eb964e1c.ngrok.io/orders/callcontent",
     to: resturantNumber,
     from: "+17786519742"
   }, function(err, call) {
