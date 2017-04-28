@@ -8,22 +8,22 @@ $(() => {
   };
 
   function dishTemplate(dish) {
-    return `<section class='col-sm-6 col-sm-4'>
+    return `<section class='col-xs-6 col-sm-4'>
               <div class='dish' data-dishId='${dish.id}'>
-                <img src='${dish.img_url}'>
+                <img class='dish-img' src='${dish.img_url}'>
                 <div class='caption'>
                   <h4 class='dish-name'>${dish.name}</h4>
-                  <div class='shop'>
-                    <i class="fa fa-minus-square-o" aria-hidden="true"></i>
-                    <span class='counter'>0</span>
-                    <i class="fa fa-plus-square" aria-hidden="true"></i> 
-                  </div>
-                  <div class='dish-details'>
-                    <p class='dish-desc'>${dish.description}</p>
-                    <p class='dish-price'>Price: \$${dish.price}</p>
-                    <p class='dish-prep'>Prep Time: ${dish.preptime} mins (approx.)</p>
-                  </div>
                 </div>              
+                <div class='dish-details'>
+                  <p class='dish-desc'>${dish.description}</p>
+                  <p class='dish-price'>Price: \$${dish.price}</p>
+                  <p class='dish-prep'>Prep Time: ${dish.preptime} mins (approx.)</p>
+                </div>
+                <div class='shop'>
+                  <i class="fa fa-minus-square-o" aria-hidden="true"></i>
+                  <span class='counter'>0</span>
+                  <i class="fa fa-plus-square" aria-hidden="true"></i> 
+                </div>
               </div>
             </section>`;
   };
@@ -71,6 +71,7 @@ $('.btn-down').click(function() {
 });
 
   // Refactor into ajax function
+
   $.ajax({
     method: 'GET',
     url: '/orders'
@@ -93,5 +94,26 @@ $('.btn-down').click(function() {
     ajaxCall('POST', '/orders/checkout', shoppingCartData);
   });
 
+
+
+  // $(window).on('scroll', function () {
+  //   let header = $('header');
+  //   let range = 200;
+  
+  //   let scrollTop = $(this).scrollTop();
+  //   let offset = header.offset().top;
+  //   let height = header.outerHeight();
+  //   offset = offset + height / 2;
+  //   let calc = 1 - (scrollTop - offset + range) / range;
+  
+  //   header.css({ 'opacity': calc });
+  
+  //   if ( calc > '1' ) {
+  //     header.css({ 'opacity': 1 });
+  //   } else if ( calc < '0' ) {
+  //     header.css({ 'opacity': 0 });
+  //   }
+  // });
+>>>>>>> master
 });
 
