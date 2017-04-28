@@ -23,6 +23,15 @@ $(() => {
             </section>`;
   };
 
+  function cartTemplate(dish) {
+    return `<ul>
+              <li>Food Item 1: [placeholder]</li>
+              <li>Price: [$xx]</li>
+              <li>Quantity: [xx]</li>
+              <li>Total: [$xx]</li>
+            </ul>`
+  }
+
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
 
@@ -51,13 +60,16 @@ $(() => {
           const $currentVal = +$counter.text();
           const newVal = $currentVal + 1;
           $counter.text(newVal);
+          if() {
+
+          }
+          $('.cart-wrapper').append(cartTemplate);
+          $('.price').text(newVal);
         }, (err) => {
           console.error('we have a problem!!!')
         })
     });
   };
-
-
 
 
   $.ajax({
