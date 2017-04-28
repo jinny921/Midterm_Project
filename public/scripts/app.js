@@ -71,7 +71,6 @@ $('.btn-down').click(function() {
 });
 
   // Refactor into ajax function
-
   $.ajax({
     method: 'GET',
     url: '/orders'
@@ -94,8 +93,6 @@ $('.btn-down').click(function() {
     ajaxCall('POST', '/orders/checkout', shoppingCartData);
   });
 
-
-
   // $(window).on('scroll', function () {
   //   let header = $('header');
   //   let range = 200;
@@ -114,6 +111,4 @@ $('.btn-down').click(function() {
   //     header.css({ 'opacity': 0 });
   //   }
   // });
->>>>>>> master
 });
-
