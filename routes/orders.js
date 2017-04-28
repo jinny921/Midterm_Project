@@ -1,6 +1,8 @@
 "use strict";
 
 const express = require('express');
+const sendSMS = require('../send-sms').sendSMS;
+const callResturant = require('../send-sms').callResturant; 
 const router  = express.Router();
 
 module.exports = (knex) => {
@@ -12,7 +14,7 @@ module.exports = (knex) => {
       .from("dishes")
       .then((dishes) => {
         res.json(dishes);
-    });
+      });
   });
 
 //update order list with selected dishes
@@ -34,8 +36,26 @@ module.exports = (knex) => {
 
   router.post("/payment", (req, res) => {
     knex
-      .select("*")
-  })
+      .select("*");
+  });
 
+  router.post("/callcontent", (req, res) => {
+//this object will be filled with database values;
+    let orderData = {
+      orderNumber: "12313",
+      clientInfo: {
+        name: "Elvisss",
+        phoneNumber: "7782324505",
+        address: "128 W. Hastings Ave, Vancouver, BC"
+      },
+      dishes: ["Massaman Curry of Braised Beef", 2, "Pad Thai", 2]
+    };
+    res.set('Content-Type', 'text/xml');
+    res.render("order", orderData);
+  });
+  router.post('/call', (req, res)=> {
+    callResturant();
+    res.send("calling");
+  });
   return router;
-}
+};
