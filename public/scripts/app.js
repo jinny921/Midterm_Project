@@ -25,8 +25,9 @@ $(() => {
 
   function cartTemplate(dish) {
     return `<ul>
+              <li>
               <li>Food Item 1: [placeholder]</li>
-              <li>Price: [$xx]</li>
+              <li><span class="price"</span></li>
               <li>Quantity: [xx]</li>
               <li>Total: [$xx]</li>
             </ul>`
@@ -60,10 +61,11 @@ $(() => {
           const $currentVal = +$counter.text();
           const newVal = $currentVal + 1;
           $counter.text(newVal);
-          if() {
+          const dishID = $that.closest('dish').data('dishId');
+          if(dish.id) {
+            $('.cart-wrapper').append(cartTemplate);
 
           }
-          $('.cart-wrapper').append(cartTemplate);
           $('.price').text(newVal);
         }, (err) => {
           console.error('we have a problem!!!')
