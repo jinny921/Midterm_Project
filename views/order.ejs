@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Say voice="alice"> Hello, Order information. Order Number <%= orderNumber %> Client <%= clientName %> Order details <%= => </Say>
-    <Play>https://demo.twilio.com/docs/classic.mp3</Play>
+    <Say voice="alice"> Hello, Mietnaam. you have a new order numbered  <%= orderNumber %>.
+    from <%= clientInfo.name %> . phone number <%= clientInfo.phoneNumber %> at <%= clientInfo.address %>
+    the order is <%= clientInfo.dishes %>
+    
+     </Say>
+    
 </Response>
