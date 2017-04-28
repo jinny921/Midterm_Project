@@ -55,11 +55,9 @@ $(() => {
           console.error('we have a problem!!!')
         })
     });
-  };
+  };  
 
-
-
-
+  // Refactor into ajax function
   $.ajax({
     method: 'GET',
     url: '/orders'
@@ -68,6 +66,10 @@ $(() => {
   }, (err) => {
     console.error(err);
   });
+
+  $('.place-order').on('click', function() {
+    ajaxCall('POST', '/order/checkout')
+  })
 
 });
 
