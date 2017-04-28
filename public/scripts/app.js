@@ -26,14 +26,14 @@ $(() => {
             </section>`;
   };
 
-  function cartTemplate(dish) {
+  function cartTemplate(item) {
     return `<section class='col-sm-6 col-sm-4'>
-              <div class='dish' data-dishId='${dish.id}'>
+              <div class='dish' data-dishId='${item.id}'>
                 <div class='caption'>
-                  <h4 class='dish-name'>${dish.name}</h4>
+                  <h4 class='dish-name'>${item.name}</h4>
                   <div class='dish-details'>
-                    <p class='dish-price'>Price: \$${dish.price}</p>
-                    <span class='counter'>0</span>
+                    <p class='dish-price'>Price: \$${item.price}</p>
+                    <span class='counter'>${item.quantity}</span>
                   </div>
                 </div>              
               </div>
@@ -42,6 +42,16 @@ $(() => {
 
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
+
+    // function appendToCart(dish) {
+    //   const dish = {
+    //           id: dishID,
+    //           name: dishName,
+    //           price: dishPrice,
+    //           quantity: newQuantity,
+    //       };
+    //   $('.cart-wrapper').append(cartTemplate(dish));
+    // }
 
     $('.fa-minus-square-o').on('click', function() { 
       const $that = $(this);
@@ -63,30 +73,35 @@ $(() => {
     $('.fa-plus-square').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
-      //const dishID = $that.parent().parent();
+      const $cart = $('.cart-wrapper').children('.col-sm-4');
       const dishID = $that.parent().parent().parent().attr('data-dishId');
-      // const dishName = $('.dish-name').text();
       const dishName = $that.parent().siblings('.dish-name').text();
       const dishPrice = $that.parent().siblings().children('.dish-price').text();
-      console.log(dishName);
-      var dish = {
-          id: dishID,
-          name: dishName,
-          price: dishPrice,
-      };
+      // const dishQuantity = updatedQuantity;
+
       ajaxCall('PUT', '/orders')
         .then((res) => {
           const $currentVal = +$counter.text();
           const newVal = $currentVal + 1;
           $counter.text(newVal);
-          // $that.addClass('addedToCart');
-          // const itemID = $('.cart-wrapper').closest('dish').data('dishId');
-          console.log(dishID);
-          // if(itemID !== dishID) {
-            $('.cart-wrapper').append(cartTemplate(dish));
-            $('.quantity').text(newVal);
+          const item = {
+              id: dishID,
+              name: dishName,
+              price: dishPrice,
+              quantity: newVal,
+          };
+
+          for (var selectedDish in $cart) {
+          console.log($cart);
+            // if () {
+            // } else {
+            //   item.quantity = newVal;
+            // }
+          }
+
+          $('.cart-wrapper').append(cartTemplate(item));
           // } else {
-          //   $('.price').text(newVal);
+          //   item.quantity = newVal;
           // }
         }, (err) => {
           console.error('we have a problem!!!')
