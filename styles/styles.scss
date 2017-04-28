@@ -7,13 +7,21 @@
 @import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis');
 body {
   background-color: #EEE;
+  box-sizing: border-box;
   font-family: 'Dosis', sans-serif;
-
-  h1, h2, h3, h4, h5, h6{
-  font-family: 'Julius Sans One', sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Julius Sans One', sans-serif;
   }
   h1 {
     color: #244751;
+  }
+  p {
+    font-size: 1.5rem;
   }
   nav {
     a {
@@ -41,20 +49,54 @@ body {
   }
   .menu-wrapper {
     padding: 30px;
+    background: #eee;
     .dish {
-      height: 400px;
+      position: relative;
+      height: 430px;
+      background: #fff;
+      margin-bottom: 30px;
+      border-radius: 5px;
       img {
         width: 100%;
         height: 180px;
         background-repeat: no-repeat;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
       }
-      .dish-name {
-        display: inline-block;
-        width: 80%;
-      }
-      .dish-price {
-        display: inline-block;
-        padding: 0 10px;
+      .caption {
+        position: relative;
+        height: 100px;
+        .shop {
+          position: absolute;
+          top: 75px;
+          text-align: center;
+          width: 100%;
+          i {
+            margin: 0 5px;
+            font-size: 25px;
+          }
+          .counter{
+            font-size: 25px;
+            padding: 0 25px;
+          }
+        }
+        .dish-details {
+          position: absolute;
+          top: 110px;
+          padding: 5px 20px;
+          .dish-price {
+            display: inline-block;
+            height: 100%;
+          }
+        }
+        .dish-name {
+          display: inline-block;
+          font-size: 2rem;
+          text-align: center;
+          padding: 8px 8px;
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }
@@ -70,29 +112,30 @@ body {
   }
   .social i {
     margin: 15px;
-  }
+  } 
   .affix-top,
   .affix {
     right: 130px;
   }
-  @media (min-width: 451px) {
-    .affix-top {
-      padding-top: 20px;
-      position: absolute;
-    }
-    .affix {
-      top: 20px;
-    }
-  }
-  @media (max-width: 450px) {
-    .affix-top,
-    .affix {
-      margin: 20px auto;
-      position: static;
-    }
-  }
   footer {
     padding: 30px;
     background: orange;
+  }
+}
+
+@media (min-width: 451px) {
+  .affix-top {
+    padding-top: 20px;
+    position: absolute;
+  }
+  .affix {
+    top: 20px;
+  }
+}
+@media (max-width: 450px) {
+  .affix-top,
+  .affix {
+    margin: 20px auto;
+    position: static;
   }
 }

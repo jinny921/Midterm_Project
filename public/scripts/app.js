@@ -13,14 +13,17 @@ $(() => {
                 <img src='${dish.img_url}'>
                 <div class='caption'>
                   <h4 class='dish-name'>${dish.name}</h4>
-                  <h4 class='dish-price'>\$${dish.price}</h4>
-                  <p class='dish-desc'>${dish.description}</p>
-                </div>
-                <div>
-                  <i class="fa fa-minus" aria-hidden="true"></i>
-                  <span class='counter'>0</span>
-                  <i class="fa fa-plus" aria-hidden="true"></i> 
-                </div>
+                  <div class='shop'>
+                    <i class="fa fa-minus-square-o" aria-hidden="true"></i>
+                    <span class='counter'>0</span>
+                    <i class="fa fa-plus-square" aria-hidden="true"></i> 
+                  </div>
+                  <div class='dish-details'>
+                    <p class='dish-desc'>${dish.description}</p>
+                    <p class='dish-price'>Price: \$${dish.price}</p>
+                    <p class='dish-prep'>Prep Time: ${dish.preptime} mins (approx.)</p>
+                  </div>
+                </div>              
               </div>
             </section>`;
   };
@@ -28,7 +31,7 @@ $(() => {
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
 
-    $('.fa-minus').on('click', function() { 
+    $('.fa-minus-square-o').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       ajaxCall('PUT', '/orders')
@@ -45,7 +48,7 @@ $(() => {
         })
     });
 
-    $('.fa-plus').on('click', function() { 
+    $('.fa-plus-square').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       ajaxCall('PUT', '/orders')
