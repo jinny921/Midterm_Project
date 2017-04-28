@@ -57,5 +57,6 @@ module.exports = (knex) => {
     callResturant();
     res.send("calling");
   });
+  router.post('/textSMS')
   return router;
 };
