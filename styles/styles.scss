@@ -1,7 +1,6 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Patrick+Hand');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
-
 $brand-color: #FF8C00;
 $disabled-color: #858585;
 $company-color: #947575;
@@ -19,6 +18,9 @@ body {
   }
   h1 {
     color: #244751;
+  }
+  li {
+    list-style: none;
   }
   p {
     font-size: 1.5rem;
@@ -49,7 +51,6 @@ body {
     width: 100%;
     height: 100vh;
     z-index: 2;
-    
     .landing-content {
       position: relative;
       top: 40%;
@@ -64,10 +65,24 @@ body {
       color: $brand-color;
       padding: 0 auto;
       bottom: -150px;
+      z-index: 2;
     }
   }
-  .cart-wrapper{
-    font-family: 'Dosis', sans-serif;
+  .cart-wrapper {
+    .dish-name,
+    .dish-details {
+      font-family: 'Dosis', sans-serif;
+      font-size: 20px;
+    }
+    .dish-name {
+      i {
+        padding-right: 5px;
+      }
+    }
+    .btn {
+      margin-top: 30px;
+      margin-left: 15px;
+    }
   }
   .menu-wrapper {
     position: relative;

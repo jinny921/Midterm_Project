@@ -31,10 +31,12 @@ $(() => {
   function cartTemplate(item) {
     return `<div class='dish' data-dishid='${item.id}'>
               <div class='caption'>
-                <h4 class='dish-name'>${item.name}</h4>
+                <li class='dish-name'><i class="fa-li fa fa-check-circle-o"></i>${item.name}</li>
                 <div class='dish-details'>
-                  <p class='dish-price'>Price: \$${item.price}</p>
-                  <span class='counter'>Quantity: ${item.quantity}</span>
+                  <li>
+                    <span class='dish-price'>Price: \$${item.price}</span>
+                    <span class='counter'> X ${item.quantity}</span>
+                  </li>
                 </div>
               </div>              
             </div>`
@@ -94,7 +96,7 @@ $(() => {
           let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
 
           if ($dishInCart.length) {
-            $dishInCart.find('.counter').text('Quantity: '+ newVal);
+            $dishInCart.find('.counter').text(' X '+ newVal);
           } else {
             $cartContainer.append(cartTemplate(item));
           }
