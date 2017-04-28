@@ -12,9 +12,9 @@ $(() => {
                 <div class='caption'>
                   <h4 class='dish-name'>${dish.name}</h4>
                   <h4 class='dish-price'>\$${dish.price}</h4>
-                  <p class='dish-desc'>${dish.description}</p>
                 </div>
-                <div>
+                <p class='dish-desc'>${dish.description}</p>
+                <div class='shop'>
                   <i class="fa fa-minus" aria-hidden="true"></i>
                   <span class='counter'>0</span>
                   <i class="fa fa-plus" aria-hidden="true"></i> 

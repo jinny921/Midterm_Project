@@ -7,10 +7,15 @@
 @import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis');
 body {
   background-color: #EEE;
+  box-sizing: border-box;
   font-family: 'Dosis', sans-serif;
-
-  h1, h2, h3, h4, h5, h6{
-  font-family: 'Julius Sans One', sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Julius Sans One', sans-serif;
   }
   h1 {
     color: #244751;
@@ -41,20 +46,44 @@ body {
   }
   .menu-wrapper {
     padding: 30px;
+    background: #fff;
     .dish {
-      height: 400px;
+      position: relative;
+      height: 380px;
+      background: #eee;
+      margin-bottom: 30px;
+      border-radius: 5px;
       img {
         width: 100%;
         height: 180px;
         background-repeat: no-repeat;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
       }
-      .dish-name {
-        display: inline-block;
-        width: 75%;
+      .caption {
+        height: 100px;
+        .dish-name {
+          display: inline-block;
+          padding: 8px 0 5px 10px;
+          width: 75%;
+          height: 100%;
+        }
+        .dish-price {
+          display: inline-block;
+          padding: 0 10px;
+          height: 100%;
+        }
+        .shop {
+          text-align: center;
+          i {
+            margin: 0 5px;
+          }
+        }
       }
-      .dish-price {
-        display: inline-block;
-        padding: 0 10px;
+      .dish-desc {
+        position: absolute;
+        top: 70%;
+        padding: 5px 20px;
       }
     }
   }
