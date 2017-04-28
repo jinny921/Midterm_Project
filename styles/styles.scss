@@ -24,7 +24,9 @@ body {
     font-size: 1.5rem;
   }
   nav {
-    a {
+    .navbar-brand {
+      font-size: 2em;
+      padding: 20px;
       color: black;
     }
   }
@@ -42,8 +44,10 @@ body {
       }
     }
     .btn-down {
-      margin: 0 auto;
       position: absolute;
+      width: 100%;
+      color: orange;
+      padding: 0 auto;
       bottom: -150px;
     }
   }

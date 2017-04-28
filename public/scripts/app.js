@@ -94,6 +94,13 @@ $(() => {
     });
   };
 
+$('.btn-down').click(function() {
+
+   $('html,body').animate({
+       scrollTop: $('#menu').offset().top},
+       'slow');
+});
+
 
   $.ajax({
     method: 'GET',
