@@ -59,7 +59,8 @@ $(() => {
           const $currentVal = +$counter.text();
           if($currentVal > 0) {
             const newVal = $currentVal - 1;
-            $counter.text(newVal);
+            $counter.text(newVal );
+            
           } else {
             $that.addClass('inactive');
           }
