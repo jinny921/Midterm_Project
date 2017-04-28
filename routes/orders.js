@@ -27,13 +27,10 @@ module.exports = (knex) => {
   });
   
 //getting order data from database after clicking checkout
-  router.post("/checkout", (req, res) => {
-    knex
-      .select("*")
-      .from("orders")
-      .then((orders) => {
-        res.json(orders);
-      });
+  router.post("/orders/checkout", (req, res) => {
+    // knex('order_quantity')
+    // .insert($(/* shopping cart items dish_ids */))
+    // knex.destroy();
   });
 
   router.post("/payment", (req, res) => {

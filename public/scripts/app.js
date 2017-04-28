@@ -1,6 +1,8 @@
 //appending dishes data, render order sidebar to home page
 $(() => {
 
+  // const sms = require('send-sms').sendSMS;
+
   function ajaxCall(method, url, data, dataType) {
     return $.ajax({method, url, data, dataType});
   };
@@ -100,24 +102,36 @@ $(() => {
           console.error('we have a problem!!!')
         })
     });
+
   };
 
-  $.ajax({
-    method: 'GET',
-    url: '/orders'
-  }).then((res) => {
+$('.btn-down').click(function() {
+
+   $('html,body').animate({
+       scrollTop: $('#menu').offset().top},
+       'slow');
+});
+
+  ajaxCall('GET','/orders')
+  .then((res) => {
     paintPage(res);
   }, (err) => {
     console.error(err);
   });
 
-  $('.btn-down').click(function() {
-
-    $('html,body').animate({
-        scrollTop: $('#menu').offset().top},
-        'slow');
+  // Kevin's WIP place order function
+  $('.place-order').on('click', function() {
+    let shoppingCartData = [];
+    var allItems = Array.from(document.getElementsByClassName('cart'));
+    allItems.forEach((item) => {
+      shoppingCartData.push(item.innerText);
+    })
+    // for (var i = 0; i < allItems.length; i++) {
+    //   shoppingCartData[allItems][i] = ;
+    // };
+    console.log(shoppingCartData);
+    ajaxCall('POST', '/orders/checkout', shoppingCartData);
   });
-
 
   // $(window).on('scroll', function () {
   //   let header = $('header');
@@ -138,4 +152,3 @@ $(() => {
   //   }
   // });
 });
-
