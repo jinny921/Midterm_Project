@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require('express');
+const sendSMS = require("../send-sms").sendSMS;
 const router  = express.Router();
 
 module.exports = (knex) => {

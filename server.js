@@ -42,6 +42,30 @@ app.use("/orders", orderRoutes(knex));
 app.get("/", (req, res) => {
   res.render("index");
 });
+app.post("/call", (req, res) => {
+    // knex
+    //     .select("*")
+    //     .from("dishes")
+    //     .then((order) => {
+    //       res.json(order);
+    //       console.log(order);
+    //     });
+    
+  let orderData = {
+    orderNumber: "12313",
+    clientInfo: {
+      name: "Elvisss",
+      phoneNumber: "7782324505",
+      address: "128 W. Hastings Ave, Vancouver, BC"
+    },
+    dishes: ["Massaman Curry of Braised Beef", 2, "Pad Thai", 2]
+  };
+  res.set('Content-Type', 'text/xml');
+  res.render("order");
+
+    // sendSMS("from the route");
+});
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
