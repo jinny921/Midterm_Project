@@ -1,6 +1,8 @@
 //appending dishes data, render order sidebar to home page
 $(() => {
 
+  // const sms = require('send-sms').sendSMS;
+
   function ajaxCall(method, url, data, dataType) {
     return $.ajax({method, url, data, dataType});
   };
@@ -68,9 +70,17 @@ $(() => {
   });
 
   $('.place-order').on('click', function() {
-    
-    ajaxCall('POST', '/order/checkout')
-  })
+    let shoppingCartData = [];
+    var allItems = Array.from(document.getElementsByClassName('cart'));
+    allItems.forEach((item) => {
+      shoppingCartData.push(item.innerText);
+    })
+    // for (var i = 0; i < allItems.length; i++) {
+    //   shoppingCartData[allItems][i] = ;
+    // };
+    console.log(shoppingCartData);
+    ajaxCall('POST', '/orders/checkout', shoppingCartData);
+  });
 
 });
 
