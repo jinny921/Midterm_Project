@@ -6,13 +6,11 @@
   <meta charset='UTF-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <title>Welcome to Mietnam</title>
-  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u'
-    crossorigin='anonymous'>
-  <link rel='stylesheet' type='text/css' href='styles/styles.css'>
-
-  <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='
-    crossorigin='anonymous'></script>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+  <link rel='stylesheet' type='text/css' href='styles/styles.css'>
 
 </head>
 
@@ -22,9 +20,6 @@
       <div class='navbar-header'>
         <h1><a class='navbar-brand' href='#'>Mietnam</a></h1>
       </div>
-      <div class='navbar-right'>
-        <a class='navbar-text' href='#'><i class='fa fa-shopping-cart fa-2x' aria-hidden='true'></i></a>
-      </div>
     </div>
   </nav>
 
@@ -32,9 +27,10 @@
     <div class='landing text-center'>
       <div class='container-fluid landing-content'>
         <h1>ARE YOU HUNGRY?</h1>
-        <div class='btn-down'><i class='animated pulse infinite fa fa-arrow-circle-o-down fa-4x' aria-hidden='true'></i><div>
-      </div>
-    </div>
+        <div class='btn-down'><i class='animated pulse infinite fa fa-arrow-circle-o-down fa-4x' aria-hidden='true'></i>
+          <div>
+          </div>
+        </div>
   </section>
 
   <main id='menu' class='container-fluid'>
@@ -45,8 +41,8 @@
         </div>
       </div>
 
-      <div class='col-md-3'>
-        <div class='row'>
+      <div class='row'>
+        <div class='col-md-3'>
           <div data-spy='affix' data-offset-top='650'>
             <section class='cart-wrapper'>
               <h3>Your Cart</h3>
@@ -63,23 +59,24 @@
         </div>
       </div>
     </div>
+  </main>
 
-    <footer class='row'>
+  <footer class='navbar navbar-default navbar-bottom'>
+    <div class='row'>
       <div class='col-xs-12'>
-        <div class='address'>
+        <div class='address navbar-right'>
           <p>Address: 128 W. Hastings Ave, Vancouver, BC</p>
           <p>Phone: 604-888-9999</p>
           <p>Hours: 9am-9pm</p>
         </div>
         <div class='social'>
-          <i class="fa fa-facebook fa-4x" aria-hidden="true"></i>
-          <i class="fa fa-instagram fa-4x" aria-hidden="true"></i>
-          <i class="fa fa-twitter fa-4x" aria-hidden="true"></i>
+          <i class="fa fa-facebook fa-2x" aria-hidden="true"></i>
+          <i class="fa fa-instagram fa-2x" aria-hidden="true"></i>
+          <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
         </div>
       </div>
-    </footer>
-  </main>
-
+    </div>
+  </footer>
 
 </body>
 
