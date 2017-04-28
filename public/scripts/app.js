@@ -6,13 +6,13 @@ $(() => {
   };
 
   function dishTemplate(dish) {
-    return `<section class='col-sm-4'>
+    return `<section class='col-sm-6 col-sm-4'>
               <div class='dish' data-dishId='${dish.id}'>
-                <img src='${dish.img_url}' alt='burrito'>
+                <img src='${dish.img_url}'>
                 <div class='caption'>
-                  <h4>${dish.name}</h4>
-                  <p>\$${dish.price}</p>
-                  <p>${dish.description}</p>
+                  <h4 class='dish-name'>${dish.name}</h4>
+                  <h4 class='dish-price'>\$${dish.price}</h4>
+                  <p class='dish-desc'>${dish.description}</p>
                 </div>
                 <div>
                   <i class="fa fa-minus" aria-hidden="true"></i>
@@ -20,7 +20,7 @@ $(() => {
                   <i class="fa fa-plus" aria-hidden="true"></i> 
                 </div>
               </div>
-            </section>`
+            </section>`;
   };
 
   function paintPage(res) {
@@ -61,8 +61,8 @@ $(() => {
 
 
   $.ajax({
-    method: "GET",
-    url: "/orders"
+    method: 'GET',
+    url: '/orders'
   }).then((res) => {
     paintPage(res);
   }, (err) => {
