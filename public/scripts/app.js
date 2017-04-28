@@ -14,7 +14,7 @@ $(() => {
                   <h4 class='dish-price'>\$${dish.price}</h4>
                   <p class='dish-desc'>${dish.description}</p>
                 </div>
-                <div>
+                <div dataid="10">
                   <i class="fa fa-minus" aria-hidden="true"></i>
                   <span class='counter'>0</span>
                   <i class="fa fa-plus" aria-hidden="true"></i> 
@@ -25,10 +25,10 @@ $(() => {
 
   function cartTemplate(dish) {
     return `<ul>
-              <li>
-              <li>Food Item 1: [placeholder]</li>
-              <li><span class="price"</span></li>
-              <li>Quantity: [xx]</li>
+              <li data-itemId='${dish.id}'></li>
+              <li>Food Item 1: ${dish.name}</li>
+              <li>Price: ${dish.price}</li>
+              <li>Quantity:<span class="quantity"</span></li>
               <li>Total: [$xx]</li>
             </ul>`
   }
@@ -56,17 +56,26 @@ $(() => {
     $('.fa-plus').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
+      //const dishID = $that.parent().parent();
+      const dishID = $that.parent().parent().attr('data-dishId');
+      var dish = {
+          id: dishID,
+          name: "jinny dish"
+      };
       ajaxCall('PUT', '/orders')
         .then((res) => {
           const $currentVal = +$counter.text();
           const newVal = $currentVal + 1;
           $counter.text(newVal);
-          const dishID = $that.closest('dish').data('dishId');
-          if(dish.id) {
-            $('.cart-wrapper').append(cartTemplate);
-
-          }
-          $('.price').text(newVal);
+          // $that.addClass('addedToCart');
+          // const itemID = $('.cart-wrapper').closest('dish').data('dishId');
+          console.log(dishID);
+          // if(itemID !== dishID) {
+            $('.cart-wrapper').append(cartTemplate(dish));
+            $('.quantity').text(newVal);
+          // } else {
+          //   $('.price').text(newVal);
+          // }
         }, (err) => {
           console.error('we have a problem!!!')
         })
