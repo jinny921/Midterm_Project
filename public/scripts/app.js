@@ -68,6 +68,7 @@ $(() => {
   });
 
   $('.place-order').on('click', function() {
+    
     ajaxCall('POST', '/order/checkout')
   })
 

@@ -27,12 +27,8 @@ module.exports = (knex) => {
   
 //getting order data from database after clicking checkout
   router.post("/checkout", (req, res) => {
-    knex
-      .select("*")
-      .from("orders")
-      .then((orders) => {
-        res.json(orders);
-      });
+    knex('order_quantity')
+      .insert($(/* shopping cart items dish_ids */))
   });
 
   router.post("/payment", (req, res) => {

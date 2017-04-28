@@ -41,10 +41,8 @@ app.use(express.static("public"));
 app.use("/orders", orderRoutes(knex));
 
 // user goto Home page request get '/'
-app.get("/order2.xml", (req, res) => {
-  var templateVars = {info: "Elvis"}
-  res.set('Content-Type', 'text/xml');
-  res.render("order", templateVars);
+app.get("/", (req, res) => {
+  res.render("index");
 });
 
 app.listen(PORT, () => {
