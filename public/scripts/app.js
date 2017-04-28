@@ -7,14 +7,14 @@ $(() => {
 
   function dishTemplate(dish) {
     return `<section class='col-xs-6 col-sm-4'>
-              <div class='dish' data-dishId='${dish.id}'>
+              <div class='dish' data-dishid='${dish.id}'>
                 <img class='dish-img' src='${dish.img_url}'>
                 <div class='caption'>
                   <h4 class='dish-name'>${dish.name}</h4>
                 </div>              
                 <div class='dish-details'>
                   <p class='dish-desc'>${dish.description}</p>
-                  <p class='dish-price'>Price: \$${dish.price}</p>
+                  <p class='dish-price'>Price: \$<span class='dishPrice'>${dish.price}</span></p>
                   <p class='dish-prep'>Prep Time: ${dish.preptime} mins (approx.)</p>
                 </div>
                 <div class='shop'>
@@ -27,12 +27,12 @@ $(() => {
   };
 
   function cartTemplate(item) {
-    return `<div class='dish' data-dishId='${item.id}'>
+    return `<div class='dish' data-dishid='${item.id}'>
               <div class='caption'>
                 <h4 class='dish-name'>${item.name}</h4>
                 <div class='dish-details'>
                   <p class='dish-price'>Price: \$${item.price}</p>
-                  <span class='counter'>${item.quantity}</span>
+                  <span class='counter'>Quantity: ${item.quantity}</span>
                 </div>
               </div>              
             </div>`
@@ -71,33 +71,31 @@ $(() => {
     $('.fa-plus-square').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
-      const dishID = $that.closest().data('dishId');
+      const $menuContainer = $that.closest('[data-dishid]');
+      const dishIDfromMenu = $menuContainer.data('dishid');
       const dishName = $that.parent().siblings().children('.dish-name').text();
-      const dishPrice = $that.parent().siblings().children('.dish-price').text();
+      const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
+      const $cartContainer = $('.selected-dish');
 
-      console.log('dishID: ',dishID);
       ajaxCall('PUT', '/orders')
         .then((res) => {
           const $currentVal = +$counter.text();
           const newVal = $currentVal + 1;
           $counter.text(newVal);
           const item = {
-              id: dishID,
+              id: dishIDfromMenu,
               name: dishName,
               price: dishPrice,
               quantity: newVal,
           };
           // dishID 
-          let $itemIdCart = $('.selected-dish .dish').data('dishId');
-          if ($itemIdCart === dishID) {
-            $itemIdCart.$('.counter').text() = newVal;
-          } else {
-          $('.selected-dish').append(cartTemplate(item));
+          let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
 
+          if ($dishInCart.length) {
+            $dishInCart.find('.counter').text('Quantity: '+ newVal);
+          } else {
+            $cartContainer.append(cartTemplate(item));
           }
-          // } else {
-          //   item.quantity = newVal;
-          // }
         }, (err) => {
           console.error('we have a problem!!!')
         })
