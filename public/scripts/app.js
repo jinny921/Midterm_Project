@@ -54,30 +54,20 @@ $(() => {
 
       ajaxCall('PUT', '/orders')
         .then((res) => {
-          const $currentVal = +$counter.text();
+          const $currentVal = 0 + $counter.text();
           if($currentVal > 0) {
             const newVal = $currentVal - 1;
             $counter.text(newVal );
-        
             let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
-            const currentQuantity = $dishInCart.find('.counter').text();
-  //if there's 1 dish1, remove the dish
-  //if there's 1+ dish1, decrease the quantity by 1 (put in new value)
-  //if there's no dish1, the button doesn't do anything
-  console.log(currentOrder);
-  console.log('keys: ', Object.keys(currentOrder));
-            // if (currentQuantity > 1) {
-            //   currentQuantity('Quantity: '+ newVal);
-            // } else if (currentQuantity === 1) {
-            //   currentOrder
-            // } else {
-            //   $that.addClass('inactive');
-            // };
-            // if ($dishInCart.length) {
-            //   $dishInCart.find('.counter').text('Quantity: '+ newVal);
-            // } else {
-            //   $cartContainer.append(cartTemplate(item));
-            // }
+            const currentQuantity = (!$dishInCart)? 0 : currentOrder[dishIDfromMenu].quantity;
+
+            if (currentQuantity > 1) {
+              $dishInCart.find('.counter').text('Quantity: '+ newVal);
+            } else if (currentQuantity === 1) {
+              $dishInCart.remove();
+            }
+            currentOrder[dishIDfromMenu].quantity--;
+
           } else {
             $that.addClass('inactive');
           }
@@ -122,10 +112,10 @@ $(() => {
 
 $('.btn-down').click(function() {
 
-   $('html,body').animate({
-       scrollTop: $('#menu').offset().top},
-       'slow');
-});
+//    $('html,body').animate({
+//        scrollTop: $('#menu').offset().top},
+//        'slow');
+// });
 
   ajaxCall('GET','/orders')
   .then((res) => {
