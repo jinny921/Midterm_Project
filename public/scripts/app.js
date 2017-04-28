@@ -70,16 +70,14 @@ $('.btn-down').click(function() {
        'slow');
 });
 
-  // Refactor into ajax function
-  $.ajax({
-    method: 'GET',
-    url: '/orders'
-  }).then((res) => {
+  ajaxCall('GET','/orders')
+  .then((res) => {
     paintPage(res);
   }, (err) => {
     console.error(err);
   });
 
+  // Kevin's WIP place order function
   $('.place-order').on('click', function() {
     let shoppingCartData = [];
     var allItems = Array.from(document.getElementsByClassName('cart'));

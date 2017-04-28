@@ -1,13 +1,14 @@
 
+
 exports.up = function(knex) {
-  return knex.schema.createTable("client", (table) => {
+  return knex.schema.createTable("order_quantity", (table) => {
     table.increments();
-    table.string('name');
-    table.string('address');
-    table.integer('phone_number');
+    table.integer('quantity');
+    table.bigInteger('order_id').unsigned().index().references('id').inTable('orders');
+    table.bigInteger('dish_id').unsigned().index().references('id').inTable('dishes');
   })
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable("client");
+  return knex.schema.dropTable("order_quantity");
 };
