@@ -11,32 +11,39 @@ $(() => {
                 <img src='${dish.img_url}'>
                 <div class='caption'>
                   <h4 class='dish-name'>${dish.name}</h4>
-                  <h4 class='dish-price'>\$${dish.price}</h4>
-                  <p class='dish-desc'>${dish.description}</p>
-                </div>
-                <div dataid="10">
-                  <i class="fa fa-minus" aria-hidden="true"></i>
-                  <span class='counter'>0</span>
-                  <i class="fa fa-plus" aria-hidden="true"></i> 
-                </div>
+                  <div class='shop'>
+                    <i class="fa fa-minus-square-o" aria-hidden="true"></i>
+                    <span class='counter'>0</span>
+                    <i class="fa fa-plus-square" aria-hidden="true"></i> 
+                  </div>
+                  <div class='dish-details'>
+                    <p class='dish-desc'>${dish.description}</p>
+                    <p class='dish-price'>Price: \$${dish.price}</p>
+                    <p class='dish-prep'>Prep Time: ${dish.preptime} mins (approx.)</p>
+                  </div>
+                </div>              
               </div>
             </section>`;
   };
 
   function cartTemplate(dish) {
-    return `<ul>
-              <li data-itemId='${dish.id}'></li>
-              <li>Food Item 1: ${dish.name}</li>
-              <li>Price: ${dish.price}</li>
-              <li>Quantity:<span class="quantity"</span></li>
-              <li>Total: [$xx]</li>
-            </ul>`
+    return `<section class='col-sm-6 col-sm-4'>
+              <div class='dish' data-dishId='${dish.id}'>
+                <div class='caption'>
+                  <h4 class='dish-name'>${dish.name}</h4>
+                  <div class='dish-details'>
+                    <p class='dish-price'>Price: \$${dish.price}</p>
+                    <span class='counter'>0</span>
+                  </div>
+                </div>              
+              </div>
+            </section`
   }
 
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
 
-    $('.fa-minus').on('click', function() { 
+    $('.fa-minus-square-o').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       ajaxCall('PUT', '/orders')
@@ -53,14 +60,19 @@ $(() => {
         })
     });
 
-    $('.fa-plus').on('click', function() { 
+    $('.fa-plus-square').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       //const dishID = $that.parent().parent();
-      const dishID = $that.parent().parent().attr('data-dishId');
+      const dishID = $that.parent().parent().parent().attr('data-dishId');
+      // const dishName = $('.dish-name').text();
+      const dishName = $that.parent().siblings('.dish-name').text();
+      const dishPrice = $that.parent().siblings().children('.dish-price').text();
+      console.log(dishName);
       var dish = {
           id: dishID,
-          name: "jinny dish"
+          name: dishName,
+          price: dishPrice,
       };
       ajaxCall('PUT', '/orders')
         .then((res) => {
