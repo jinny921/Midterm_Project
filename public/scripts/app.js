@@ -27,17 +27,15 @@ $(() => {
   };
 
   function cartTemplate(item) {
-    return `<section class='col-sm-6 col-sm-4'>
-              <div class='dish' data-dishId='${item.id}'>
-                <div class='caption'>
-                  <h4 class='dish-name'>${item.name}</h4>
-                  <div class='dish-details'>
-                    <p class='dish-price'>Price: \$${item.price}</p>
-                    <span class='counter'>${item.quantity}</span>
-                  </div>
-                </div>              
-              </div>
-            </section`
+    return `<div class='dish' data-dishId='${item.id}'>
+              <div class='caption'>
+                <h4 class='dish-name'>${item.name}</h4>
+                <div class='dish-details'>
+                  <p class='dish-price'>Price: \$${item.price}</p>
+                  <span class='counter'>${item.quantity}</span>
+                </div>
+              </div>              
+            </div>`
   }
 
   function paintPage(res) {
@@ -73,12 +71,11 @@ $(() => {
     $('.fa-plus-square').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
-      const $cart = $('.cart-wrapper').children('.col-sm-4');
-      const dishID = $that.parent().parent().parent().attr('data-dishId');
-      const dishName = $that.parent().siblings('.dish-name').text();
+      const dishID = $that.closest().data('dishId');
+      const dishName = $that.parent().siblings().children('.dish-name').text();
       const dishPrice = $that.parent().siblings().children('.dish-price').text();
-      // const dishQuantity = updatedQuantity;
 
+      console.log('dishID: ',dishID);
       ajaxCall('PUT', '/orders')
         .then((res) => {
           const $currentVal = +$counter.text();
@@ -90,16 +87,14 @@ $(() => {
               price: dishPrice,
               quantity: newVal,
           };
+          // dishID 
+          let $itemIdCart = $('.selected-dish .dish').data('dishId');
+          if ($itemIdCart === dishID) {
+            $itemIdCart.$('.counter').text() = newVal;
+          } else {
+          $('.selected-dish').append(cartTemplate(item));
 
-          for (var selectedDish in $cart) {
-          console.log($cart);
-            // if () {
-            // } else {
-            //   item.quantity = newVal;
-            // }
           }
-
-          $('.cart-wrapper').append(cartTemplate(item));
           // } else {
           //   item.quantity = newVal;
           // }
