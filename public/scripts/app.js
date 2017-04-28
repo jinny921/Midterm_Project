@@ -105,12 +105,12 @@ $(() => {
 
   };
 
-$('.btn-down').click(function() {
+  $('.btn-down').click(function() {
 
-   $('html,body').animate({
-       scrollTop: $('#menu').offset().top},
-       'slow');
-});
+    $('html,body').animate({
+        scrollTop: $('#menu').offset().top},
+        'slow');
+  });
 
   ajaxCall('GET','/orders')
   .then((res) => {
@@ -133,22 +133,27 @@ $('.btn-down').click(function() {
     ajaxCall('POST', '/orders/checkout', shoppingCartData);
   });
 
-  // $(window).on('scroll', function () {
-  //   let header = $('header');
-  //   let range = 200;
-  
-  //   let scrollTop = $(this).scrollTop();
-  //   let offset = header.offset().top;
-  //   let height = header.outerHeight();
-  //   offset = offset + height / 2;
-  //   let calc = 1 - (scrollTop - offset + range) / range;
-  
-  //   header.css({ 'opacity': calc });
-  
-  //   if ( calc > '1' ) {
-  //     header.css({ 'opacity': 1 });
-  //   } else if ( calc < '0' ) {
-  //     header.css({ 'opacity': 0 });
-  //   }
-  // });
+  // NavBar transition effects
+  $(window).on('scroll', function () {
+    const header = $('header');
+    const range = 200;
+    const height = header.outerHeight();
+    const scrollTop = $(this).scrollTop();
+    let offset = header.offset().top + height / 2;
+    let calc = 1 - (scrollTop - offset + range) / range;
+
+    header.css({
+      'opacity': calc
+    });
+
+    if (calc > '1') {
+      header.css({
+        'opacity': 1
+      });
+    } else if (calc < '0') {
+      header.css({
+        'opacity': 0
+      });
+    }
+  });
 });
