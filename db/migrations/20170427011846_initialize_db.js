@@ -1,13 +1,13 @@
 
 exports.up = function(knex) {
-  return knex.schema.createTable("restaurant", (table) => {
+  return knex.schema.createTable("restaurants", (table) => {
     table.increments();
     table.string('name');
     table.string('address');
-    table.integer('phone_number');
+    table.string('phone_number');
   })
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable("restaurant");
+  return knex.schema.dropTable("restaurants");
 };

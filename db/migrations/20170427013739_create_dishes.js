@@ -3,9 +3,11 @@ exports.up = function(knex) {
   return knex.schema.createTable("dishes", (table) => {
     table.increments();
     table.string('name');
-    table.string('price');
+    table.integer('price');
     table.integer('preptime');
-    table.bigInteger('restaurant_id').unsigned().index().references('id').inTable('restaurant')
+    table.string('img_url');
+    table.string('description');
+    table.bigInteger('restaurant_id').unsigned().index().references('id').inTable('restaurants')
   })
 };
 
