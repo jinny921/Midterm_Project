@@ -44,8 +44,8 @@ $(() => {
     return `<form action="/payment" method="POST">
               <p>Total: ${total}</p>
               <input type="name" name="name" placeholder="Name">
-              <input type="phone_number" name="phone_number" placeholder="password">
-              <button type="submit" value="confirm-payment">Confirm Payment</button>
+              <input type="phone_number" name="phone_number" placeholder="Phone Number">
+              <button type="submit" value="confirm-payment">Confirm</button>
             </form>`
   }
 
@@ -126,19 +126,20 @@ $('.btn-down').click(function() {
     console.error(err);
   });
 
-  function calculateTotal(order) {
-    var orderObjKeys = Object.keys(order);
-    for(let i = 0; i < orderObjKeys.length; i++) {
-      console.log(order[i]);
+  function calculateTotal() {
+    let total = 0;
+    for (var prop in currentOrder) {
+      var currObj = currentOrder[prop];
+      total += currObj.price * currObj.quantity;
     }
-    console.log(Object.keys(order));
-    // return order.order
+    console.log(total);
+    return total;
   }
 
   // Kevin's WIP place order function
   $('.place-order').on('click', function() {
     const $orderContainer = $('.order-confirmation');
-    const currentTotal = calculateTotal(currentOrder);
+    const currentTotal = calculateTotal();
     ajaxCall('POST', '/orders/checkout', currentOrder);
     $orderContainer.append(checkoutTemplate(currentTotal));
   });

@@ -35,8 +35,8 @@ module.exports = (knex) => {
   });
 
   router.post("/payment", (req, res) => {
-    knex
-      .select("*");
+    // knex
+    //   .select("*");
   });
 
   router.post("/callcontent", (req, res) => {
