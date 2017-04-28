@@ -130,8 +130,8 @@ $(() => {
 
   function calculateTotal() {
     let total = 0;
-    for (var prop in currentOrder) {
-      var currObj = currentOrder[prop];
+    for (const prop in currentOrder) {
+      const currObj = currentOrder[prop];
       total += currObj.price * currObj.quantity;
     }
     console.log(total);
