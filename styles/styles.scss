@@ -4,14 +4,17 @@
 @import url('https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
-@import url('');
-
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis');
 body {
   background-color: #EEE;
+  font-family: 'Dosis', sans-serif;
+
+  h1, h2, h3, h4, h5, h6{
+  font-family: 'Julius Sans One', sans-serif;
+  }
   h1 {
     color: #244751;
   }
-
   nav {
     a {
       color: black;
@@ -26,28 +29,53 @@ body {
     .landing-content {
       position: relative;
       top: 40%;
-      h1{
+      h1 {
         font-size: 50px;
       }
     }
-    .btn-down{
-      position: relative;
-      top: 100px;
-    }
-  }
-  .dish{
-    img{
-      width: 100%;
-      background-repeat: no-repeat;
+    .btn-down {
+      margin: 0 auto;
+      position: absolute;
+      bottom: -150px;
     }
   }
   .menu-wrapper {
     padding: 30px;
+    .dish {
+      height: 400px;
+      img {
+        width: 100%;
+        height: 180px;
+        background-repeat: no-repeat;
+      }
+      .dish-name {
+        display: inline-block;
+        width: 80%;
+      }
+      .dish-price {
+        display: inline-block;
+        padding: 0 10px;
+      }
+    }
   }
-  .affix-top, .affix {
+  .fa-minus .inactive {
+    color: lightgrey;
+  }
+  .social,
+  .address {
+    display: inline-block;
+  }
+  .address {
+    float: right;
+  }
+  .social i {
+    margin: 15px;
+  }
+  .affix-top,
+  .affix {
     right: 130px;
   }
-  @media (min-width: 992px) {
+  @media (min-width: 451px) {
     .affix-top {
       padding-top: 20px;
       position: absolute;
@@ -56,13 +84,14 @@ body {
       top: 20px;
     }
   }
-  @media (max-width: 991px) {
-    .affix-top, .affix {
-      padding-top: 20px;
+  @media (max-width: 450px) {
+    .affix-top,
+    .affix {
+      margin: 20px auto;
       position: static;
     }
   }
-  footer{
+  footer {
     padding: 30px;
     background: orange;
   }
