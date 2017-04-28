@@ -2,18 +2,20 @@
 $(() => {
 
   function dishTemplate(dish) {
-    return `<section class='col-sm-4'>
+    return `<section class='col-sm-6 col-md-4'>
               <div class='dish'>
-                <img src='${dish.img_url}' alt='burrito'>
+                <img src='${dish.img_url}'>
                 <div class='caption'>
-                  <h3>${dish.name}</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias molestiae ullam similique ipsa, ex modi,
-                    maxime, eum voluptates harum odit dolore saepe nemo nesc</p>
+                  <h4 class='dish-name'>${dish.name}</h4>
+                  <h4 class='dish-price'>\$${dish.price}</h4>
+                  <p class='dish-desc'>${dish.description}</p>
                 </div>
-                <p>\$${dish.price}</p>
-                <p><a href='#' class='btn btn-primary' role='button'>Button</a> <a href='#' class='btn btn-default' role='button'>Button</a></p>
+                <div>
+                 <i class='fa fa-minus' aria-hidden='true'></i>
+                 <i class='fa fa-plus' aria-hidden='true'></i>
+                </div>
               </div>
-            </section>`
+            </section>`;
   };
 
   function paintPage(res) {
@@ -22,8 +24,8 @@ $(() => {
 
 
   $.ajax({
-    method: "GET",
-    url: "/orders"
+    method: 'GET',
+    url: '/orders'
   }).then((res) => {
     paintPage(res);
   }, (err) => {
@@ -35,15 +37,47 @@ $(() => {
 function renderOrderList(order) {
 
 }
+
+// Select all links with hashes
+$('#btn-down').click(function (event) {
+  // On-page links
+  if (
+    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
+    location.hostname == this.hostname
+  ) {
+    // Figure out element to scroll to
+    var target = $('#menu');
+    // Does a scroll target exist?
+    if (target.length) {
+      // Only prevent default if animation is actually gonna happen
+      event.preventDefault();
+      $('html, body').animate({
+        scrollTop: target.offset().top
+      }, 1000, function () {
+        // Callback after animation
+        // Must change focus!
+        var $target = $(target);
+        $target.focus();
+        if ($target.is(":focus")) { // Checking if the target was focused
+          return false;
+        } else {
+          $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+          $target.focus(); // Set focus again
+        };
+      });
+    }
+  }
+});
+
 //update order list, re-render sidebar
 
 //submit final order list, press checkout button, pass order info to /checkout
 $('checkoutBtn').on('submit', (event) => {
   $.ajax({
-    method: "POST",
-    url: "/checkout"
+    method: 'POST',
+    url: '/checkout'
   }).then((order) => {
-      console.log("order", order);
+    console.log('order', order);
   }, (err) => {
     console.error(err);
   })
@@ -52,8 +86,8 @@ $('checkoutBtn').on('submit', (event) => {
 //passing payment info, confirm payment, render order confirmation page
 $('paymentBtn').on('submit', (event) => {
   $.ajax({
-    method: "POST",
-    url: "/payment"
+    method: 'POST',
+    url: '/payment'
   }).done((paymentInfo) => {
     render
   });
