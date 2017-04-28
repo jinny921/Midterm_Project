@@ -40,6 +40,15 @@ $(() => {
             </div>`
   }
 
+  function checkoutTemplate(total) {
+    return `<form action="/payment" method="POST">
+              <p>Total: ${total}</p>
+              <input type="name" name="name" placeholder="Name">
+              <input type="phone_number" name="phone_number" placeholder="Phone Number">
+              <button type="submit" value="confirm-payment">Confirm</button>
+            </form>`
+  }
+
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
 
@@ -110,12 +119,11 @@ $(() => {
     });
   };
 
-$('.btn-down').click(function() {
+  $('.btn-down').click(function() {
 
-//    $('html,body').animate({
-//        scrollTop: $('#menu').offset().top},
-//        'slow');
-// });
+    $('html,body').animate({
+      scrollTop: $('#menu').offset().top},'slow');
+  });
 
   ajaxCall('GET','/orders')
   .then((res) => {
@@ -124,17 +132,21 @@ $('.btn-down').click(function() {
     console.error(err);
   });
 
+  function calculateTotal() {
+    let total = 0;
+    for (var prop in currentOrder) {
+      var currObj = currentOrder[prop];
+      total += currObj.price * currObj.quantity;
+    }
+    console.log(total);
+    return total;
+  }
+
   // Kevin's WIP place order function
   $('.place-order').on('click', function() {
-    let shoppingCartData = [];
-    var allItems = Array.from(document.getElementsByClassName('cart'));
-    allItems.forEach((item) => {
-      shoppingCartData.push(item.innerText);
-    })
-    // for (var i = 0; i < allItems.length; i++) {
-    //   shoppingCartData[allItems][i] = ;
-    // };
-    console.log(shoppingCartData);
-    ajaxCall('POST', '/orders/checkout', shoppingCartData);
+    const $orderContainer = $('.order-confirmation');
+    const currentTotal = calculateTotal();
+    ajaxCall('POST', '/orders/checkout', currentOrder);
+    $orderContainer.append(checkoutTemplate(currentTotal));
   });
 });
