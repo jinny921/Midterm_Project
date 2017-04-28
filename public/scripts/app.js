@@ -1,6 +1,6 @@
 //appending dishes data, render order sidebar to home page
 $(() => {
-
+  const currentOrder = {};
   // const sms = require('send-sms').sendSMS;
 
   function ajaxCall(method, url, data, dataType) {
@@ -43,26 +43,41 @@ $(() => {
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
 
-    // function appendToCart(dish) {
-    //   const dish = {
-    //           id: dishID,
-    //           name: dishName,
-    //           price: dishPrice,
-    //           quantity: newQuantity,
-    //       };
-    //   $('.cart-wrapper').append(cartTemplate(dish));
-    // }
-
     $('.fa-minus-square-o').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
+      const $menuContainer = $that.closest('[data-dishid]');
+      const dishIDfromMenu = $menuContainer.data('dishid');
+      const dishName = $that.parent().siblings().children('.dish-name').text();
+      const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
+      const $cartContainer = $('.selected-dish');
+
       ajaxCall('PUT', '/orders')
         .then((res) => {
           const $currentVal = +$counter.text();
           if($currentVal > 0) {
             const newVal = $currentVal - 1;
             $counter.text(newVal );
-            
+        
+            let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+            const currentQuantity = $dishInCart.find('.counter').text();
+  //if there's 1 dish1, remove the dish
+  //if there's 1+ dish1, decrease the quantity by 1 (put in new value)
+  //if there's no dish1, the button doesn't do anything
+  console.log(currentOrder);
+  console.log('keys: ', Object.keys(currentOrder));
+            // if (currentQuantity > 1) {
+            //   currentQuantity('Quantity: '+ newVal);
+            // } else if (currentQuantity === 1) {
+            //   currentOrder
+            // } else {
+            //   $that.addClass('inactive');
+            // };
+            // if ($dishInCart.length) {
+            //   $dishInCart.find('.counter').text('Quantity: '+ newVal);
+            // } else {
+            //   $cartContainer.append(cartTemplate(item));
+            // }
           } else {
             $that.addClass('inactive');
           }
@@ -91,9 +106,9 @@ $(() => {
               price: dishPrice,
               quantity: newVal,
           };
-          // dishID 
-          let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+          currentOrder[dishIDfromMenu] = item;
 
+          let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
           if ($dishInCart.length) {
             $dishInCart.find('.counter').text('Quantity: '+ newVal);
           } else {
@@ -103,7 +118,6 @@ $(() => {
           console.error('we have a problem!!!')
         })
     });
-
   };
 
 $('.btn-down').click(function() {
@@ -133,23 +147,4 @@ $('.btn-down').click(function() {
     console.log(shoppingCartData);
     ajaxCall('POST', '/orders/checkout', shoppingCartData);
   });
-
-  // $(window).on('scroll', function () {
-  //   let header = $('header');
-  //   let range = 200;
-  
-  //   let scrollTop = $(this).scrollTop();
-  //   let offset = header.offset().top;
-  //   let height = header.outerHeight();
-  //   offset = offset + height / 2;
-  //   let calc = 1 - (scrollTop - offset + range) / range;
-  
-  //   header.css({ 'opacity': calc });
-  
-  //   if ( calc > '1' ) {
-  //     header.css({ 'opacity': 1 });
-  //   } else if ( calc < '0' ) {
-  //     header.css({ 'opacity': 0 });
-  //   }
-  // });
 });
