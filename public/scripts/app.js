@@ -7,7 +7,7 @@ $(() => {
 
   function dishTemplate(dish) {
     return `<section class='col-sm-4'>
-              <div class='dish'>
+              <div class='dish' data-dishId='${dish.id}'>
                 <img src='${dish.img_url}' alt='burrito'>
                 <div class='caption'>
                   <h4>${dish.name}</h4>
@@ -55,7 +55,10 @@ $(() => {
           console.error('we have a problem!!!')
         })
     });
-  }
+  };
+
+
+
 
   $.ajax({
     method: "GET",
@@ -64,33 +67,7 @@ $(() => {
     paintPage(res);
   }, (err) => {
     console.error(err);
-  })
+  });
+
 });
 
-// //receive user's picks (quantity and dish), display on order sidebar
-// function renderOrderList(order) {
-
-// }
-// //update order list, re-render sidebar
-
-// //submit final order list, press checkout button, pass order info to /checkout
-// $('checkoutBtn').on('submit', (event) => {
-//   $.ajax({
-//     method: "POST",
-//     url: "/checkout"
-//   }).then((order) => {
-//       console.log("order", order);
-//   }, (err) => {
-//     console.error(err);
-//   })
-// });
-
-// //passing payment info, confirm payment, render order confirmation page
-// $('paymentBtn').on('submit', (event) => {
-//   $.ajax({
-//     method: "POST",
-//     url: "/payment"
-//   }).done((paymentInfo) => {
-//     render
-//   });
-// });
