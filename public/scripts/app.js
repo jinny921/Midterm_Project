@@ -156,11 +156,13 @@ $(() => {
     if(Object.keys(currentOrder).length === 0) {
       return;
     }
-    $('.shop').hide();
     const $cartContainer = $('.cart-wrapper');
     const currentTotal = calculateTotal();
-    ajaxCall('POST', '/orders/checkout', currentOrder);
-    $cartContainer.empty().append(checkoutTemplate(currentTotal));
+    if (currentTotal !== 0) {
+      $('.shop').fadeOut('400');
+      ajaxCall('POST', '/orders/checkout', currentOrder);
+      $cartContainer.empty().append(checkoutTemplate(currentTotal));
+    }
   });
 
   // NavBar transition effects
