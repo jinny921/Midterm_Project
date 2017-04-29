@@ -26,16 +26,35 @@ module.exports = (knex) => {
         res.json(selected);
       });
   });
-// getting order data from database after clicking checkout
+
   router.post('/checkout', (req, res) => {
     // knex('order_quantity')
     // .insert($(/* shopping cart items dish_ids */))
     // knex.destroy();
+    // res.send(kevin);
   });
 
   router.post('/payment', (req, res) => {
+    // console.log('Full Order: ', req.body);
+    const dataBody = req.body;
+    const dishIDs = Object.keys(dataBody);
+    const dishQuantities = {};
+    const customerName = req.body.name;
+    const customerPhone = req.body.phone_number;
+    dishIDs.forEach(dishID => {
+      if (Number.isNaN(dataBody[dishID].quantity)) {
+        return;
+      }
+      dishQuantities[dishID] = Number(dataBody[dishID].quantity);
+    });
+    console.log('dishID:', dishIDs);
+    console.log('quantity:', dishQuantities);
+    console.log('custName:', customerName);
+    console.log('custPhone:', customerPhone);
+
     // knex
     //   .select('*');
+    res.redirect('/');
   });
 
   router.post('/callcontent', (req, res) => {
@@ -56,8 +75,8 @@ module.exports = (knex) => {
     callResturant();
     res.send('calling');
   });
-  router.post('/customerupdate', (req, res) => {
-    
+
+  router.post('/customerupdate', (req, res) => {    
     let clientMessage = `Thanks for your order 
     you order number is ${req.body.ordernumber}
     and will be ready in ${req.body.preptime} minutes`;

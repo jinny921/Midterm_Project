@@ -44,7 +44,7 @@ $(() => {
     if ($('.confirm-order').length) {
       return;
     }
-    return `<form action='/orders/checkout' method='POST'>
+    return `<form class='submit-payment' action='/orders/payment' method='POST'>
               <div class='form-group'>
                 <label for='name'>Your Name:</label>
                 <input class='form-control' id='name' type='text' name='name' placeholder='Name'>
@@ -60,11 +60,11 @@ $(() => {
 
   function calculateTotal() {
     let total = 0;
-      for (const prop in currentOrder) {
-        const currObj = currentOrder[prop];
-        total += currObj.price * currObj.quantity;
-      }
-    console.log(total);
+    for (const prop in currentOrder) {
+      const currObj = currentOrder[prop];
+      total += currObj.price * currObj.quantity;
+    }
+    // console.log(total);
     return total;
   };
 
@@ -129,7 +129,7 @@ $(() => {
           };
           currentOrder[dishIDfromMenu] = item;
 
-          let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+          const $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
           if ($dishInCart.length) {
             $dishInCart.find('.counter').text(' X ' + newVal);
           } else {
@@ -158,20 +158,26 @@ $(() => {
     const currentTotal = calculateTotal();
     if (currentTotal !== 0) {
       $('.shop').fadeOut('400');
-      ajaxCall('POST', '/orders/checkout', currentOrder);
+      ajaxCall('POST', '/orders/payment', currentOrder);
       $cartContainer.empty().append(checkoutTemplate(currentTotal));
     }
   });
+
+  // Kevin's WIP post to /payment call
+  // $('.submit-payment').on('click', (event) => {
+  //   ajaxCall('POST', '/orders/payment',)
+  //   .then();
+  // });
 
   // NavBar transition effects
   $(window).on('scroll', () => {
     const header = $('header');
     const range = 200;
-    const scrollTop = $(this).scrollTop();
+    let scrollTop = $(this).scrollTop();
     let offset = header.offset();
-    const height = header.outerHeight();
+    let height = header.outerHeight();
     offset = offset + height / 2;
-    const calc = 1 - (scrollTop - offset + range) / range;
+    let calc = 1 - (scrollTop - offset + range) / range;
 
     header.css({
       opacity: calc,
