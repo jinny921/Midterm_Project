@@ -45,11 +45,11 @@ $(() => {
       return;
     }
     return `<form class='submit-payment' action='/orders/payment' method='POST'>
-              <div class='form-group'>
+              <div class='form-name'>
                 <label for='name'>Your Name:</label>
                 <input class='form-control' id='name' type='text' name='name' placeholder='Name'>
               </div>
-              <div class='form-group'>
+              <div class='form-number'>
                 <label for='phone_number'>Phone:</label>
                 <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555'>
               </div>
@@ -158,12 +158,12 @@ $(() => {
     const currentTotal = calculateTotal();
     if (currentTotal !== 0) {
       $('.shop').fadeOut('400');
-      ajaxCall('POST', '/orders/payment', currentOrder);
+      ajaxCall('POST', '/orders/checkout', currentOrder);
       $cartContainer.empty().append(checkoutTemplate(currentTotal));
     }
   });
 
-  // Kevin's WIP post to /payment call
+  // // Kevin's WIP post to /payment call
   // $('.submit-payment').on('click', (event) => {
   //   ajaxCall('POST', '/orders/payment',)
   //   .then();
