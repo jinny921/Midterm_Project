@@ -158,17 +158,16 @@ $(() => {
     const currentTotal = calculateTotal();
     if (currentTotal !== 0) {
       $('.shop').fadeOut('400');
-      ajaxCall('POST', '/orders/checkout', currentOrder);
+      ajaxCall('POST', '/orders/payment', currentOrder);
       $cartContainer.empty().append(checkoutTemplate(currentTotal));
     }
   });
 
   // Kevin's WIP post to /payment call
-  $('.submit-payment').on('click', (event) => {
-    const kevin = 5;
-    ajaxCall('POST', '/orders/payment', kevin)
-    .then();
-  });
+  // $('.submit-payment').on('click', (event) => {
+  //   ajaxCall('POST', '/orders/payment',)
+  //   .then();
+  // });
 
   // NavBar transition effects
   $(window).on('scroll', () => {

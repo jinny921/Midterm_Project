@@ -26,9 +26,8 @@ module.exports = (knex) => {
         res.json(selected);
       });
   });
-// getting order data from database after clicking checkout
+
   router.post('/checkout', (req, res) => {
-    console.log(req.body);
     // knex('order_quantity')
     // .insert($(/* shopping cart items dish_ids */))
     // knex.destroy();
@@ -36,8 +35,16 @@ module.exports = (knex) => {
   });
 
   router.post('/payment', (req, res) => {
-    // console.log(body.kevin);
-    console.log(req.body);
+    console.log('Full Order: ', req.body);
+    const dataBody = req.body;
+    const dishIDs = Object.keys(dataBody);
+    const dishQuantities = {};
+    const customerName = req.body.name;
+    const customerPhone = req.body.phone_number;
+    dishIDs.forEach(dishID => {
+      dishQuantities[dishID] = dataBody[dishID].quantity;
+    });
+    console.log(dishQuantities);
     // knex
     //   .select('*');
     res.redirect('/');
