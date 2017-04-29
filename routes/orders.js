@@ -27,33 +27,36 @@ module.exports = (knex) => {
       });
   });
 
-  router.post('/checkout', (req, res) => {
-    // knex('order_quantity')
-    // .insert($(/* shopping cart items dish_ids */))
-    // knex.destroy();
-    // res.send(kevin);
-  });
+  const dataGlobal = {
+    id: {},
+    quantity: {},
+  };
 
-  router.post('/payment', (req, res) => {
-    // console.log('Full Order: ', req.body);
+  router.post('/checkout', (req, res) => {
     const dataBody = req.body;
     const dishIDs = Object.keys(dataBody);
     const dishQuantities = {};
-    const customerName = req.body.name;
-    const customerPhone = req.body.phone_number;
-    dishIDs.forEach(dishID => {
-      if (Number.isNaN(dataBody[dishID].quantity)) {
-        return;
-      }
+    dishIDs.forEach((dishID) => {
       dishQuantities[dishID] = Number(dataBody[dishID].quantity);
     });
-    console.log('dishID:', dishIDs);
-    console.log('quantity:', dishQuantities);
-    console.log('custName:', customerName);
-    console.log('custPhone:', customerPhone);
+    dataGlobal.id = dishIDs;
+    dataGlobal.quantity = dishQuantities;
+    // knex('order_quantity')
+    // .insert($(/* shopping cart items dish_ids */))
+    // knex.destroy();
+  });
+
+  router.post('/payment', (req, res) => {
+    const dataBody = req.body;
+    const customerName = dataBody.name;
+    const customerPhone = dataBody.phone_number;
+    dataGlobal.name = customerName;
+    dataGlobal.phone_number = customerPhone;
+    console.log('Complete Data:', dataGlobal);
 
     // knex
     //   .select('*');
+    //   .insert
     res.redirect('/');
   });
 
