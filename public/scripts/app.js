@@ -96,7 +96,7 @@ $(() => {
             } else if (currentQuantity === 1) {
               $dishInCart.remove();
             }
-          currentOrder[dishIDfromMenu].quantity--;
+              currentOrder[dishIDfromMenu].quantity--;
           } else {
             $that.addClass('inactive');
           }
@@ -149,13 +149,16 @@ $(() => {
   });
 
   ajaxCall('GET', '/orders')
-  .then((res) => {
-    paintPage(res);
-  }, (err) => {
-    console.error(err);
-  });
+    .then(paintPage, (err) => {
+      console.error(err);
+    });
 
-  $('.place-order').on('click', (event) => {
+  // Kevin's WIP place order function
+  $('.place-order').on('click', function(event) {
+    if(Object.keys(currentOrder).length === 0) {
+      return;
+    }
+    $('.shop').hide();
     const $cartContainer = $('.cart-wrapper');
     const currentTotal = calculateTotal();
     $cartContainer.empty().append(checkoutTemplate(currentTotal));
@@ -163,7 +166,7 @@ $(() => {
 
   // Kevin's WIP post to /payment call
   $('.submit-payment').on('click', (event) => {
-    var kevin = 5;
+    const kevin = 5;
     ajaxCall('POST', '/orders/payment', kevin)
     .then();
   });
