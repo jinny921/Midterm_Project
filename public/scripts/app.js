@@ -31,10 +31,12 @@ $(() => {
   function cartTemplate(item) {
     return `<div class='dish' data-dishid='${item.id}'>
               <div class='caption'>
-                <h4 class='dish-name'>${item.name}</h4>
+                <li class='dish-name'><i class="fa-li fa fa-check-circle-o"></i>${item.name}</li>
                 <div class='dish-details'>
-                  <p class='dish-price'>Price: \$${item.price}</p>
-                  <span class='counter'>Quantity: ${item.quantity}</span>
+                  <li>
+                    <span class='dish-price'>Price: \$${item.price}</span>
+                    <span class='counter'> X ${item.quantity}</span>
+                  </li>
                 </div>
               </div>              
             </div>`
@@ -109,7 +111,7 @@ $(() => {
 
           let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
           if ($dishInCart.length) {
-            $dishInCart.find('.counter').text('Quantity: '+ newVal);
+            $dishInCart.find('.counter').text(' X '+ newVal);
           } else {
             $cartContainer.append(cartTemplate(item));
           }
@@ -134,8 +136,8 @@ $(() => {
 
   function calculateTotal() {
     let total = 0;
-    for (var prop in currentOrder) {
-      var currObj = currentOrder[prop];
+    for (const prop in currentOrder) {
+      const currObj = currentOrder[prop];
       total += currObj.price * currObj.quantity;
     }
     console.log(total);
@@ -148,5 +150,30 @@ $(() => {
     const currentTotal = calculateTotal();
     ajaxCall('POST', '/orders/checkout', currentOrder);
     $orderContainer.append(checkoutTemplate(currentTotal));
+  });
+
+
+  // NavBar transition effects
+  $(window).on('scroll', function () {
+    const header = $('header');
+    const range = 200;
+    const height = header.outerHeight();
+    const scrollTop = $(this).scrollTop();
+    let offset = header.offset().top + height / 2;
+    let calc = 1 - (scrollTop - offset + range) / range;
+
+    header.css({
+      'opacity': calc
+    });
+
+    if (calc > '1') {
+      header.css({
+        'opacity': 1
+      });
+    } else if (calc < '0') {
+      header.css({
+        'opacity': 0
+      });
+    }
   });
 });
