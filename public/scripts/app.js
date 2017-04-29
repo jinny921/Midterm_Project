@@ -46,13 +46,29 @@ $(() => {
     if ($('.confirm-order').length) {
       return;
     }
-    return `<form class='confirm-order' action="/payment" method="POST">
-              <p>Total: ${total}</p>
-              <input type="name" name="name" placeholder="Name">
-              <input type="phone_number" name="phone_number" placeholder="Phone Number">
-              <button type="submit" value="confirm-payment">Confirm</button>
+    return `<form action='/orders/checkout' method='POST'>
+              <div class='form-group'>
+                <label for='name'>Your Name:</label>
+                <input class='form-control' id='name' type='text' name='name' placeholder='Name'>
+              </div>
+              <div class='form-group'>
+                <label for='phone_number'>Phone:</label>
+                <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555'>
+              </div>
+              <div>Total: ${total}</div>
+              <input class='btn btn-primary pay-order' type='submit' role='button' value='Pay'>
             </form>`;
   }
+
+  function calculateTotal() {
+    let total = 0;
+      for (const prop in currentOrder) {
+        const currObj = currentOrder[prop];
+        total += currObj.price * currObj.quantity;
+      }
+    console.log(total);
+    return total;
+  };
 
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
@@ -80,10 +96,12 @@ $(() => {
             } else if (currentQuantity === 1) {
               $dishInCart.remove();
             }
-            currentOrder[dishIDfromMenu].quantity--;
+          currentOrder[dishIDfromMenu].quantity--;
           } else {
             $that.addClass('inactive');
           }
+          let total = calculateTotal();
+          $('#cart-total').text(total);
         }, (err) => {
           console.error('we have a problem!!!');
         });
@@ -117,6 +135,8 @@ $(() => {
           } else {
             $cartContainer.append(cartTemplate(item));
           }
+          let total = calculateTotal();
+          $('#cart-total').text(total);
         }, (err) => {
           console.error('we have a problem!!!');
         });
@@ -135,21 +155,12 @@ $(() => {
     console.error(err);
   });
 
-  function calculateTotal() {
-    let total = 0;
-    for (const prop in currentOrder) {
-      const currObj = currentOrder[prop];
-      total += currObj.price * currObj.quantity;
-    }
-    console.log(total);
-    return total;
-  }
-
-  $('.place-order').on('click', () => {
-    const $orderContainer = $('.order-confirmation');
+  // Kevin's WIP place order function
+  $('.place-order').on('click', function(event) {
+    const $cartContainer = $('.cart-wrapper');
     const currentTotal = calculateTotal();
     ajaxCall('POST', '/orders/checkout', currentOrder);
-    $orderContainer.append(checkoutTemplate(currentTotal));
+    $cartContainer.empty().append(checkoutTemplate(currentTotal));
   });
 
   // NavBar transition effects
