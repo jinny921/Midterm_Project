@@ -3,7 +3,7 @@
 const express = require('express');
 const sendSMS = require('../send-sms').sendSMS;
 const callResturant = require('../send-sms').callResturant;
-
+const bodyParser  = require('body-parser');
 const router = express.Router();
 
 module.exports = (knex) => {
@@ -57,7 +57,12 @@ module.exports = (knex) => {
     res.send('calling');
   });
   router.post('/customerupdate', (req, res) => {
-    console.log("FSDF");
+    
+    let clientMessage = `Thanks for your order 
+    you order number is ${req.body.ordernumber}
+    and will be ready in ${req.body.preptime} minutes`;
+    // sendSMS(clientMessage);
+    res.redirect('/resturant');
   });
   return router;
 };
