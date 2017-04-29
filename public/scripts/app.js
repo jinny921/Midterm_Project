@@ -92,9 +92,10 @@ $(() => {
             if (currentQuantity > 1) {
               $dishInCart.find('.counter').text(` X ${newVal}`);
             } else if (currentQuantity === 1) {
+              $('.place-order').attr('disabled', 'disabled');
               $dishInCart.remove();
             }
-              currentOrder[dishIDfromMenu].quantity--;
+            currentOrder[dishIDfromMenu].quantity--;
           } else {
             $that.addClass('inactive');
           }
@@ -114,6 +115,7 @@ $(() => {
       const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
+      $('.place-order').removeAttr('disabled');
       ajaxCall('PUT', '/orders')
         .then((res) => {
           const $currentVal = +$counter.text();
@@ -141,11 +143,6 @@ $(() => {
     });
   }
 
-  $('.btn-down').click(() => {
-    $('html,body').animate({
-      scrollTop: $('#menu').offset().top }, 'slow');
-  });
-
   ajaxCall('GET', '/orders')
     .then(paintPage, (err) => {
       console.error(err);
@@ -154,6 +151,7 @@ $(() => {
   // Kevin's WIP place order function
   $('.place-order').on('click', function(event) {
     if(Object.keys(currentOrder).length === 0) {
+      $('.place-order').attr('disabled', 'disabled');
       return;
     }
     const $cartContainer = $('.cart-wrapper');
@@ -188,5 +186,11 @@ $(() => {
         opacity: 0,
       });
     }
+  });
+
+  // page scroll animation
+  $('.btn-down').click(() => {
+    $('html,body').animate({
+      scrollTop: $('#menu').offset().top }, 'slow');
   });
 });
