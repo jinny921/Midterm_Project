@@ -45,9 +45,9 @@ module.exports = (knex) => {
       clientInfo: {
         name: 'Elvisss',
         phoneNumber: '7782324505',
-        address: '128 W. Hastings Ave, Vancouver, BC'
+        address: '128 W. Hastings Ave, Vancouver, BC',
       },
-      dishes: ['Massaman Curry of Braised Beef', 2, "Pad Thai", 2]
+      dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2],
     };
     res.set('Content-Type', 'text/xml');
     res.render('order', orderData);
