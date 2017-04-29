@@ -39,7 +39,7 @@ $(() => {
                   </li>
                 </div>
               </div>              
-            </div>`
+            </div>`;
   }
 
   function checkoutTemplate(total) {
@@ -48,7 +48,7 @@ $(() => {
               <input type="name" name="name" placeholder="Name">
               <input type="phone_number" name="phone_number" placeholder="Phone Number">
               <button type="submit" value="confirm-payment">Confirm</button>
-            </form>`
+            </form>`;
   }
 
   function paintPage(res) {
