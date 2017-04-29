@@ -158,10 +158,11 @@ $(() => {
   $(window).on('scroll', function () {
     const header = $('header');
     const range = 200;
-    const height = header.outerHeight();
-    const scrollTop = $(this).scrollTop();
-    const offset = header.offset().top + height / 2;
-    const calc = 1 - (scrollTop - offset + range) / range;
+    let scrollTop = $(this).scrollTop();
+    let offset = header.offset();
+    let height = header.outerHeight();
+    offset = offset + height / 2;
+    let calc = 1 - (scrollTop - offset + range) / range;
 
     header.css({
       opacity: calc,
