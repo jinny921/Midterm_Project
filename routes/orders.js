@@ -56,5 +56,8 @@ module.exports = (knex) => {
     callResturant();
     res.send('calling');
   });
+  router.post('/customerupdate', (req, res) => {
+    console.log("FSDF");
+  });
   return router;
 };
