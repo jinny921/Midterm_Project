@@ -1,5 +1,6 @@
 // appending dishes data, render order sidebar to home page
 $(() => {
+  $(this).scrollTop(0);
   const currentOrder = {};
   // const sms = require('send-sms').sendSMS;
 
@@ -36,7 +37,7 @@ $(() => {
   function cartTemplate(item) {
     return `<div class='dish' data-dishid='${item.id}'>
               <div class='caption'>
-                <div class='dish-name'><i class="fa-li fa fa-check-circle-o"></i>${item.name}</div>
+                <div class='dish-name'><i class="fa-li fa fa-remove"></i>${item.name}</div>
                 <div class='dish-details'>
                   <span class='dish-price'>Price: \$${item.price}</span>
                   <span class='counter'> X ${item.quantity}</span>
@@ -105,6 +106,7 @@ $(() => {
           }
           let total = calculateTotal();
           $('#cart-total').text(total);
+
         }, (err) => {
           console.error('we have a problem!!!');
         });
@@ -142,6 +144,13 @@ $(() => {
           }
           let total = calculateTotal();
           $('#cart-total').text(total);
+
+          // remove single item in cart
+          $('.fa-remove').on('click', function () {
+            let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+            $dishInCart.remove();
+            $counter.text('0');
+          });
         }, (err) => {
           console.error('we have a problem!!!');
         });
@@ -157,7 +166,6 @@ $(() => {
   $('.place-order').on('click', function (event) {
     if (Object.keys(currentOrder).length === 0) {
       $(this).attr('disabled', 'disabled');
-      $('.cart-wrapper h3').removeClass('hr');
       return;
     }
     const $cartContainer = $('.cart-wrapper');
@@ -206,4 +214,20 @@ $(() => {
       scrollTop: $('#menu').offset().top
     }, 'slow');
   });
+
+  // affix cart
+  let $attribute = $('[data-smart-affix]');
+  $attribute.each(function(){
+    $(this).affix({
+      offset: {
+        top: $(this).offset().top + 100,
+        right: $(this).offset().right
+      }
+    })
+  })
+  $(window).on("resize", function(){
+    $attribute.each(function(){
+      $(this).data('bs.affix').options.offset = $(this).offset().top
+    })
+  })
 });

@@ -144,7 +144,7 @@ body {
           .dish-desc,
           .dish-price,
           .dish-prep {
-            margin-top: 20px;
+            margin-top: 15px;
           }
         }
       }
@@ -233,6 +233,9 @@ body {
 }
 
 @media (max-width: 766px) {
+  body{
+    font-size: 1em;
+  }
   .affix-top,
   .affix {
     margin: 20px auto;
@@ -240,9 +243,7 @@ body {
   }
   .caption {
     .dish-details {
-      p {
-        font-size: 1em;
-      }
+
     }
   }
 }
