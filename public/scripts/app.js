@@ -94,7 +94,7 @@ $(() => {
             } else if (currentQuantity === 1) {
               $dishInCart.remove();
             }
-          currentOrder[dishIDfromMenu].quantity--;
+              currentOrder[dishIDfromMenu].quantity--;
           } else {
             $that.addClass('inactive');
           }
@@ -147,14 +147,16 @@ $(() => {
   });
 
   ajaxCall('GET', '/orders')
-  .then((res) => {
-    paintPage(res);
-  }, (err) => {
-    console.error(err);
-  });
+    .then(paintPage, (err) => {
+      console.error(err);
+    });
 
   // Kevin's WIP place order function
   $('.place-order').on('click', function(event) {
+    if(Object.keys(currentOrder).length === 0) {
+      return;
+    }
+    $('.shop').hide();
     const $cartContainer = $('.cart-wrapper');
     const currentTotal = calculateTotal();
     ajaxCall('POST', '/orders/checkout', currentOrder);
