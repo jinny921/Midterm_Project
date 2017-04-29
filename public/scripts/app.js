@@ -145,8 +145,7 @@ $(() => {
     return total;
   }
 
-  // Kevin's WIP place order function
-  $('.place-order').on('click', function() {
+  $('.place-order').on('click', () => {
     const $orderContainer = $('.order-confirmation');
     const currentTotal = calculateTotal();
     ajaxCall('POST', '/orders/checkout', currentOrder);
@@ -155,14 +154,14 @@ $(() => {
 
 
   // NavBar transition effects
-  $(window).on('scroll', function () {
+  $(window).on('scroll', () => {
     const header = $('header');
     const range = 200;
-    let scrollTop = $(this).scrollTop();
+    const scrollTop = $(this).scrollTop();
     let offset = header.offset();
-    let height = header.outerHeight();
+    const height = header.outerHeight();
     offset = offset + height / 2;
-    let calc = 1 - (scrollTop - offset + range) / range;
+    const calc = 1 - (scrollTop - offset + range) / range;
 
     header.css({
       opacity: calc,
