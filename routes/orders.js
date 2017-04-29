@@ -54,9 +54,12 @@ module.exports = (knex) => {
     dataGlobal.phone_number = customerPhone;
     console.log('Complete Data:', dataGlobal);
 
-    // knex
-    //   .select('*');
-    //   .insert
+    // knex.insert({name: customerName}, {phone_number: customerPhone}).into('clients');
+    for (let item in dataGlobal) {
+      console.log('item: ', item);
+      // knex.insert({quantity: item.quantity[item]: dataGlobal.id,}, {});
+    }
+    // knex.destroy();
     res.redirect('/');
   });
 

@@ -5,7 +5,9 @@ exports.up = function(knex) {
     table.increments();
     table.integer('quantity');
     table.bigInteger('order_id').unsigned().index().references('id').inTable('orders');
-    table.bigInteger('dish_id').unsigned().index().references('id').inTable('dishes');
+    // table.bigInteger('dish_id').unsigned().index().references('id').inTable('dishes');
+    table.integer('dish_id').unsigned();
+    table.foreign('dish_id').references('dishes.id');
   })
 };
 
