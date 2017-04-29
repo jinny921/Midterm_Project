@@ -10,7 +10,7 @@ $(() => {
   function dishTemplate(dish) {
     return `<section class='col-xs-6 col-sm-4'>
               <div class='dish' data-dishid='${dish.id}'>
-                <img class='dish-img' src='${dish.img_url}'>
+                <div class='dish-img-wrapper'><img class='dish-img' src='${dish.img_url}'></div>
                 <div class='caption'>
                   <h4 class='dish-name'>${dish.name}</h4>
                 </div>              
