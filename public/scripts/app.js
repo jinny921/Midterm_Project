@@ -31,12 +31,10 @@ $(() => {
   function cartTemplate(item) {
     return `<div class='dish' data-dishid='${item.id}'>
               <div class='caption'>
-                <li class='dish-name'><i class="fa-li fa fa-check-circle-o"></i>${item.name}</li>
+                <div class='dish-name'><i class="fa-li fa fa-check-circle-o"></i>${item.name}</div>
                 <div class='dish-details'>
-                  <li>
-                    <span class='dish-price'>Price: \$${item.price}</span>
-                    <span class='counter'> X ${item.quantity}</span>
-                  </li>
+                  <span class='dish-price'>Price: \$${item.price}</span>
+                  <span class='counter'> X ${item.quantity}</span>
                 </div>
               </div>              
             </div>`;
