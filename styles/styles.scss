@@ -1,5 +1,5 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Patrick+Hand');
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Patrick+Hand|Rock+Salt');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
 $brand-color: #FF8C00;
 $disabled-color: #858585;
@@ -8,6 +8,7 @@ body {
   box-sizing: border-box;
   width: 100%;
   font-family: 'Dosis', sans-serif;
+  font-size: 15px;
   h1,
   h2,
   h3,
@@ -37,10 +38,10 @@ body {
   }
   nav {
     .navbar-brand {
+      font-family: 'Rock Salt', sans-serif;
       position: relative;
       left: 30px;
-      top: -5px;
-      font-size: 50px;
+      font-size: 40px;
       color: $company-color;
       z-index: 3;
     }
@@ -108,24 +109,48 @@ body {
     background: #eee;
     .dish {
       position: relative;
-      height: 450px;
+      height: 350px;
       background: #fff;
       margin-bottom: 30px;
       border-radius: 5px;
       border: 1px lightgrey solid;
-      overflow: scroll;
-      img {
+      .dish-img-wrapper {
+        position: absolute;
         width: 100%;
-        height: 180px;
-        background-repeat: no-repeat;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        height: 225px;
+        img {
+          width: 100%;
+          height: 100%;
+          background-repeat: no-repeat;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+      }
+      &:hover {
+        .dish-name,
+        .dish-img-wrapper {
+          opacity: 0.6;
+        }
+        .shop {
+          opacity: 0;
+        }
+        .dish-details {
+          padding-top: 30px;
+          height: 60%;
+          .dish-desc,
+          .dish-price,
+          .dish-prep {
+margin-top: 20px;
+          }
+        }
       }
       .caption {
-        position: relative;
+        position: absolute;
+        width: 100%;
         height: 100px;
+        top: 65%;
         .dish-name {
-          font-size: 1.5em;
+          font-size: 1.8em;
           display: inline-block;
           font-family: 'Patrick Hand', sans-serif;
           font-weight: 300;
@@ -137,17 +162,22 @@ body {
       }
       .dish-details {
         position: absolute;
-        top: 58%;
-        padding: 5px 20px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        background-color: $company-color;
+        color: #fff;
+        transition: 0.6s ease-in-out;
         font-family: 'Coming Soon', sans-serif;
-        .dish-price {
-          display: inline-block;
-          height: 100%;
-        }
+        text-align: center;
+        vertical-align: middle;
       }
       .shop {
         position: absolute;
-        bottom: 4%;
+        bottom: 7%;
         text-align: center;
         width: 100%;
         i {
