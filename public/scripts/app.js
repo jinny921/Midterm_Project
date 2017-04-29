@@ -145,7 +145,7 @@ $(() => {
   }
 
   // Kevin's WIP place order function
-  $('.place-order').on('click', function() {
+  $('.place-order').on('click', function(event) {
     const $orderContainer = $('.order-confirmation');
     const currentTotal = calculateTotal();
     ajaxCall('POST', '/orders/checkout', currentOrder);
