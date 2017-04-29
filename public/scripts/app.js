@@ -52,25 +52,31 @@ $(() => {
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
 
-    // function appendToCart(dish) {
-    //   const dish = {
-    //           id: dishID,
-    //           name: dishName,
-    //           price: dishPrice,
-    //           quantity: newQuantity,
-    //       };
-    //   $('.cart-wrapper').append(cartTemplate(dish));
-    // }
-
     $('.fa-minus-square-o').on('click', function() { 
       const $that = $(this);
       const $counter = $that.siblings('.counter');
+      const $menuContainer = $that.closest('[data-dishid]');
+      const dishIDfromMenu = $menuContainer.data('dishid');
+      const dishName = $that.parent().siblings().children('.dish-name').text();
+      const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
+      const $cartContainer = $('.selected-dish');
+
       ajaxCall('PUT', '/orders')
         .then((res) => {
-          const $currentVal = +$counter.text();
+          const $currentVal = 0 + $counter.text();
           if($currentVal > 0) {
             const newVal = $currentVal - 1;
-            $counter.text(newVal);
+            $counter.text(newVal );
+            let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+            const currentQuantity = (!$dishInCart)? 0 : currentOrder[dishIDfromMenu].quantity;
+
+            if (currentQuantity > 1) {
+              $dishInCart.find('.counter').text('Quantity: '+ newVal);
+            } else if (currentQuantity === 1) {
+              $dishInCart.remove();
+            }
+            currentOrder[dishIDfromMenu].quantity--;
+
           } else {
             $that.addClass('inactive');
           }
@@ -100,8 +106,8 @@ $(() => {
               quantity: newVal,
           };
           currentOrder[dishIDfromMenu] = item;
-          let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
 
+          let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
           if ($dishInCart.length) {
             $dishInCart.find('.counter').text('Quantity: '+ newVal);
           } else {
@@ -113,11 +119,11 @@ $(() => {
     });
   };
 
-$('.btn-down').click(function() {
+  $('.btn-down').click(function() {
 
-  $('html,body').animate({
-    scrollTop: $('#menu').offset().top},'slow');
-});
+    $('html,body').animate({
+      scrollTop: $('#menu').offset().top},'slow');
+  });
 
   ajaxCall('GET','/orders')
   .then((res) => {
