@@ -32,13 +32,15 @@ module.exports = (knex) => {
     // knex('order_quantity')
     // .insert($(/* shopping cart items dish_ids */))
     // knex.destroy();
-    res.send(req.body);
+    // res.send(kevin);
   });
 
   router.post('/payment', (req, res) => {
+    // console.log(body.kevin);
     console.log(req.body);
     // knex
     //   .select('*');
+    res.redirect('/');
   });
 
   router.post('/callcontent', (req, res) => {
@@ -59,8 +61,8 @@ module.exports = (knex) => {
     callResturant();
     res.send('calling');
   });
-  router.post('/customerupdate', (req, res) => {
-    
+
+  router.post('/customerupdate', (req, res) => {    
     let clientMessage = `Thanks for your order 
     you order number is ${req.body.ordernumber}
     and will be ready in ${req.body.preptime} minutes`;

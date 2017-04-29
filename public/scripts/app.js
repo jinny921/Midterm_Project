@@ -46,7 +46,7 @@ $(() => {
     if ($('.confirm-order').length) {
       return;
     }
-    return `<form action='/orders/payment' method='POST'>
+    return `<form class='submit-payment' action='/orders/payment' method='POST'>
               <div class='form-group'>
                 <label for='name'>Your Name:</label>
                 <input class='form-control' id='name' type='text' name='name' placeholder='Name'>
@@ -159,12 +159,13 @@ $(() => {
     const $cartContainer = $('.cart-wrapper');
     const currentTotal = calculateTotal();
     $cartContainer.empty().append(checkoutTemplate(currentTotal));
-    ajaxCall('POST', '/orders/checkout', currentOrder)
-    .then((res) => {
-      currentOrder;
-    }, (err) => {
-      console.error(err);
-    });
+  });
+
+  // Kevin's WIP post to /payment call
+  $('.submit-payment').on('click', (event) => {
+    var kevin = 5;
+    ajaxCall('POST', '/orders/payment', kevin)
+    .then();
   });
 
   // NavBar transition effects
