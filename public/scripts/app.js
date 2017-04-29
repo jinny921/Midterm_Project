@@ -55,7 +55,7 @@ $(() => {
                 <label for='phone_number'>Phone:</label>
                 <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555'>
               </div>
-              <div>Total: ${total}</div>
+              <div>Total: \$${total}</div>
               <input class='btn btn-primary pay-order' type='submit' role='button' value='Pay'>
             </form>`;
   }

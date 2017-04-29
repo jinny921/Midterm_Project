@@ -111,9 +111,10 @@ body {
           display: inline-block;
           font-family: 'Patrick Hand', sans-serif;
           font-weight: 300;
-          font-size: 2rem;
+          font-size: 1rem;
           text-align: center;
           padding: 8px 8px;
+          margin-bottom: 10px;
           width: 100%;
         }
       }
@@ -147,6 +148,9 @@ body {
     position: relative;
     top: 50px;
     padding: 30px;
+    .total {
+      background: red;
+    }
   }
   .fa-minus .inactive {
     color: $disabled-color;
