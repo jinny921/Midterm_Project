@@ -34,19 +34,19 @@ module.exports = (knex) => {
     // knex.destroy();
   });
 
-  router.post("/payment", (req, res) => {
+  router.post('/payment', (req, res) => {
     // knex
-    //   .select("*");
+    //   .select('*');
   });
 
-  router.post("/callcontent", (req, res) => {
+  router.post('/callcontent', (req, res) => {
 //this object will be filled with database values;
-    let orderData = {
-      orderNumber: "12313",
+    const orderData = {
+      orderNumber: '12313',
       clientInfo: {
-        name: "Elvisss",
-        phoneNumber: "7782324505",
-        address: "128 W. Hastings Ave, Vancouver, BC"
+        name: 'Elvisss',
+        phoneNumber: '7782324505',
+        address: '128 W. Hastings Ave, Vancouver, BC'
       },
       dishes: ["Massaman Curry of Braised Beef", 2, "Pad Thai", 2]
     };

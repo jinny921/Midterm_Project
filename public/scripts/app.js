@@ -75,11 +75,11 @@ $(() => {
             $that.addClass('inactive');
           }
         }, (err) => {
-          console.error('we have a problem!!!')
-        })
+          console.error('we have a problem!!!');
+        });
     });
 
-    $('.fa-plus-square').on('click', function() { 
+    $('.fa-plus-square').on('click', () => {
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
@@ -94,29 +94,28 @@ $(() => {
           const newVal = $currentVal + 1;
           $counter.text(newVal);
           const item = {
-              id: dishIDfromMenu,
-              name: dishName,
-              price: dishPrice,
-              quantity: newVal,
+            id: dishIDfromMenu,
+            name: dishName,
+            price: dishPrice,
+            quantity: newVal,
           };
           currentOrder[dishIDfromMenu] = item;
-          let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+          const $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
 
           if ($dishInCart.length) {
-            $dishInCart.find('.counter').text('Quantity: '+ newVal);
+            $dishInCart.find('.counter').text('Quantity: ' + newVal);
           } else {
             $cartContainer.append(cartTemplate(item));
           }
         }, (err) => {
-          console.error('we have a problem!!!')
-        })
+          console.error('we have a problem!!!');
+        });
     });
-  };
+  }
 
-$('.btn-down').click(function() {
-
+$('.btn-down').click(() => {
   $('html,body').animate({
-    scrollTop: $('#menu').offset().top},'slow');
+    scrollTop: $('#menu').offset().top }, 'slow');
 });
 
   ajaxCall('GET','/orders')
@@ -128,19 +127,18 @@ $('.btn-down').click(function() {
 
   function calculateTotal() {
     let total = 0;
-    for (var prop in currentOrder) {
-      var currObj = currentOrder[prop];
+    for (const prop in currentOrder) {
+      const currObj = currentOrder[prop];
       total += currObj.price * currObj.quantity;
     }
-    console.log(total);
     return total;
   }
 
   // Kevin's WIP place order function
-  $('.place-order').on('click', function() {
+  $('.place-order').on('click', () => {
     const $orderContainer = $('.order-confirmation');
     const currentTotal = calculateTotal();
     ajaxCall('POST', '/orders/checkout', currentOrder);
     $orderContainer.append(checkoutTemplate(currentTotal));
   });
-});
+})
