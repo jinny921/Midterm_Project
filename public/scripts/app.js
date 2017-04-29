@@ -14,7 +14,7 @@ $(() => {
   }
 
   function dishTemplate(dish) {
-    return `<section class='col-xs-6 col-sm-4'>
+    return `<section class='col-xs-12 col-md-9'>
               <div class='dish' data-dishid='${dish.id}'>
                 <div class='dish-img-wrapper'><img class='dish-img' src='${dish.img_url}'></div>
                 <div class='caption'>
@@ -94,15 +94,20 @@ $(() => {
             let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
             const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
 
+
             if (currentQuantity > 1) {
               $dishInCart.find('.counter').text(` X ${newVal}`);
             } else if (currentQuantity === 1) {
               $('.place-order').attr('disabled', 'disabled');
               $dishInCart.remove();
+
+            }
+            if (Object.keys(currentOrder).length === 0) {
+              // $(this).attr('disabled', 'disabled');
+              $('.cart-wrapper h3').removeClass('hr');
+              // return;
             }
             currentOrder[dishIDfromMenu].quantity--;
-          } else {
-            $that.attr('disabled', 'disabled');
           }
           let total = calculateTotal();
           $('#cart-total').text(total);
@@ -217,7 +222,7 @@ $(() => {
 
   // affix cart
   let $attribute = $('[data-smart-affix]');
-  $attribute.each(function(){
+  $attribute.each(function () {
     $(this).affix({
       offset: {
         top: $(this).offset().top + 100,
@@ -225,8 +230,8 @@ $(() => {
       }
     })
   })
-  $(window).on("resize", function(){
-    $attribute.each(function(){
+  $(window).on("resize", function () {
+    $attribute.each(function () {
       $(this).data('bs.affix').options.offset = $(this).offset().top
     })
   })

@@ -28,7 +28,7 @@ body {
     font-size: 1.5rem;
     letter-spacing: 1px;
   }
-  .hr{
+  .hr {
     border-bottom: 1px $disabled-color solid;
     padding-bottom: 5px;
   }
@@ -233,17 +233,24 @@ body {
 }
 
 @media (max-width: 766px) {
-  body{
+  body {
     font-size: 1em;
-  }
-  .affix-top,
-  .affix {
-    margin: 20px auto;
-    position: static;
-  }
-  .caption {
-    .dish-details {
-
+    .affix-top,
+    .affix {
+      margin: 20px auto;
+      position: static;
+    }
+    .caption {
+      .dish-details {}
+    }
+    .navbar-bottom {
+      padding-right: 0;
+    }
+    .address {
+      text-align: center;
+      padding-right: 0;
+      margin: 0;
+      right: 0;
     }
   }
 }
