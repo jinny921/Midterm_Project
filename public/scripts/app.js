@@ -151,7 +151,7 @@ $(() => {
   // Kevin's WIP place order function
   $('.place-order').on('click', function(event) {
     if(Object.keys(currentOrder).length === 0) {
-      $('.place-order').attr('disabled', 'disabled');
+      $(this).attr('disabled', 'disabled');
       return;
     }
     const $cartContainer = $('.cart-wrapper');
