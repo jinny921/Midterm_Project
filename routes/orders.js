@@ -28,16 +28,17 @@ module.exports = (knex) => {
   });
 // getting order data from database after clicking checkout
   router.post('/checkout', (req, res) => {
+    console.log(req.body);
     // knex('order_quantity')
     // .insert($(/* shopping cart items dish_ids */))
     // knex.destroy();
+    res.send(req.body);
   });
 
   router.post('/payment', (req, res) => {
     console.log(req.body);
     // knex
     //   .select('*');
-
   });
 
   router.post('/callcontent', (req, res) => {

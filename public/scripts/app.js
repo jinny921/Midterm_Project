@@ -46,7 +46,7 @@ $(() => {
     if ($('.confirm-order').length) {
       return;
     }
-    return `<form action='/orders/checkout' method='POST'>
+    return `<form action='/orders/payment' method='POST'>
               <div class='form-group'>
                 <label for='name'>Your Name:</label>
                 <input class='form-control' id='name' type='text' name='name' placeholder='Name'>
@@ -62,11 +62,11 @@ $(() => {
 
   function calculateTotal() {
     let total = 0;
-      for (const prop in currentOrder) {
-        const currObj = currentOrder[prop];
-        total += currObj.price * currObj.quantity;
-      }
-    console.log(total);
+    for (const prop in currentOrder) {
+      const currObj = currentOrder[prop];
+      total += currObj.price * currObj.quantity;
+    }
+    // console.log(total);
     return total;
   };
 
@@ -155,12 +155,16 @@ $(() => {
     console.error(err);
   });
 
-  // Kevin's WIP place order function
-  $('.place-order').on('click', function(event) {
+  $('.place-order').on('click', (event) => {
     const $cartContainer = $('.cart-wrapper');
     const currentTotal = calculateTotal();
-    ajaxCall('POST', '/orders/checkout', currentOrder);
     $cartContainer.empty().append(checkoutTemplate(currentTotal));
+    ajaxCall('POST', '/orders/checkout', currentOrder)
+    .then((res) => {
+      currentOrder;
+    }, (err) => {
+      console.error(err);
+    });
   });
 
   // NavBar transition effects
