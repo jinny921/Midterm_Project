@@ -34,6 +34,7 @@ module.exports = (knex) => {
   });
 
   router.post('/payment', (req, res) => {
+    console.log(req.body);
     // knex
     //   .select('*');
   });

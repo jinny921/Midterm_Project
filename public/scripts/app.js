@@ -111,7 +111,7 @@ $(() => {
           };
           currentOrder[dishIDfromMenu] = item;
 
-          let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+          const $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
           if ($dishInCart.length) {
             $dishInCart.find('.counter').text(' X ' + newVal);
           } else {
@@ -152,16 +152,15 @@ $(() => {
     $orderContainer.append(checkoutTemplate(currentTotal));
   });
 
-
   // NavBar transition effects
   $(window).on('scroll', () => {
     const header = $('header');
     const range = 200;
-    const scrollTop = $(this).scrollTop();
+    let scrollTop = $(this).scrollTop();
     let offset = header.offset();
-    const height = header.outerHeight();
+    let height = header.outerHeight();
     offset = offset + height / 2;
-    const calc = 1 - (scrollTop - offset + range) / range;
+    let calc = 1 - (scrollTop - offset + range) / range;
 
     header.css({
       opacity: calc,
