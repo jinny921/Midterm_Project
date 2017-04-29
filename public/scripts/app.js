@@ -54,7 +54,7 @@ $(() => {
                 <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555'>
               </div>
               <div>Total: \$${total}</div>
-              <input class='btn btn-primary pay-order' type='submit' role='button' value='Pay'>
+              <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Pay'>
             </form>`;
   }
 
@@ -90,7 +90,7 @@ $(() => {
             const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
 
             if (currentQuantity > 1) {
-              $dishInCart.find('.counter').text('Quantity: ' + newVal);
+              $dishInCart.find('.counter').text(` X ${newVal}`);
             } else if (currentQuantity === 1) {
               $dishInCart.remove();
             }
