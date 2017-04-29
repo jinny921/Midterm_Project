@@ -4,7 +4,12 @@ $(() => {
   // const sms = require('send-sms').sendSMS;
 
   function ajaxCall(method, url, data, dataType) {
-    return $.ajax({ method, url, data, dataType });
+    return $.ajax({
+      method,
+      url,
+      data,
+      dataType
+    });
   }
 
   function dishTemplate(dish) {
@@ -60,10 +65,10 @@ $(() => {
 
   function calculateTotal() {
     let total = 0;
-      for (const prop in currentOrder) {
-        const currObj = currentOrder[prop];
-        total += currObj.price * currObj.quantity;
-      }
+    for (const prop in currentOrder) {
+      const currObj = currentOrder[prop];
+      total += currObj.price * currObj.quantity;
+    }
     console.log(total);
     return total;
   };
@@ -71,7 +76,7 @@ $(() => {
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
 
-    $('.fa-minus-square-o').on('click', function() {
+    $('.fa-minus-square-o').on('click', function () {
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
@@ -97,7 +102,7 @@ $(() => {
             }
             currentOrder[dishIDfromMenu].quantity--;
           } else {
-            $that.addClass('inactive');
+            $that.attr('disabled', 'disabled');
           }
           let total = calculateTotal();
           $('#cart-total').text(total);
@@ -106,7 +111,7 @@ $(() => {
         });
     });
 
-    $('.fa-plus-square').on('click', function() {
+    $('.fa-plus-square').on('click', function () {
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
@@ -115,6 +120,7 @@ $(() => {
       const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
+      $('.cart-wrapper h3').addClass('hr');
       $('.place-order').removeAttr('disabled');
       ajaxCall('PUT', '/orders')
         .then((res) => {
@@ -149,9 +155,10 @@ $(() => {
     });
 
   // Kevin's WIP place order function
-  $('.place-order').on('click', function(event) {
-    if(Object.keys(currentOrder).length === 0) {
+  $('.place-order').on('click', function (event) {
+    if (Object.keys(currentOrder).length === 0) {
       $(this).attr('disabled', 'disabled');
+      $('.cart-wrapper h3').removeClass('hr');
       return;
     }
     const $cartContainer = $('.cart-wrapper');
@@ -191,6 +198,7 @@ $(() => {
   // page scroll animation
   $('.btn-down').click(() => {
     $('html,body').animate({
-      scrollTop: $('#menu').offset().top }, 'slow');
+      scrollTop: $('#menu').offset().top
+    }, 'slow');
   });
 });

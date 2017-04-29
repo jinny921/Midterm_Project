@@ -28,6 +28,10 @@ body {
     font-size: 1.5rem;
     letter-spacing: 1px;
   }
+  .hr{
+    border-bottom: 1px $disabled-color solid;
+    padding-bottom: 5px;
+  }
   #nav-bg {
     background: #222;
     position: fixed;
