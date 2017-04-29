@@ -69,16 +69,27 @@ body {
     }
   }
   .cart-wrapper {
+    margin-top: 100px;
+    padding-left: 30%;
+    .total, .dish-details {
+      font-weight: 400;
+    }
     .dish-name,
     .dish-details {
       font-family: 'Dosis', sans-serif;
-      font-size: 20px;
     }
     .dish-name {
       position: relative;
+      font-size: 1.7rem;
       i {
         padding-right: 5px;
       }
+    }
+    .dish-details {
+      margin-top: 5px;
+      margin-bottom: 10px;
+      font-size: 1.6rem;
+      font-style: italic;
     }
     .btn {
       margin-top: 30px;
@@ -145,16 +156,6 @@ body {
       }
     }
   }
-  .cart-wrapper {
-    // position: relative;
-    // top: 50px;
-    // padding: 30px;
-    margin-top: 150px;
-    padding-left: 30px;
-    .total {
-      background: red;
-    }
-  }
   .fa-minus .inactive {
     color: $disabled-color;
   }
@@ -193,9 +194,6 @@ body {
     position: static;
   }
   .caption {
-    h4.dish-name {
-      font-size: 1em;
-    }
     .dish-details {
       p {
         font-size: 1em;
