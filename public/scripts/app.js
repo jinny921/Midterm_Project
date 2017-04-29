@@ -54,7 +54,7 @@ $(() => {
                 <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555'>
               </div>
               <div>Total: \$${total}</div>
-              <input class='btn btn-primary pay-order' type='submit' role='button' value='Pay'>
+              <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Pay'>
             </form>`;
   }
 
@@ -90,11 +90,12 @@ $(() => {
             const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
 
             if (currentQuantity > 1) {
-              $dishInCart.find('.counter').text('Quantity: ' + newVal);
+              $dishInCart.find('.counter').text(` X ${newVal}`);
             } else if (currentQuantity === 1) {
+              $('.place-order').attr('disabled', 'disabled');
               $dishInCart.remove();
             }
-              currentOrder[dishIDfromMenu].quantity--;
+            currentOrder[dishIDfromMenu].quantity--;
           } else {
             $that.addClass('inactive');
           }
@@ -114,6 +115,7 @@ $(() => {
       const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
+      $('.place-order').removeAttr('disabled');
       ajaxCall('PUT', '/orders')
         .then((res) => {
           const $currentVal = +$counter.text();
@@ -141,11 +143,6 @@ $(() => {
     });
   }
 
-  $('.btn-down').click(() => {
-    $('html,body').animate({
-      scrollTop: $('#menu').offset().top }, 'slow');
-  });
-
   ajaxCall('GET', '/orders')
     .then(paintPage, (err) => {
       console.error(err);
@@ -154,12 +151,16 @@ $(() => {
   // Kevin's WIP place order function
   $('.place-order').on('click', function(event) {
     if(Object.keys(currentOrder).length === 0) {
+      $(this).attr('disabled', 'disabled');
       return;
     }
-    $('.shop').hide();
     const $cartContainer = $('.cart-wrapper');
     const currentTotal = calculateTotal();
-    $cartContainer.empty().append(checkoutTemplate(currentTotal));
+    if (currentTotal !== 0) {
+      $('.shop').fadeOut('400');
+      ajaxCall('POST', '/orders/checkout', currentOrder);
+      $cartContainer.empty().append(checkoutTemplate(currentTotal));
+    }
   });
 
   // Kevin's WIP post to /payment call
@@ -192,5 +193,11 @@ $(() => {
         opacity: 0,
       });
     }
+  });
+
+  // page scroll animation
+  $('.btn-down').click(() => {
+    $('html,body').animate({
+      scrollTop: $('#menu').offset().top }, 'slow');
   });
 });
