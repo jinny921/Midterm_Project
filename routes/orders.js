@@ -35,16 +35,23 @@ module.exports = (knex) => {
   });
 
   router.post('/payment', (req, res) => {
-    console.log('Full Order: ', req.body);
+    // console.log('Full Order: ', req.body);
     const dataBody = req.body;
     const dishIDs = Object.keys(dataBody);
     const dishQuantities = {};
     const customerName = req.body.name;
     const customerPhone = req.body.phone_number;
     dishIDs.forEach(dishID => {
-      dishQuantities[dishID] = dataBody[dishID].quantity;
+      if (Number.isNaN(dataBody[dishID].quantity)) {
+        return;
+      }
+      dishQuantities[dishID] = Number(dataBody[dishID].quantity);
     });
-    console.log(dishQuantities);
+    console.log('dishID:', dishIDs);
+    console.log('quantity:', dishQuantities);
+    console.log('custName:', customerName);
+    console.log('custPhone:', customerPhone);
+
     // knex
     //   .select('*');
     res.redirect('/');
