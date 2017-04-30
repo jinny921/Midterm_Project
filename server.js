@@ -55,6 +55,7 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
+// Pseudo login page
 app.get('/restaurant_login', (req, res) => {
   res.render('restaurant_login');
 });
