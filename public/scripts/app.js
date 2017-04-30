@@ -211,7 +211,7 @@ $(() => {
     $(this).affix({
       offset: {
         top: $(this).offset().top + 70,
-        // right: $(this).offset().right,       
+        right: $(this).offset().right       
       },
     });
   });

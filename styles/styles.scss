@@ -87,8 +87,9 @@ body {
     }
   }
   .cart-wrapper {
-    margin-top: 130px;
+    margin: 130px auto;
     position: relative;
+    width: 250px;
     h3 {
       font-size: 1.2em;
       margin-bottom: 15px;
@@ -195,6 +196,9 @@ body {
         font-family: 'Coming Soon', sans-serif;
         text-align: center;
         vertical-align: middle;
+        .dish-desc{
+          padding: 10px;
+        }
       }
       .shop {
         position: absolute;
