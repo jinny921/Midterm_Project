@@ -50,8 +50,6 @@ module.exports = (knex) => {
     const dataBody = req.body;
     const customerName = dataBody.name;
     const customerPhone = dataBody.phone_number;
-    dataGlobal.name = customerName;
-    dataGlobal.phone_number = customerPhone;
     console.log('Complete Data:', dataGlobal);
 
     // knex.insert({name: customerName}, {phone_number: customerPhone}).into('clients');
