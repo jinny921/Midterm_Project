@@ -97,6 +97,15 @@ module.exports = (knex) => {
 
   router.post('/callcontent', (req, res) => {
 // this object will be filled with database values;
+    let reqName = "Nawar"; 
+    let reqNumber = 89742;
+    knex
+    .select('id')
+    .from('orders')
+    .asCallback((err, rows) => {
+      console.log(rows);
+    });
+
     const orderData = {
       orderNumber: '12313',
       clientInfo: {
@@ -109,6 +118,9 @@ module.exports = (knex) => {
     res.set('Content-Type', 'text/xml');
     res.render('order', orderData);
   });
+
+
+
   router.post('/call', (req, res)=> {
     callResturant();
     res.send('calling');
@@ -121,6 +133,5 @@ module.exports = (knex) => {
     sendSMS(clientMessage);
     res.redirect('/resturant');
   });
-  router.post('/textSMS')
   return router;
 };
