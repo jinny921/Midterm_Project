@@ -25,7 +25,7 @@ module.exports = (knex) => {
   });
   const dataGlobal = {
     id: {},
-    quantity: {}
+    quantity: {},
   };
   router.post('/checkout', (req, res) => {
     const dataBody = req.body;
@@ -56,20 +56,20 @@ module.exports = (knex) => {
 
       console.log('New client successfully added');
       knex('clients').orderBy('id', 'desc').limit(1).asCallback((err, rows) => {
-        let clientID = rows[0].id;
-        knex('orders').insert({client_id: clientID}).asCallback((err, rows)=> {
+        const clientID = rows[0].id;
+        knex('orders').insert({client_id: clientID }).asCallback((err, rows) => {
           if (err) {
             knex.destroy();
             return console.error('error inserting order', err);
           }
           console.log('New order successfully added');
-          knex('orders').orderBy('id', 'desc').limit(1).asCallback((err, rows)=> {
+          knex('orders').orderBy('id', 'desc').limit(1).asCallback((err, rows) => {
             if (err) {
               knex.destroy();
               return console.error('error querying order id', err);
             }
             console.log(' orderID successfully grabbed');
-            if(!(rows[0].id)) {
+            if (!(rows[0].id)) {
               nextID = 1;
             } else {
               nextID = (rows[0].id);
@@ -102,7 +102,7 @@ module.exports = (knex) => {
       clientInfo: {
         name: 'Elvisss',
         phoneNumber: '7782324505',
-        address: '128 W. Hastings Ave, Vancouver, BC'
+        address: '128 W. Hastings Ave, Vancouver, BC',
       },
       dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2]
     };
@@ -115,7 +115,7 @@ module.exports = (knex) => {
   });
 
   router.post('/customerupdate', (req, res) => {
-    let clientMessage = `Thanks for your order 
+    const clientMessage = `Thanks for your order 
     you order number is ${req.body.ordernumber}
     and will be ready in ${req.body.preptime} minutes`;
     sendSMS(clientMessage);
