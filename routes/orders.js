@@ -41,9 +41,6 @@ module.exports = (knex) => {
     });
     dataGlobal.id = dishIDs;
     dataGlobal.quantity = dishQuantities;
-    // knex('order_quantity')
-    // .insert($(/* shopping cart items dish_ids */))
-    // knex.destroy();
   });
 
   router.post('/payment', (req, res) => {
@@ -67,6 +64,8 @@ module.exports = (knex) => {
     // knex.destroy();
     res.redirect('/');
   });
+
+
 
   router.post('/callcontent', (req, res) => {
 // this object will be filled with database values;
