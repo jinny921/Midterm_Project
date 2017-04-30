@@ -33,20 +33,18 @@ body {
     border-bottom: 1px $disabled-color solid;
     padding-bottom: 5px;
   }
-    .btn {
-      font-family: 'Dosis', sans-serif;
-      letter-spacing: 1px;
-      font-weight: 300;
-      width: 43%;
-      border-radius: 40px;
-      margin-top: 15px;
-      font-size: 1.5rem;
-    }
-    .clear-order {
-      margin-left: 10px;
-    }
-  
-
+  .btn {
+    font-family: 'Dosis', sans-serif;
+    letter-spacing: 1px;
+    font-weight: 300;
+    width: 43%;
+    border-radius: 40px;
+    margin-top: 15px;
+    font-size: 1.5rem;
+  }
+  .clear-order {
+    margin-left: 10px;
+  }
   #nav-bg {
     background: #222;
     position: fixed;
@@ -97,16 +95,12 @@ body {
       z-index: 2;
     }
   }
-  .submit-payment{
-    .submit-total{
+  .submit-payment {
+    .submit-total {
       font-size: 2em;
       margin-bottom: 25px;
       padding-bottom: 10px;
       border-bottom: 1px $company-color solid;
-    }
-    .contact{
-      font-size: 1.5em;
-      margin-bottom: 10px;
     }
   }
   .cart-wrapper {
@@ -117,6 +111,14 @@ body {
       font-size: 1.2em;
       margin-bottom: 15px;
     }
+    .contact {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+      .form-number {
+        margin-top: 20px;
+      }
+    
     .caption {
       position: relative;
       left: 30px;
@@ -243,7 +245,7 @@ body {
         }
       }
     }
-  } 
+  }
   .navbar-bottom {
     background: $brand-color;
     margin-top: 50px;
@@ -254,9 +256,24 @@ body {
       line-height: 1.3;
     }
   }
+  .restaurant {
+    bottom-margin: 20px;
+    label {
+      font-size: 1.5em; // color: $disabled-color;
+    }
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    .btn.pay-order {
+      width: 50%;
+      ;
+    }
+  }
 }
 
+
 /* Wrapper */
+
 .icon-button {
   background-color: #eee;
   border-radius: 3.6rem;
@@ -277,6 +294,7 @@ body {
 
 
 /* Circle */
+
 .icon-button span {
   border-radius: 0;
   display: block;
@@ -313,6 +331,7 @@ body {
 
 
 /* Icons */
+
 .icon-button i {
   background: none;
   text-decoration: none;
