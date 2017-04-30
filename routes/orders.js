@@ -25,7 +25,7 @@ module.exports = (knex) => {
   });
   const dataGlobal = {
     id: {},
-    quantity: {}
+    quantity: {},
   };
   router.post('/checkout', (req, res) => {
     const dataBody = req.body;
@@ -45,7 +45,7 @@ module.exports = (knex) => {
     const customerAddress = 'fake';
     let nextID;
     console.log('passed in order:', dataGlobal);
-    knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err, rows) => {
+    knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err) => {
       if (err) {
         knex.destroy();
         return console.error('error inserting client', err);
@@ -87,8 +87,9 @@ module.exports = (knex) => {
       });
                   // knex.destroy();
     });
+
     res.redirect('/thankyou');
-    // $('.landing h1').text('Thank you for your order');
+
   });
 
 
@@ -102,7 +103,8 @@ module.exports = (knex) => {
     .from('orders')
     .join('clients', 'clients.id', '=', 'orders.client_id')
     .where('name', 'Elvis')
-    .orderBy('id', 'desc').limit(1)
+    .orderBy('id', 'desc')
+    .limit(1)
     .asCallback((err, rows) => {
       if (err) {
         knex.destroy();
@@ -116,9 +118,9 @@ module.exports = (knex) => {
         clientInfo: {
           name: reqName,
           phoneNumber: reqPhoneNumber,
-          address: '128 W. Hastings Ave, Vancouver, BC'
+          address: '128 W. Hastings Ave, Vancouver, BC',
         },
-        dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2]
+        dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2],
       };
 
       res.set('Content-Type', 'text/xml');

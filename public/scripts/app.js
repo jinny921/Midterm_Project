@@ -9,7 +9,7 @@ $(() => {
       method,
       url,
       data,
-      dataType
+      dataType,
     });
   }
 
@@ -59,7 +59,7 @@ $(() => {
                 </div>
               </div>
               <div class='form-number'>
-                <label for='phone_number'>Phone:</label>
+                <label for='phone_number'>Phone Number:</label>
                 <input class='form-control' type='tel' min-length=10 id='phone_number' name='tel' pattern='[0-9,-]{10,12}' title='Please enter a valid phone number.' placeholder='555-555-5555' required >
               </div>
               <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
@@ -92,7 +92,7 @@ $(() => {
           if ($currentVal > 0) {
             const newVal = $currentVal - 1;
             $counter.text(newVal);
-            const $dishInCart = $cartContainer.find(`[data-dishid="${  dishIDfromMenu  }"]`);
+            const $dishInCart = $cartContainer.find(`[data-dishid="${dishIDfromMenu}"]`);
             const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
 
             if (currentQuantity > 1) {
@@ -137,7 +137,7 @@ $(() => {
           };
           currentOrder[dishIDfromMenu] = item;
 
-          const $dishInCart = $cartContainer.find(`[data-dishid="${ dishIDfromMenu }"]`);
+          const $dishInCart = $cartContainer.find(`[data-dishid="${dishIDfromMenu}"]`);
           if ($dishInCart.length) {
             $dishInCart.find('.counter').text(` X ${newVal}`);
           } else {
@@ -152,7 +152,7 @@ $(() => {
       // remove all items in cart
       $('.clear-order').on('click', function () {
         $('.selected-dish').empty();
-        Object.keys(currentOrder).forEach(function (prop) {
+        Object.keys(currentOrder).forEach((prop) => {
           delete currentOrder[prop];
         });
         $counter.text('0');
@@ -212,7 +212,7 @@ $(() => {
   // page scroll animation
   $('.btn-down').click(() => {
     $('html,body').animate({
-      scrollTop: $('#menu').offset().top
+      scrollTop: $('#menu').offset().top,
     }, 'slow');
   });
 
@@ -222,7 +222,7 @@ $(() => {
     $(this).affix({
       offset: {
         top: $(this).offset().top + 70,
-        right: $(this).offset().right
+        right: $(this).offset().right,
       },
     });
   });
