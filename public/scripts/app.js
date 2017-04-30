@@ -159,6 +159,7 @@ $(() => {
     if (currentTotal !== 0) {
       $('.shop').fadeOut('400');
       ajaxCall('POST', '/orders/checkout', currentOrder);
+      console.log('orders in cart:', currentOrder);
       $cartContainer.empty().append(checkoutTemplate(currentTotal));
     }
   });
