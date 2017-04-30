@@ -73,10 +73,10 @@ $(() => {
   //           </div>`
   // }
 
-// // place order button
-//   $('.pay-order').on('click', (event) => {
-//     $('.cart-wrapper').empty().append(thankyouPage())
-//   })
+  // // place order button
+  //   $('.pay-order').on('click', (event) => {
+  //     $('.cart-wrapper').empty().append(thankyouPage())
+  //   })
 
   function calculateTotal() {
     let total = 0;
@@ -111,6 +111,7 @@ $(() => {
             } else if (currentQuantity === 1) {
               $dishInCart.remove();
               delete currentOrder[dishIDfromMenu];
+              $('#cart-total').text(calculateTotal());
             }
             currentOrder[dishIDfromMenu].quantity--;
             if ($('.selected-dish')[0].childElementCount === 0) {
