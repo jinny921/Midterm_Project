@@ -52,7 +52,7 @@ $(() => {
               </div>
               <div class='form-number'>
                 <label for='phone_number'>Phone:</label>
-                <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555' required >
+                <input class='form-control' type='tel' min-length=10 id='phone_number' name='tel' pattern='[0-9,-]{10,12}' title='Please enter a valid phone number.' placeholder='555-555-5555' required >
               </div>
               <div>Total: $${total}</div>
               <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
