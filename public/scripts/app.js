@@ -66,17 +66,6 @@ $(() => {
             </form>`;
   }
 
-  // function thankyouPage() {
-  //   return `<div class='thankyou'>
-  //             <h3>Thank you for your order!</h3>
-  //             <h4>The restaurant will contact you shortly with your order# and pick-up time!</h4>
-  //           </div>`
-  // }
-
-// // place order button
-//   $('.pay-order').on('click', (event) => {
-//     $('.cart-wrapper').empty().append(thankyouPage())
-//   })
 
   function calculateTotal() {
     let total = 0;
@@ -111,6 +100,7 @@ $(() => {
             } else if (currentQuantity === 1) {
               $dishInCart.remove();
               delete currentOrder[dishIDfromMenu];
+              $('#cart-total').text(calculateTotal());
             }
             currentOrder[dishIDfromMenu].quantity--;
             if ($('.selected-dish')[0].childElementCount === 0) {
