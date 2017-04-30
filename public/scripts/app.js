@@ -64,6 +64,18 @@ $(() => {
             </form>`;
   }
 
+  // function thankyouPage() {
+  //   return `<div class='thankyou'>
+  //             <h3>Thank you for your order!</h3>
+  //             <h4>The restaurant will contact you shortly with your order# and pick-up time!</h4>
+  //           </div>`
+  // }
+
+// // place order button
+//   $('.pay-order').on('click', (event) => {
+//     $('.cart-wrapper').empty().append(thankyouPage())
+//   })
+
   function calculateTotal() {
     let total = 0;
     for (const prop in currentOrder) {
@@ -81,8 +93,6 @@ $(() => {
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
       const dishIDfromMenu = $menuContainer.data('dishid');
-      // const dishName = $that.parent().siblings().children('.dish-name').text();
-      // const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
       ajaxCall('PUT', '/orders')
@@ -164,7 +174,7 @@ $(() => {
       console.error(err);
     });
 
-  // Kevin's WIP place order function
+  // proceed to checkout button
   $('.place-order').on('click', () => {
     if (Object.keys(currentOrder).length === 0) {
       $(this).attr('disabled', 'disabled');
@@ -179,6 +189,8 @@ $(() => {
       $cartContainer.empty().append(checkoutTemplate(currentTotal));
     }
   });
+
+
 
   // NavBar transition effects
   $(window).on('scroll', () => {

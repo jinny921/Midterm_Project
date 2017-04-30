@@ -87,12 +87,10 @@ module.exports = (knex) => {
       });
                   // knex.destroy();
     });
-    //Commented so it doesnt call while testing the app
-    console.log("Calling the restaurant");
-   // callResturant(customerName);
-
-    res.redirect('/');
+    res.redirect('/thankyou');
+    // $('.landing h1').text('Thank you for your order');
   });
+
 
   router.post('/callcontent/:name', (req, res) => {
 // this object will be filled with database values;
