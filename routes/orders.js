@@ -25,7 +25,7 @@ module.exports = (knex) => {
   });
   const dataGlobal = {
     id: {},
-    quantity: {},
+    quantity: {}
   };
   router.post('/checkout', (req, res) => {
     const dataBody = req.body;
@@ -47,7 +47,7 @@ module.exports = (knex) => {
     const customerPhone = dataBody.phone_number;
     const customerAddress = 'fake';
     let nextID;
-    console.log('passed in order:', dataGlobal);  
+    console.log('passed in order:', dataGlobal);
     knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err, rows) => {
       if (err) {
         knex.destroy();
@@ -92,37 +92,49 @@ module.exports = (knex) => {
       });
                   // knex.destroy();
     });
-                  res.redirect('/');
+    callResturant(customerName);
+    res.redirect('/');
   });
 
-  router.post('/callcontent', (req, res) => {
+  router.post('/callcontent/:name', (req, res) => {
 // this object will be filled with database values;
-    let reqName = "Nawar"; 
-    let reqNumber = 89742;
+    let reqName = req.params.name;
+    let reqPhoneNumber = 89742;
     knex
-    .select('id')
+    .select('orders.id')
     .from('orders')
+    .join('clients', 'clients.id', '=', 'orders.client_id')
+    .where('name', 'Elvis')
+    .orderBy('id', 'desc').limit(1)
     .asCallback((err, rows) => {
-      console.log(rows);
+      if (err) {
+        knex.destroy();
+        return console.error('error inserting into order_quantity table', err);
+      }
+      console.log('New order successfully added order quantity');
+      let dbOrderNumber = rows[0].id;
+
+      const orderData = {
+        orderNumber: dbOrderNumber,
+        clientInfo: {
+          name: reqName,
+          phoneNumber: reqPhoneNumber,
+          address: '128 W. Hastings Ave, Vancouver, BC'
+        },
+        dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2]
+      };
+
+      res.set('Content-Type', 'text/xml');
+      res.render('order', orderData);
+
     });
 
-    const orderData = {
-      orderNumber: '12313',
-      clientInfo: {
-        name: 'Elvisss',
-        phoneNumber: '7782324505',
-        address: '128 W. Hastings Ave, Vancouver, BC',
-      },
-      dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2]
-    };
-    res.set('Content-Type', 'text/xml');
-    res.render('order', orderData);
   });
 
 
 
   router.post('/call', (req, res)=> {
-    callResturant();
+    
     res.send('calling');
   });
 
