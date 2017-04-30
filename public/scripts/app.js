@@ -1,20 +1,14 @@
 // appending dishes data, render order sidebar to home page
 $(() => {
-  $(this).scrollTop(0);
   const currentOrder = {};
   // const sms = require('send-sms').sendSMS;
 
   function ajaxCall(method, url, data, dataType) {
-    return $.ajax({
-      method,
-      url,
-      data,
-      dataType
-    });
+    return $.ajax({ method, url, data, dataType });
   }
 
   function dishTemplate(dish) {
-    return `<section class='col-xs-12 col-md-4'>
+    return `<section class='col-xs-6 col-sm-4'>
               <div class='dish' data-dishid='${dish.id}'>
                 <div class='dish-img-wrapper'><img class='dish-img' src='${dish.img_url}'></div>
                 <div class='caption'>
@@ -37,7 +31,7 @@ $(() => {
   function cartTemplate(item) {
     return `<div class='dish' data-dishid='${item.id}'>
               <div class='caption'>
-                <div class='dish-name'><i class="fa-li fa fa-remove"></i>${item.name}</div>
+                <div class='dish-name'><i class="fa-li fa fa-check-circle-o"></i>${item.name}</div>
                 <div class='dish-details'>
                   <span class='dish-price'>Price: $${item.price}</span>
                   <span class='counter'> X ${item.quantity}</span>
@@ -60,7 +54,7 @@ $(() => {
                 <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555'>
               </div>
               <div>Total: $${total}</div>
-              <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
+              <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Pay'>
             </form>`;
   }
 
@@ -70,17 +64,20 @@ $(() => {
       const currObj = currentOrder[prop];
       total += currObj.price * currObj.quantity;
     }
+    // console.log(total);
     return total;
   };
 
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
 
-    $('.fa-minus-square-o').on('click', function () {
+    $('.fa-minus-square-o').on('click', function() {
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
       const dishIDfromMenu = $menuContainer.data('dishid');
+      // const dishName = $that.parent().siblings().children('.dish-name').text();
+      // const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
       ajaxCall('PUT', '/orders')
@@ -89,33 +86,27 @@ $(() => {
           if ($currentVal > 0) {
             const newVal = $currentVal - 1;
             $counter.text(newVal);
-            const $dishInCart = $cartContainer.find(`[data-dishid="' ${dishIDfromMenu} '"]`);
+            let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
             const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
-
 
             if (currentQuantity > 1) {
               $dishInCart.find('.counter').text(` X ${newVal}`);
             } else if (currentQuantity === 1) {
               $('.place-order').attr('disabled', 'disabled');
               $dishInCart.remove();
-
-            }
-            if (Object.keys(currentOrder).length === 0) {
-              // $(this).attr('disabled', 'disabled');
-              $('.cart-wrapper h3').removeClass('hr');
-              // return;
             }
             currentOrder[dishIDfromMenu].quantity--;
+          } else {
+            $that.addClass('inactive');
           }
           const total = calculateTotal();
           $('#cart-total').text(total);
-
         }, (err) => {
           console.error('we have a problem!!!');
         });
     });
 
-    $('.fa-plus-square').on('click', function () {
+    $('.fa-plus-square').on('click', function() {
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
@@ -124,7 +115,6 @@ $(() => {
       const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
-      $('.cart-wrapper h3').addClass('hr');
       $('.place-order').removeAttr('disabled');
       ajaxCall('PUT', '/orders')
         .then(() => {
@@ -139,21 +129,14 @@ $(() => {
           };
           currentOrder[dishIDfromMenu] = item;
 
-          const $dishInCart = $cartContainer.find(`[data-dishid="' ${dishIDfromMenu} '"]`);
+          const $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
           if ($dishInCart.length) {
-            $dishInCart.find('.counter').text(` X ${newVal} `);
+            $dishInCart.find('.counter').text(' X ' + newVal);
           } else {
             $cartContainer.append(cartTemplate(item));
           }
           const total = calculateTotal();
           $('#cart-total').text(total);
-
-          // remove single item in cart
-          $('.fa-remove').on('click', function () {
-            let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
-            $dishInCart.remove();
-            $counter.text('0');
-          });
         }, (err) => {
           console.error('we have a problem!!!');
         });
@@ -185,9 +168,9 @@ $(() => {
   $(window).on('scroll', () => {
     const header = $('header');
     const range = 200;
-    const scrollTop = $(this).scrollTop();
+    let scrollTop = $(this).scrollTop();
     let offset = header.offset();
-    const height = header.outerHeight();
+    let height = header.outerHeight();
     offset = offset + height / 2;
     const calc = 1 - (scrollTop - offset + range) / range;
 
@@ -209,23 +192,6 @@ $(() => {
   // page scroll animation
   $('.btn-down').click(() => {
     $('html,body').animate({
-      scrollTop: $('#menu').offset().top
-    }, 'slow');
+      scrollTop: $('#menu').offset().top }, 'slow');
   });
-
-  // affix cart
-  let $attribute = $('[data-smart-affix]');
-  $attribute.each(function () {
-    $(this).affix({
-      offset: {
-        top: $(this).offset().top + 100,
-        right: $(this).offset().right
-      }
-    })
-  })
-  $(window).on("resize", function () {
-    $attribute.each(function () {
-      $(this).data('bs.affix').options.offset = $(this).offset().top
-    })
-  })
 });
