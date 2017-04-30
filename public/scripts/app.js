@@ -142,8 +142,8 @@ $(() => {
           console.error('we have a problem!!!');
         });
 
-        // // remove single item in cart
-        // $('.fa-remove').on('click', function () {
+        // // remove all items in cart
+        // $('.clear-cart').on('click', function () {
         //   const $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
         //   $dishInCart.remove();
         //   $counter.text('0');
