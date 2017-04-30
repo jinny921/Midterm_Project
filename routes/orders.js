@@ -50,10 +50,15 @@ module.exports = (knex) => {
     const dataBody = req.body;
     const customerName = dataBody.name;
     const customerPhone = dataBody.phone_number;
-    dataGlobal.name = customerName;
-    dataGlobal.phone_number = customerPhone;
     console.log('Complete Data:', dataGlobal);
 
+    var ids = dataGlobal.id;
+    console.log('ids',ids);
+    for(var i = 0; i < ids.length; i++) {
+      var quantitykey = ids[i];
+      var quantity = dataGlobal.quantity[ids[i]];
+      console.log('quantity', quantity);
+    }
     // knex.insert({name: customerName}, {phone_number: customerPhone}).into('clients');
     for (let item in dataGlobal) {
       console.log('item: ', item);
