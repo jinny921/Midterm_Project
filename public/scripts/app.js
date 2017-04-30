@@ -37,7 +37,7 @@ $(() => {
   function cartTemplate(item) {
     return `<div class='dish' data-dishid='${item.id}'>
               <div class='caption'>
-                <div class='dish-name'><i class="fa-li fa fa-check-circle-o"></i>${item.name}</div>
+                <div class='dish-name'><i class="fa-li fa fa-remove"></i>${item.name}</div>
                 <div class='dish-details'>
                   <span class='dish-price'>Price: $${item.price}</span>
                   <span class='counter'> X ${item.quantity}</span>
@@ -122,7 +122,7 @@ $(() => {
       const $cartContainer = $('.selected-dish');
 
       $('.place-order').removeClass('disabled');
-
+      
       ajaxCall('PUT', '/orders')
         .then(() => {
           const $currentVal = +$counter.text();
@@ -143,13 +143,22 @@ $(() => {
             $cartContainer.append(cartTemplate(item));
           }
 
+          $('.fa-remove').on('click', function () {
+            let idToDelete = $(this).closest('[data-dishid]').data('dishid');
+            delete currentOrder[idToDelete];
+            let $correspItemInMenu = $('.menu-wrapper').find(`[data-dishid="${ idToDelete }"]`);
+            $correspItemInMenu.find('.counter').text('0');
+            $(this).closest('.dish').remove();
+            $('#cart-total').text(calculateTotal());
+          });
+
           $('#cart-total').text(calculateTotal());
         }, (err) => {
           console.error('we have a problem!!!');
         });
 
       // remove all items in cart
-      $('.clear-order').on('click', function () {
+      $('.clear-order').on('click', () => {
         $('.selected-dish').empty();
         Object.keys(currentOrder).forEach(function (prop) {
           delete currentOrder[prop];
@@ -180,8 +189,6 @@ $(() => {
       $cartContainer.empty().append(checkoutTemplate(currentTotal));
     }
   });
-
-
 
   // NavBar transition effects
   $(window).on('scroll', () => {

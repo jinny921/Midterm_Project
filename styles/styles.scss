@@ -120,6 +120,9 @@ body {
     .caption {
       position: relative;
       left: 30px;
+      .fa-remove {
+        color: #F00;
+      }
     }
     .total,
     .dish-details {
