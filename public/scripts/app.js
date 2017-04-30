@@ -76,6 +76,8 @@ $(() => {
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
       const dishIDfromMenu = $menuContainer.data('dishid');
+      // const dishName = $that.parent().siblings().children('.dish-name').text();
+      // const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
       ajaxCall('PUT', '/orders')
@@ -84,7 +86,7 @@ $(() => {
           if ($currentVal > 0) {
             const newVal = $currentVal - 1;
             $counter.text(newVal);
-            const $dishInCart = $cartContainer.find(`[data-dishid="' ${dishIDfromMenu} '"]`);
+            let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
             const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
 
             if (currentQuantity > 1) {
@@ -127,9 +129,9 @@ $(() => {
           };
           currentOrder[dishIDfromMenu] = item;
 
-          const $dishInCart = $cartContainer.find(`[data-dishid="' ${dishIDfromMenu} '"]`);
+          const $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
           if ($dishInCart.length) {
-            $dishInCart.find('.counter').text(` X ${newVal} `);
+            $dishInCart.find('.counter').text(' X ' + newVal);
           } else {
             $cartContainer.append(cartTemplate(item));
           }
@@ -166,9 +168,9 @@ $(() => {
   $(window).on('scroll', () => {
     const header = $('header');
     const range = 200;
-    const scrollTop = $(this).scrollTop();
+    let scrollTop = $(this).scrollTop();
     let offset = header.offset();
-    const height = header.outerHeight();
+    let height = header.outerHeight();
     offset = offset + height / 2;
     const calc = 1 - (scrollTop - offset + range) / range;
 
