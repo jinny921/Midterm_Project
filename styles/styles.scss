@@ -1,6 +1,6 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css');
-@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Rock+Salt');
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Rock+Salt|Lato');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
 $brand-color: #FF8C00;
 $disabled-color: #858585;
@@ -33,15 +33,20 @@ body {
     border-bottom: 1px $disabled-color solid;
     padding-bottom: 5px;
   }
-  .btn {
-    border-radius: 40px;
-  }
-  .place-order {
-    margin-top: 30px;
-  }
-  .clear-order {
-    margin-top: 10px;;
-  }
+    .btn {
+      font-family: 'Dosis', sans-serif;
+      letter-spacing: 1px;
+      font-weight: 300;
+      width: 43%;
+      border-radius: 40px;
+      margin-top: 15px;
+      font-size: 1.5rem;
+    }
+    .clear-order {
+      margin-left: 10px;
+    }
+  
+
   #nav-bg {
     background: #222;
     position: fixed;
@@ -90,6 +95,18 @@ body {
       margin: 0 auto;
       bottom: -150px;
       z-index: 2;
+    }
+  }
+  .submit-payment{
+    .submit-total{
+      font-size: 2em;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 1px $company-color solid;
+    }
+    .contact{
+      font-size: 1.5em;
+      margin-bottom: 10px;
     }
   }
   .cart-wrapper {
@@ -223,9 +240,7 @@ body {
         }
       }
     }
-  } // .inactive {
-  //   color: $disabled-color;
-  // }
+  } 
   .navbar-bottom {
     background: $brand-color;
     margin-top: 50px;
@@ -238,9 +253,7 @@ body {
   }
 }
 
-
 /* Wrapper */
-
 .icon-button {
   background-color: #eee;
   border-radius: 3.6rem;
@@ -261,7 +274,6 @@ body {
 
 
 /* Circle */
-
 .icon-button span {
   border-radius: 0;
   display: block;
@@ -298,7 +310,6 @@ body {
 
 
 /* Icons */
-
 .icon-button i {
   background: none;
   text-decoration: none;
