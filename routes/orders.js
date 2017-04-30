@@ -87,7 +87,8 @@ module.exports = (knex) => {
       });
                   // knex.destroy();
     });
-    res.redirect('/');
+    res.render('thankYou');
+    // res.redirect('/');
   });
 
 
