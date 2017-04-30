@@ -54,8 +54,16 @@ $(() => {
                 <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555'>
               </div>
               <div>Total: $${total}</div>
-              <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Pay'>
+              <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
             </form>`;
+  }
+
+  function thankyouTemplate() {
+    return `<div class='thank_you'>
+              <h3>Thank you for you order!</h3>
+              <h5>You will receive a message from the restaurant very soon.</h5><br>
+              <h5>They will provide you with the order# and pick-up time</h5>
+            </div>`
   }
 
   function calculateTotal() {
@@ -106,7 +114,7 @@ $(() => {
         });
     });
 
-    $('.fa-plus-square').on('click', function() {
+    $('.fa-plus-square').on('click', () => {
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
@@ -159,9 +167,14 @@ $(() => {
     if (currentTotal !== 0) {
       $('.shop').fadeOut('400');
       ajaxCall('POST', '/orders/checkout', currentOrder);
-      console.log('orders in cart:', currentOrder);
+      // console.log('orders in cart:', currentOrder);
       $cartContainer.empty().append(checkoutTemplate(currentTotal));
     }
+  });
+
+  $('.pay-order').on('click', () => {
+    
+    ajaxCall('POST', '/orders/call', )
   });
 
   // NavBar transition effects
