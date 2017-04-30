@@ -207,11 +207,11 @@ $(() => {
 
   // affix cart
   const $attribute = $('[data-smart-affix]');
-  $attribute.each(function () {
+  $attribute.each(function() {
     $(this).affix({
       offset: {
-        top: $(this).offset().top + 100,
-        right: $(this).offset().right,       
+        top: $(this).offset().top + 70,
+        // right: $(this).offset().right,       
       },
     });
   });

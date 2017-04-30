@@ -88,8 +88,14 @@ body {
   }
   .cart-wrapper {
     margin-top: 130px;
+    position: relative;
     h3 {
-      margin-bottom: 10px;
+      font-size: 1.2em;
+      margin-bottom: 15px;
+    }
+    .caption {
+      position: relative;
+      left: 30px;
     }
     .total,
     .dish-details {
@@ -317,13 +323,17 @@ body {
 
 // large screen
 @media (min-width: 766px) {
-  .affix-top {
-    position: absolute;
-    top: 10px;
+  .affix-top, .affix{
+        width: 22.5%;
+        top: 10px;
   }
-  .affix {
-    top: 10px;
-  }
+  // .affix-top {
+  //   // position: absolute;
+  //   top: 10px;
+  // }
+  // .affix {
+  //   top: 10px;
+  // }
 }
 
 // small screen
