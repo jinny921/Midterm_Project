@@ -24,10 +24,10 @@ function sendSMS(smsbody) {
 }
 
 //to use this function require("./send-sms").callResturant;
-function callResturant(name) {
+function callResturant(name, phoneNum) {
   client.calls.create({
     method: 'POST',
-    url: `http://7e26570e.ngrok.io/orders/callcontent/${name}`,
+    url: `http://7e26570e.ngrok.io/orders/callcontent/${name}/${phoneNum}`,
     to: resturantNumber,
     from: '+17786519742',
   }, (err, call) => {

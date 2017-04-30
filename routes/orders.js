@@ -92,16 +92,16 @@ module.exports = (knex) => {
     });
     //Commented so it doesnt call while testing the app
     console.log("Calling the restaurant");
-   // callResturant(customerName);
+    callResturant(customerName, customerPhone);
 
     res.redirect('/');
   });
 
-  router.post('/callcontent/:name', (req, res) => {
+  router.post('/callcontent/:name/:phoneNum', (req, res) => {
 // this object will be filled with database values;
 
     let reqName = req.params.name;
-    let reqPhoneNumber = 89742;
+    let reqPhoneNumber = req.params.phoneNum;
     knex
     .select('orders.id')
     .from('orders')
@@ -115,6 +115,22 @@ module.exports = (knex) => {
       }
       console.log('New order successfully added order quantity');
       let dbOrderNumber = rows[0].id;
+      knex
+      .select('dishes.name')
+      .from('dishes')
+      .join('order_quantity', 'order_quantity.dish_id', '=', 'dishes.id')
+      .join('orders', 'orders.id', '=', 'order_quantity.order_id')
+      .join('clients', 'clients.id', '=', 'orders.client_id')
+      .where('clients.name', reqName)
+      .andWhere('clients.phone_number', reqPhoneNumber)
+      .asCallback((err, rows) => {
+        if (err) {
+          knex.destroy();
+          return console.error('error selecting name from dishes table', err);
+        }
+        console.log(rows);
+      });
+
 
       const orderData = {
         orderNumber: dbOrderNumber,
