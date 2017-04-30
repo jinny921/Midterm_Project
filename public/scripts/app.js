@@ -22,7 +22,7 @@ $(() => {
                 </div>              
                 <div class='dish-details'>
                   <p class='dish-desc'>${dish.description}</p>
-                  <p class='dish-price'>Price: \$<span class='dishPrice'>${dish.price}</span></p>
+                  <p class='dish-price'>Price: $<span class='dishPrice'>${dish.price}</span></p>
                   <p class='dish-prep'>Prep Time: ${dish.preptime} mins (approx.)</p>
                 </div>
                 <div class='shop'>
@@ -39,7 +39,7 @@ $(() => {
               <div class='caption'>
                 <div class='dish-name'><i class="fa-li fa fa-remove"></i>${item.name}</div>
                 <div class='dish-details'>
-                  <span class='dish-price'>Price: \$${item.price}</span>
+                  <span class='dish-price'>Price: $${item.price}</span>
                   <span class='counter'> X ${item.quantity}</span>
                 </div>
               </div>              
@@ -59,7 +59,7 @@ $(() => {
                 <label for='phone_number'>Phone:</label>
                 <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555'>
               </div>
-              <div>Total: \$${total}</div>
+              <div>Total: $${total}</div>
               <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Pay'>
             </form>`;
   }
@@ -81,12 +81,12 @@ $(() => {
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
       const dishIDfromMenu = $menuContainer.data('dishid');
-      const dishName = $that.parent().siblings().children('.dish-name').text();
-      const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
+      // const dishName = $that.parent().siblings().children('.dish-name').text();
+      // const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
       ajaxCall('PUT', '/orders')
-        .then((res) => {
+        .then(() => {
           const $currentVal = 0 + $counter.text();
           if ($currentVal > 0) {
             const newVal = $currentVal - 1;
@@ -109,7 +109,7 @@ $(() => {
             }
             currentOrder[dishIDfromMenu].quantity--;
           }
-          let total = calculateTotal();
+          const total = calculateTotal();
           $('#cart-total').text(total);
 
         }, (err) => {
@@ -129,7 +129,7 @@ $(() => {
       $('.cart-wrapper h3').addClass('hr');
       $('.place-order').removeAttr('disabled');
       ajaxCall('PUT', '/orders')
-        .then((res) => {
+        .then(() => {
           const $currentVal = +$counter.text();
           const newVal = $currentVal + 1;
           $counter.text(newVal);
@@ -147,7 +147,7 @@ $(() => {
           } else {
             $cartContainer.append(cartTemplate(item));
           }
-          let total = calculateTotal();
+          const total = calculateTotal();
           $('#cart-total').text(total);
 
           // remove single item in cart
@@ -168,7 +168,7 @@ $(() => {
     });
 
   // Kevin's WIP place order function
-  $('.place-order').on('click', function (event) {
+  $('.place-order').on('click', () => {
     if (Object.keys(currentOrder).length === 0) {
       $(this).attr('disabled', 'disabled');
       return;
@@ -183,12 +183,6 @@ $(() => {
     }
   });
 
-  // // Kevin's WIP post to /payment call
-  // $('.submit-payment').on('click', (event) => {
-  //   ajaxCall('POST', '/orders/payment',)
-  //   .then();
-  // });
-
   // NavBar transition effects
   $(window).on('scroll', () => {
     const header = $('header');
@@ -197,7 +191,7 @@ $(() => {
     let offset = header.offset();
     let height = header.outerHeight();
     offset = offset + height / 2;
-    let calc = 1 - (scrollTop - offset + range) / range;
+    const calc = 1 - (scrollTop - offset + range) / range;
 
     header.css({
       opacity: calc,
