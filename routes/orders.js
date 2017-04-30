@@ -36,9 +36,6 @@ module.exports = (knex) => {
     });
     dataGlobal.id = dishIDs;
     dataGlobal.quantity = dishQuantities;
-    // knex('order_quantity')
-    // .insert($(/* shopping cart items dish_ids */))
-    // knex.destroy();
   });
 
   router.post('/payment', (req, res) => {
@@ -90,6 +87,10 @@ module.exports = (knex) => {
       });
                   // knex.destroy();
     });
+    res.redirect('/thankyou');
+    // $('.landing h1').text('Thank you for your order');
+  });
+
     //Commented so it doesnt call while testing the app
     console.log("Calling the restaurant");
     callResturant(customerName, customerPhone);

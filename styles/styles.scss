@@ -1,6 +1,6 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css');
-@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Rock+Salt');
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Rock+Salt|Lato');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
 $brand-color: #FF8C00;
 $disabled-color: #858585;
@@ -33,9 +33,20 @@ body {
     border-bottom: 1px $disabled-color solid;
     padding-bottom: 5px;
   }
-  .btn {
-    border-radius: 40px;
-  }
+    .btn {
+      font-family: 'Dosis', sans-serif;
+      letter-spacing: 1px;
+      font-weight: 300;
+      width: 43%;
+      border-radius: 40px;
+      margin-top: 15px;
+      font-size: 1.5rem;
+    }
+    .clear-order {
+      margin-left: 10px;
+    }
+  
+
   #nav-bg {
     background: #222;
     position: fixed;
@@ -55,7 +66,7 @@ body {
       color: $company-color;
       z-index: 3;
     }
-    .social{
+    .social {
       display: inline-block;
       position: absolute;
       top: 20px;
@@ -84,6 +95,18 @@ body {
       margin: 0 auto;
       bottom: -150px;
       z-index: 2;
+    }
+  }
+  .submit-payment{
+    .submit-total{
+      font-size: 2em;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 1px $company-color solid;
+    }
+    .contact{
+      font-size: 1.5em;
+      margin-bottom: 10px;
     }
   }
   .cart-wrapper {
@@ -119,9 +142,6 @@ body {
       margin-bottom: 10px;
       font-size: 1.3rem;
       font-style: italic;
-    }
-    .btn {
-      margin-top: 30px;
     }
   }
   .menu-wrapper {
@@ -196,7 +216,7 @@ body {
         font-family: 'Coming Soon', sans-serif;
         text-align: center;
         vertical-align: middle;
-        .dish-desc{
+        .dish-desc {
           padding: 10px;
         }
       }
@@ -220,9 +240,7 @@ body {
         }
       }
     }
-  } // .inactive {
-  //   color: $disabled-color;
-  // }
+  } 
   .navbar-bottom {
     background: $brand-color;
     margin-top: 50px;
@@ -290,6 +308,7 @@ body {
   background-color: #db5a3c;
 }
 
+
 /* Icons */
 .icon-button i {
   background: none;
@@ -326,12 +345,12 @@ body {
 }
 
 // large screen
-@media (min-width: 766px) {
-  .affix-top, .affix{
-        width: 22.5%;
-        top: 10px;
-  }
-  // .affix-top {
+@media (min-width: 992px) {
+  .affix-top,
+  .affix {
+    width: 22.5%;
+    top: 10px;
+  } // .affix-top {
   //   // position: absolute;
   //   top: 10px;
   // }
@@ -341,11 +360,24 @@ body {
 }
 
 // small screen
-@media (max-width: 766px) {
+@media (max-width: 991px) {
   body {
-    font-size: 1em;
+    font-size: 1.5em;
+    .cart-wrapper {
+      h3 {
+        font-size: 2em;
+      }
+      .selected-dish {
+        .dish-name,
+        i,
+        span {
+          font-size: 1.2em;
+        }
+      }
+    }
     .affix-top,
     .affix {
+      width: 100%;
       margin: 20px auto;
       position: static;
     }
