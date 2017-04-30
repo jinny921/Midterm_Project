@@ -9,7 +9,7 @@ $(() => {
       method,
       url,
       data,
-      dataType
+      dataType,
     });
   }
 
@@ -91,7 +91,7 @@ $(() => {
           if ($currentVal > 0) {
             const newVal = $currentVal - 1;
             $counter.text(newVal);
-            const $dishInCart = $cartContainer.find(`[data-dishid="${  dishIDfromMenu  }"]`);
+            const $dishInCart = $cartContainer.find(`[data-dishid="${dishIDfromMenu}"]`);
             const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
 
             if (currentQuantity > 1) {
@@ -135,7 +135,7 @@ $(() => {
           };
           currentOrder[dishIDfromMenu] = item;
 
-          const $dishInCart = $cartContainer.find(`[data-dishid="${ dishIDfromMenu }"]`);
+          const $dishInCart = $cartContainer.find(`[data-dishid="${dishIDfromMenu}"]`);
           if ($dishInCart.length) {
             $dishInCart.find('.counter').text(` X ${newVal}`);
           } else {
@@ -150,7 +150,7 @@ $(() => {
       // remove all items in cart
       $('.clear-order').on('click', function () {
         $('.selected-dish').empty();
-        Object.keys(currentOrder).forEach(function (prop) {
+        Object.keys(currentOrder).forEach((prop) => {
           delete currentOrder[prop];
         });
         $counter.text('0');
@@ -208,7 +208,7 @@ $(() => {
   // page scroll animation
   $('.btn-down').click(() => {
     $('html,body').animate({
-      scrollTop: $('#menu').offset().top
+      scrollTop: $('#menu').offset().top,
     }, 'slow');
   });
 
@@ -218,7 +218,7 @@ $(() => {
     $(this).affix({
       offset: {
         top: $(this).offset().top + 70,
-        right: $(this).offset().right
+        right: $(this).offset().right,
       },
     });
   });
