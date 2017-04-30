@@ -45,7 +45,7 @@ module.exports = (knex) => {
     // .insert($(/* shopping cart items dish_ids */))
     // knex.destroy();
   });
-  let next_id;
+  
   router.post('/payment', (req, res) => {
     const dataBody = req.body;
     const customerName = dataBody.name;
@@ -59,54 +59,60 @@ module.exports = (knex) => {
         knex.destroy();
         return console.error('error query', err);
       }
-      console.log('rows[0]', rows[0]);
-      console.log('rows[0].order_id', rows[0].order_id);
-      console.log('rows[0].order_id', typeof rows[0].order_id);
-      next_id = (rows[0].order_id) + 1;
-      console.log('next_id', next_id);
-      console.log('query succesful');
-      knex.destroy();
-    });
-
-    console.log('Complete Data:', dataGlobal);
-    console.log(customerName);
-    console.log(customerPhone);
-
+      // console.log('rows[0]', rows[0])
+      // console.log('rows[0].order_id', rows[0].order_id);
+      // console.log('rows[0].order_id', typeof rows[0].order_id);
+      // let next_id;
+      // if (!(rows[0].order_id)) {
+      //   next_id = 1;
+      // } else {
+      //   next_id = (rows[0].order_id) + 1;
+      // }
     knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err, rows) => {
         if (err) {
           knex.destroy();
           return console.error('error inserting client', err);
         }
         console.log('New client successfully added');
+      // knex.destroy();
+      dataGlobal.id.forEach((id_num) => {
+        const qty = dataGlobal.quantity[id_num];
+        knex('orders').insert({ client_id: 1 }).asCallback((err, rows) => {
+          if (err) {
+            knex.destroy();
+            return console.error('error inserting orderid', err);
+          }
+          console.log('New orderid successfully added');
+          // knex.destroy();
+          knex('order_quantity').insert({ dish_id: id_num, quantity: qty, order_id: 1 }).asCallback((err, rows) => {
+            if (err) {
+              knex.destroy();
+              return console.error('error inserting', err);
+            }
+            console.log('New order successfully added');
+          });
+          // knex.destroy();
+        });
+      });
+    });
+      // console.log('next_id', next_id);
+      console.log('query succesful');
       knex.destroy();
+    res.redirect('/');
     });
+  });
 
-    dataGlobal.id.forEach((id_num) => {
-      const qty = dataGlobal.quantity[id_num];
-      knex('orders').insert({ client_id: 1 }).asCallback((err, rows) => {
-        if (err) {
-          knex.destroy();
-          return console.error('error inserting orderid', err);
-        }
-        console.log('New orderid successfully added');
-        knex.destroy();
-      });
-      knex('order_quantity').insert({ dish_id: id_num, quantity: qty, order_id: next_id }).asCallback((err, rows) => {
-        if (err) {
-          knex.destroy();
-          return console.error('error inserting', err);
-        }
-        console.log('New order successfully added');
-        knex.destroy();
-      });
-    });
+    // console.log('Complete Data:', dataGlobal);
+    // console.log(customerName);
+    // console.log(customerPhone);
+
+
     // for (let item in dataGlobal) {
     //   console.log('item: ', item);
     //   // knex.insert({quantity: item.quantity[item]: dataGlobal.id,}, {});
     // }
     // knex.destroy();
-    res.redirect('/');
-  });
+  // });
 
   router.post('/callcontent', (req, res) => {
 // this object will be filled with database values;
