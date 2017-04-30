@@ -14,7 +14,7 @@ $(() => {
   }
 
   function dishTemplate(dish) {
-    return `<section class='col-xs-12 col-sm-4'>
+    return `<section class='col-xs-6 col-md-4'>
               <div class='dish' data-dishid='${dish.id}'>
                 <div class='dish-img-wrapper'><img class='dish-img' src='${dish.img_url}'></div>
                 <div class='caption'>
@@ -52,14 +52,16 @@ $(() => {
     }
     return `<form class='submit-payment' action='/orders/payment' method='POST'>
               <div class='form-name'>
-                <label for='name'>Your Name:</label>
-                <input class='form-control' id='name' type='text' name='name' placeholder='Name' required >
+                <div class='submit-total'>Your total: $${total}</div>
+                <div class='contact'>Contact info:</div>
+                  <label for='name'>Name:</label>
+                  <input class='form-control' id='name' type='text' name='name' placeholder='Name' required >
+                </div>
               </div>
               <div class='form-number'>
                 <label for='phone_number'>Phone:</label>
                 <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555' required >
               </div>
-              <div>Total: $${total}</div>
               <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
             </form>`;
   }
