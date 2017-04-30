@@ -23,11 +23,11 @@ function sendSMS(smsbody) {
   });
 }
 
-// to use this function require('./send-sms').callResturant;
-function callResturant() {
+//to use this function require("./send-sms").callResturant;
+function callResturant(name) {
   client.calls.create({
     method: 'POST',
-    url: 'http://7e26570e.ngrok.io/orders/callcontent',
+    url: `http://7e26570e.ngrok.io/orders/callcontent/${name}`,
     to: resturantNumber,
     from: '+17786519742',
   }, (err, call) => {
