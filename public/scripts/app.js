@@ -1,5 +1,6 @@
 // appending dishes data, render order sidebar to home page
 $(() => {
+  $(this).scrollTop(0);
   const currentOrder = {};
   // const sms = require('send-sms').sendSMS;
 
@@ -8,7 +9,7 @@ $(() => {
   }
 
   function dishTemplate(dish) {
-    return `<section class='col-xs-6 col-sm-4'>
+    return `<section class='col-xs-12 col-sm-4'>
               <div class='dish' data-dishid='${dish.id}'>
                 <div class='dish-img-wrapper'><img class='dish-img' src='${dish.img_url}'></div>
                 <div class='caption'>
@@ -47,14 +48,14 @@ $(() => {
     return `<form class='submit-payment' action='/orders/payment' method='POST'>
               <div class='form-name'>
                 <label for='name'>Your Name:</label>
-                <input class='form-control' id='name' type='text' name='name' placeholder='Name'>
+                <input class='form-control' id='name' type='text' name='name' placeholder='Name' required >
               </div>
               <div class='form-number'>
                 <label for='phone_number'>Phone:</label>
-                <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555'>
+                <input class='form-control' type='tel' id='phone_number' name='phone_number' placeholder='(555) 555-5555' required >
               </div>
               <div>Total: $${total}</div>
-              <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Pay'>
+              <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
             </form>`;
   }
 
@@ -64,14 +65,13 @@ $(() => {
       const currObj = currentOrder[prop];
       total += currObj.price * currObj.quantity;
     }
-    // console.log(total);
     return total;
-  };
+  }
 
   function paintPage(res) {
     $('.menu-wrapper').append(res.map(dishTemplate));
 
-    $('.fa-minus-square-o').on('click', function() {
+    $('.fa-minus-square-o').on('click', function () {
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
@@ -79,25 +79,25 @@ $(() => {
       // const dishName = $that.parent().siblings().children('.dish-name').text();
       // const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
-
+      
       ajaxCall('PUT', '/orders')
         .then(() => {
           const $currentVal = 0 + $counter.text();
           if ($currentVal > 0) {
             const newVal = $currentVal - 1;
             $counter.text(newVal);
-            let $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+            const $dishInCart = $cartContainer.find(`[data-dishid="${  dishIDfromMenu  }"]`);
             const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
 
             if (currentQuantity > 1) {
               $dishInCart.find('.counter').text(` X ${newVal}`);
             } else if (currentQuantity === 1) {
-              $('.place-order').attr('disabled', 'disabled');
               $dishInCart.remove();
             }
             currentOrder[dishIDfromMenu].quantity--;
-          } else {
-            $that.addClass('inactive');
+            if ($('.selected-dish')[0].childElementCount === 0) {
+              $('.place-order').addClass('disabled');
+            }
           }
           const total = calculateTotal();
           $('#cart-total').text(total);
@@ -106,7 +106,7 @@ $(() => {
         });
     });
 
-    $('.fa-plus-square').on('click', function() {
+    $('.fa-plus-square').on('click', function () {
       const $that = $(this);
       const $counter = $that.siblings('.counter');
       const $menuContainer = $that.closest('[data-dishid]');
@@ -115,7 +115,8 @@ $(() => {
       const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
-      $('.place-order').removeAttr('disabled');
+      $('.place-order').removeClass('disabled');
+      
       ajaxCall('PUT', '/orders')
         .then(() => {
           const $currentVal = +$counter.text();
@@ -129,17 +130,26 @@ $(() => {
           };
           currentOrder[dishIDfromMenu] = item;
 
-          const $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+          const $dishInCart = $cartContainer.find(`[data-dishid="${ dishIDfromMenu }"]`);
           if ($dishInCart.length) {
-            $dishInCart.find('.counter').text(' X ' + newVal);
+            $dishInCart.find('.counter').text(` X ${newVal}`);
           } else {
             $cartContainer.append(cartTemplate(item));
           }
-          const total = calculateTotal();
-          $('#cart-total').text(total);
+
+          $('#cart-total').text(calculateTotal());
         }, (err) => {
           console.error('we have a problem!!!');
         });
+
+        // // remove single item in cart
+        // $('.fa-remove').on('click', function () {
+        //   const $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
+        //   $dishInCart.remove();
+        //   $counter.text('0');
+        //   $('#cart-total').text(calculateTotal());
+        // });
+
     });
   }
 
@@ -168,10 +178,10 @@ $(() => {
   $(window).on('scroll', () => {
     const header = $('header');
     const range = 200;
-    let scrollTop = $(this).scrollTop();
+    const scrollTop = $(this).scrollTop();
     let offset = header.offset();
-    let height = header.outerHeight();
-    offset = offset + height / 2;
+    const height = header.outerHeight();
+    offset += height / 2;
     const calc = 1 - (scrollTop - offset + range) / range;
 
     header.css({
@@ -194,4 +204,22 @@ $(() => {
     $('html,body').animate({
       scrollTop: $('#menu').offset().top }, 'slow');
   });
+
+  // affix cart
+  const $attribute = $('[data-smart-affix]');
+  $attribute.each(function() {
+    $(this).affix({
+      offset: {
+        top: $(this).offset().top + 70,
+        right: $(this).offset().right       
+      },
+    });
+  });
+
+  $(window).on('resize', () => {
+    $attribute.each(function () {
+      $(this).data('bs.affix').options.offset = $(this).offset().top;
+    });
+  });
 });
+

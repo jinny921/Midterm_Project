@@ -1,8 +1,8 @@
-'use strict';
 const express = require('express');
 const sendSMS = require('../send-sms').sendSMS;
 const callResturant = require('../send-sms').callResturant;
-const bodyParser  = require('body-parser');
+const bodyParser = require('body-parser');
+
 const router = express.Router();
 module.exports = (knex) => {
 // getting dishes data from database for home page (/ = /orders)
@@ -57,7 +57,7 @@ module.exports = (knex) => {
       console.log('New client successfully added');
       knex('clients').orderBy('id', 'desc').limit(1).asCallback((err, rows) => {
         const clientID = rows[0].id;
-        knex('orders').insert({client_id: clientID }).asCallback((err, rows) => {
+        knex('orders').insert({ client_id: clientID }).asCallback((err, rows) => {
           if (err) {
             knex.destroy();
             return console.error('error inserting order', err);
@@ -76,9 +76,7 @@ module.exports = (knex) => {
 
               dataGlobal.id.forEach((id_num) => {
                 const qty = dataGlobal.quantity[id_num];
-          
-
-                knex('order_quantity').insert({ quantity: qty, dish_id: id_num, order_id: nextID }).asCallback((err, rows) => {
+                knex('order_quantity').insert({ quantity: qty, dish_id: id_num, order_id: nextID }).asCallback((err) => {
                   if (err) {
                     knex.destroy();
                     return console.error('error inserting into order_quantity table', err);
@@ -92,12 +90,16 @@ module.exports = (knex) => {
       });
                   // knex.destroy();
     });
-    callResturant(customerName);
+    //Commented so it doesnt call while testing the app
+    console.log("Calling the restaurant");
+   // callResturant(customerName);
+
     res.redirect('/');
   });
 
   router.post('/callcontent/:name', (req, res) => {
 // this object will be filled with database values;
+
     let reqName = req.params.name;
     let reqPhoneNumber = 89742;
     knex
@@ -133,8 +135,9 @@ module.exports = (knex) => {
 
 
 
-  router.post('/call', (req, res)=> {
-    
+
+
+  router.post('/call', (req, res) => {
     res.send('calling');
   });
 
