@@ -27,7 +27,7 @@ function sendSMS(smsbody){
 function callResturant() {
   client.calls.create({
     method: 'POST',
-    url: "http://eb964e1c.ngrok.io/orders/callcontent",
+    url: "http://7e26570e.ngrok.io/orders/callcontent",
     to: resturantNumber,
     from: "+17786519742"
   }, function(err, call) {
