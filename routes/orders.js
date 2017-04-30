@@ -28,8 +28,8 @@ module.exports = (knex) => {
   });
 
   const dataGlobal = {
-    id: {},
-    quantity: {},
+    // id: {},
+    orderInfo: {}
   };
 
   router.post('/checkout', (req, res) => {
@@ -52,11 +52,18 @@ module.exports = (knex) => {
     const customerPhone = dataBody.phone_number;
     dataGlobal.name = customerName;
     dataGlobal.phone_number = customerPhone;
-    console.log('Complete Data:', dataGlobal);
-
+    // console.log('Complete Data:', dataGlobal);
+    // console.log(dataGlobal);
     // knex.insert({name: customerName}, {phone_number: customerPhone}).into('clients');
+    let orderFoodInfo = dataGlobal.quantity;
+    let name = dataGlobal.name;
+    let contact = dataGlobal.phone_number;
+    console.log(`orderFoodInfo  ${orderFoodInfo}
+    name : ${name}
+    contact : ${contact}`);
     for (let item in dataGlobal) {
-      console.log('item: ', item);
+      // console.log('item: ', item);
+      
       // knex.insert({quantity: item.quantity[item]: dataGlobal.id,}, {});
     }
     // knex.destroy();
