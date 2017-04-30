@@ -1,11 +1,9 @@
 'use strict';
-
 const express = require('express');
 const sendSMS = require('../send-sms').sendSMS;
 const callResturant = require('../send-sms').callResturant;
 const bodyParser  = require('body-parser');
 const router = express.Router();
-
 module.exports = (knex) => {
 // getting dishes data from database for home page (/ = /orders)
   router.get('/', (req, res) => {
@@ -16,7 +14,6 @@ module.exports = (knex) => {
         res.json(dishes);
       });
   });
-
 // update order list with selected dishes
   router.put('/', (req, res) => {
     knex
@@ -26,12 +23,10 @@ module.exports = (knex) => {
         res.json(selected);
       });
   });
-
   const dataGlobal = {
-    // id: {},
-    orderInfo: {}
+    id: {},
+    quantity: {}
   };
-
   router.post('/checkout', (req, res) => {
     const dataBody = req.body;
     const dishIDs = Object.keys(dataBody);
@@ -45,70 +40,67 @@ module.exports = (knex) => {
     // .insert($(/* shopping cart items dish_ids */))
     // knex.destroy();
   });
-  let next_id;
+  
+
+
+
+
+
   router.post('/payment', (req, res) => {
     const dataBody = req.body;
     const customerName = dataBody.name;
     const customerPhone = dataBody.phone_number;
     const customerAddress = 'fake';
-    dataGlobal.name = customerName;
-    dataGlobal.phone_number = customerPhone;
-
-
-    knex('order_quantity').orderBy('order_id', 'desc').limit(1).asCallback((err, rows) => {
+    let nextID;
+    console.log('passed in order:', dataGlobal);
+    
+    knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err, rows) => {
       if (err) {
         knex.destroy();
-        return console.error('error query', err);
+        return console.error('error inserting client', err);
       }
-      console.log('rows[0]', rows[0]);
-      console.log('rows[0].order_id', rows[0].order_id);
-      console.log('rows[0].order_id', typeof rows[0].order_id);
-      next_id = (rows[0].order_id) + 1;
-      console.log('next_id', next_id);
-      console.log('query succesful');
-      knex.destroy();
-    });
+      console.log('New client successfully added');
+      knex('clients').orderBy('id', 'desc').limit(1).asCallback((err, rows) => {
+        let clientID = rows[0].id;
+        knex('orders').insert({client_id: clientID}).asCallback((err, rows)=> {
+          if (err) {
+            knex.destroy();
+            return console.error('error inserting order', err);
+          }
+          console.log('New order successfully added');
+          knex('orders').orderBy('id', 'desc').limit(1).asCallback((err, rows)=> {
+            if (err) {
+              knex.destroy();
+              return console.error('error querying order id', err);
+            }
+            console.log(' orderID successfully grabbed');
+            if(!(rows[0].id)) {
+              nextID = 1;
+            } else {
+              nextID = (rows[0].id);
 
-    console.log('Complete Data:', dataGlobal);
-    console.log(customerName);
-    console.log(customerPhone);
+              dataGlobal.id.forEach((id_num) => {
+                const qty = dataGlobal.quantity[id_num];
+          
 
-    knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err, rows) => {
-        if (err) {
-          knex.destroy();
-          return console.error('error inserting client', err);
-        }
-        console.log('New client successfully added');
-      knex.destroy();
-    });
-
-    dataGlobal.id.forEach((id_num) => {
-      const qty = dataGlobal.quantity[id_num];
-      knex('orders').insert({ client_id: 1 }).asCallback((err, rows) => {
-        if (err) {
-          knex.destroy();
-          return console.error('error inserting orderid', err);
-        }
-        console.log('New orderid successfully added');
-        knex.destroy();
+                knex('order_quantity').insert({ quantity: qty, dish_id: id_num, order_id: nextID }).asCallback((err, rows) => {
+                  if (err) {
+                    knex.destroy();
+                    return console.error('error inserting into order_quantity table', err);
+                  }
+                  console.log('New order successfully added order quantity');
+                });
+              });
+            }
+          });
+        });
       });
-      knex('order_quantity').insert({ dish_id: id_num, quantity: qty, order_id: next_id }).asCallback((err, rows) => {
-        if (err) {
-          knex.destroy();
-          return console.error('error inserting', err);
-        }
-        console.log('New order successfully added');
-        knex.destroy();
-      });
+                  // knex.destroy();
     });
-    // for (let item in dataGlobal) {
-    //   console.log('item: ', item);
-    //   // knex.insert({quantity: item.quantity[item]: dataGlobal.id,}, {});
-    // }
->>>>>>> origin/place_order_route
-    // knex.destroy();
-    res.redirect('/');
+                  res.redirect('/');
+
   });
+
 
   router.post('/callcontent', (req, res) => {
 // this object will be filled with database values;
@@ -117,9 +109,9 @@ module.exports = (knex) => {
       clientInfo: {
         name: 'Elvisss',
         phoneNumber: '7782324505',
-        address: '128 W. Hastings Ave, Vancouver, BC',
+        address: '128 W. Hastings Ave, Vancouver, BC'
       },
-      dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2],
+      dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2]
     };
     res.set('Content-Type', 'text/xml');
     res.render('order', orderData);
@@ -129,11 +121,12 @@ module.exports = (knex) => {
     res.send('calling');
   });
 
-  router.post('/customerupdate', (req, res) => {    
+
+  router.post('/customerupdate', (req, res) => {
     let clientMessage = `Thanks for your order 
     you order number is ${req.body.ordernumber}
     and will be ready in ${req.body.preptime} minutes`;
-    // sendSMS(clientMessage);
+    sendSMS(clientMessage);
     res.redirect('/resturant');
   });
   return router;
