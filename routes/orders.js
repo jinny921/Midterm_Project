@@ -87,16 +87,13 @@ module.exports = (knex) => {
       });
                   // knex.destroy();
     });
+    console.log("Calling the restaurant");
+    callResturant(customerName, customerPhone);
     res.redirect('/thankyou');
     // $('.landing h1').text('Thank you for your order');
   });
 
     //Commented so it doesnt call while testing the app
-    console.log("Calling the restaurant");
-    callResturant(customerName, customerPhone);
-
-    res.redirect('/');
-  });
 
   router.post('/callcontent/:name/:phoneNum', (req, res) => {
 // this object will be filled with database values;
@@ -129,22 +126,45 @@ module.exports = (knex) => {
           knex.destroy();
           return console.error('error selecting name from dishes table', err);
         }
-        console.log(rows);
+        let dishes = [];
+        rows.forEach((dish)=> {
+          dishes.push(dish.name);
+        });
+        knex
+        .select('order_quantity.quantity')
+        .from('order_quantity')
+        .join('orders', 'orders.id', '=', 'order_quantity.order_id')
+        .join('clients', 'clients.id', '=', 'orders.client_id')
+        .where('clients.name', reqName)
+        .andWhere('clients.phone_number', reqPhoneNumber)
+        .asCallback((err, rows)=> {
+          if (err) {
+            knex.destroy();
+            return console.error('error selecting name from dishes table', err);
+          }
+          let quantity = [];
+          rows.forEach((item)=> {
+            quantity.push(item.quantity);
+          });
+          console.log("--------------Q:", quantity);
+          console.log("-----------Dished:", dishes);
+          const orderData = {
+            orderNumber: dbOrderNumber,
+            clientInfo: {
+              name: reqName,
+              phoneNumber: reqPhoneNumber,
+              address: '128 W. Hastings Ave, Vancouver, BC'
+            },
+            dishes: dishes,
+            quantity: quantity
+          };
+
+          res.set('Content-Type', 'text/xml');
+          res.render('order', orderData);
+
+        });
+        
       });
-
-
-      const orderData = {
-        orderNumber: dbOrderNumber,
-        clientInfo: {
-          name: reqName,
-          phoneNumber: reqPhoneNumber,
-          address: '128 W. Hastings Ave, Vancouver, BC'
-        },
-        dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2]
-      };
-
-      res.set('Content-Type', 'text/xml');
-      res.render('order', orderData);
 
     });
 
