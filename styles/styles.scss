@@ -28,6 +28,13 @@ body {
     font-size: 1.5rem;
     letter-spacing: 1px;
   }
+  .hr {
+    border-bottom: 1px $disabled-color solid;
+    padding-bottom: 5px;
+  }
+  .fa-remove {
+    color:#F32323;
+  }
   #nav-bg {
     background: #222;
     position: fixed;
@@ -140,7 +147,7 @@ body {
           .dish-desc,
           .dish-price,
           .dish-prep {
-            margin-top: 20px;
+            margin-top: 15px;
           }
         }
       }
@@ -220,7 +227,7 @@ body {
 
 @media (min-width: 766px) {
   .affix-top {
-    padding-top: 20px;
+    // top: 10px;
     position: absolute;
   }
   .affix {
@@ -229,15 +236,19 @@ body {
 }
 
 @media (max-width: 766px) {
-  .affix-top,
-  .affix {
-    margin: 20px auto;
-    position: static;
-  }
-  .caption {
-    .dish-details {
-      p {
-        font-size: 1em;
+  body {
+    font-size: 1em;
+    .affix-top,
+    .affix {
+      margin: 20px auto;
+      position: static;
+    }
+    .navbar-bottom {
+      padding-right: 0;
+      .address {
+        text-align: center;
+        padding-right: 0;
+        margin: 0;
       }
     }
   }
