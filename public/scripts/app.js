@@ -58,6 +58,13 @@ $(() => {
             </form>`;
   }
 
+  function thankyouPage() {
+    return `<div class='thankyou'>
+              <h3>Thank you for your order!</h3>
+              <h4>The restaurant will contact you shortly with your order# and pick-up time!</h4>
+            </div>`
+  }
+
   function calculateTotal() {
     let total = 0;
     for (const prop in currentOrder) {
@@ -92,7 +99,6 @@ $(() => {
             if (currentQuantity > 1) {
               $dishInCart.find('.counter').text(` X ${newVal}`);
             } else if (currentQuantity === 1) {
-              $('.place-order').attr('disabled', 'disabled');
               $dishInCart.remove();
             }
             currentOrder[dishIDfromMenu].quantity--;
@@ -163,6 +169,15 @@ $(() => {
       $cartContainer.empty().append(checkoutTemplate(currentTotal));
     }
   });
+
+  $('.pay-order').on('click', () => {
+    ajaxCall('POST', '/call', $(this).serialize())
+      .then(() => {
+        $cartContainer.empty().append(thankyouPage())
+      }, (err) => {
+        console.error(err);
+      });
+  })
 
   // NavBar transition effects
   $(window).on('scroll', () => {
