@@ -225,11 +225,9 @@ body {
   }
 }
 
-
 /* Wrapper */
-
 .icon-button {
-  background-color: white;
+  background-color: #eee;
   border-radius: 3.6rem;
   cursor: pointer;
   display: inline-block;
@@ -282,11 +280,10 @@ body {
   background-color: #db5a3c;
 }
 
-
 /* Icons */
 .icon-button i {
   background: none;
-  color: white;
+  text-decoration: none;
   height: 3.6rem;
   left: 0;
   line-height: 3.6rem;
@@ -315,7 +312,7 @@ body {
 .icon-button:hover .icon-twitter,
 .icon-button:hover .icon-facebook,
 .icon-button:hover .icon-google-plus {
-  color: white;
+  color: #fff;
 }
 
 // large screen
