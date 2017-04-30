@@ -36,6 +36,12 @@ body {
   .btn {
     border-radius: 40px;
   }
+  .place-order {
+    margin-top: 30px;
+  }
+  .clear-order {
+    margin-top: 10px;;
+  }
   #nav-bg {
     background: #222;
     position: fixed;
@@ -55,7 +61,7 @@ body {
       color: $company-color;
       z-index: 3;
     }
-    .social{
+    .social {
       display: inline-block;
       position: absolute;
       top: 20px;
@@ -119,9 +125,6 @@ body {
       margin-bottom: 10px;
       font-size: 1.3rem;
       font-style: italic;
-    }
-    .btn {
-      margin-top: 30px;
     }
   }
   .menu-wrapper {
@@ -196,7 +199,7 @@ body {
         font-family: 'Coming Soon', sans-serif;
         text-align: center;
         vertical-align: middle;
-        .dish-desc{
+        .dish-desc {
           padding: 10px;
         }
       }
@@ -235,7 +238,9 @@ body {
   }
 }
 
+
 /* Wrapper */
+
 .icon-button {
   background-color: #eee;
   border-radius: 3.6rem;
@@ -256,6 +261,7 @@ body {
 
 
 /* Circle */
+
 .icon-button span {
   border-radius: 0;
   display: block;
@@ -290,7 +296,9 @@ body {
   background-color: #db5a3c;
 }
 
+
 /* Icons */
+
 .icon-button i {
   background: none;
   text-decoration: none;
@@ -326,12 +334,12 @@ body {
 }
 
 // large screen
-@media (min-width: 766px) {
-  .affix-top, .affix{
-        width: 22.5%;
-        top: 10px;
-  }
-  // .affix-top {
+@media (min-width: 992px) {
+  .affix-top,
+  .affix {
+    width: 22.5%;
+    top: 10px;
+  } // .affix-top {
   //   // position: absolute;
   //   top: 10px;
   // }
@@ -341,11 +349,24 @@ body {
 }
 
 // small screen
-@media (max-width: 766px) {
+@media (max-width: 991px) {
   body {
-    font-size: 1em;
+    font-size: 1.5em;
+    .cart-wrapper {
+      h3 {
+        font-size: 2em;
+      }
+      .selected-dish {
+        .dish-name,
+        i,
+        span {
+          font-size: 1.2em;
+        }
+      }
+    }
     .affix-top,
     .affix {
+      width: 100%;
       margin: 20px auto;
       position: static;
     }
