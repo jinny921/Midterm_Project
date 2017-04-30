@@ -41,8 +41,9 @@ module.exports = (knex) => {
   router.post('/payment', (req, res) => {
     const dataBody = req.body;
     const customerName = dataBody.name;
-    const customerPhone = dataBody.phone_number;
+    const customerPhone = dataBody.tel;
     const customerAddress = 'fake';
+    console.log('Phone Number: ', customerPhone);
     let nextID;
     console.log('passed in order:', dataGlobal);
     knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err) => {
