@@ -161,7 +161,7 @@ $(() => {
       console.error(err);
     });
 
-  // Kevin's WIP place order function
+  // proceed to checkout button
   $('.place-order').on('click', () => {
     if (Object.keys(currentOrder).length === 0) {
       $(this).attr('disabled', 'disabled');
@@ -177,8 +177,10 @@ $(() => {
     }
   });
 
-  $('.pay-order').on('click', () => {
-    ajaxCall('POST', '/call', $(this).serialize())
+// place order button
+  $('.pay-order').on('click', (event) => {
+    event.preventDefault();
+    ajaxCall('GET', '/')
       .then(() => {
         $cartContainer.empty().append(thankyouPage())
       }, (err) => {
@@ -217,21 +219,21 @@ $(() => {
       scrollTop: $('#menu').offset().top }, 'slow');
   });
 
-   // affix cart
+  // affix cart
   const $attribute = $('[data-smart-affix]');
   $attribute.each(function () {
-     $(this).affix({
-       offset: {
-         top: $(this).offset().top + 100,
-         right: $(this).offset().right,
-       },
-     });
+    $(this).affix({
+      offset: {
+        top: $(this).offset().top + 100,
+        right: $(this).offset().right,
+      },
+    });
   });
 
   $(window).on('resize', () => {
-     $attribute.each(function () {
-       $(this).data('bs.affix').options.offset = $(this).offset().top;
-     });
+    $attribute.each(function () {
+      $(this).data('bs.affix').options.offset = $(this).offset().top;
+    });
   });
 });
 
