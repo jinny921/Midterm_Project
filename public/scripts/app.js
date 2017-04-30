@@ -5,7 +5,12 @@ $(() => {
   // const sms = require('send-sms').sendSMS;
 
   function ajaxCall(method, url, data, dataType) {
-    return $.ajax({ method, url, data, dataType });
+    return $.ajax({
+      method,
+      url,
+      data,
+      dataType
+    });
   }
 
   function dishTemplate(dish) {
@@ -79,7 +84,7 @@ $(() => {
       // const dishName = $that.parent().siblings().children('.dish-name').text();
       // const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
-      
+
       ajaxCall('PUT', '/orders')
         .then(() => {
           const $currentVal = 0 + $counter.text();
@@ -93,14 +98,14 @@ $(() => {
               $dishInCart.find('.counter').text(` X ${newVal}`);
             } else if (currentQuantity === 1) {
               $dishInCart.remove();
+              delete currentOrder[dishIDfromMenu];
             }
             currentOrder[dishIDfromMenu].quantity--;
             if ($('.selected-dish')[0].childElementCount === 0) {
               $('.place-order').addClass('disabled');
             }
           }
-          const total = calculateTotal();
-          $('#cart-total').text(total);
+          $('#cart-total').text(calculateTotal());
         }, (err) => {
           console.error('we have a problem!!!');
         });
@@ -116,7 +121,7 @@ $(() => {
       const $cartContainer = $('.selected-dish');
 
       $('.place-order').removeClass('disabled');
-      
+
       ajaxCall('PUT', '/orders')
         .then(() => {
           const $currentVal = +$counter.text();
@@ -142,14 +147,15 @@ $(() => {
           console.error('we have a problem!!!');
         });
 
-        // // remove all items in cart
-        // $('.clear-cart').on('click', function () {
-        //   const $dishInCart = $cartContainer.find('[data-dishid="' + dishIDfromMenu + '"]');
-        //   $dishInCart.remove();
-        //   $counter.text('0');
-        //   $('#cart-total').text(calculateTotal());
-        // });
-
+      // remove all items in cart
+      $('.clear-order').on('click', function () {
+        $('.selected-dish').empty();
+        Object.keys(currentOrder).forEach(function (prop) {
+          delete currentOrder[prop];
+        });
+        $counter.text('0');
+        $('#cart-total').text(calculateTotal());
+      });
     });
   }
 
@@ -202,16 +208,17 @@ $(() => {
   // page scroll animation
   $('.btn-down').click(() => {
     $('html,body').animate({
-      scrollTop: $('#menu').offset().top }, 'slow');
+      scrollTop: $('#menu').offset().top
+    }, 'slow');
   });
 
   // affix cart
   const $attribute = $('[data-smart-affix]');
-  $attribute.each(function() {
+  $attribute.each(function () {
     $(this).affix({
       offset: {
         top: $(this).offset().top + 70,
-        right: $(this).offset().right       
+        right: $(this).offset().right
       },
     });
   });
@@ -222,4 +229,3 @@ $(() => {
     });
   });
 });
-
