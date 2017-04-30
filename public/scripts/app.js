@@ -79,7 +79,7 @@ $(() => {
       // const dishName = $that.parent().siblings().children('.dish-name').text();
       // const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
-
+      
       ajaxCall('PUT', '/orders')
         .then(() => {
           const $currentVal = 0 + $counter.text();
@@ -95,6 +95,9 @@ $(() => {
               $dishInCart.remove();
             }
             currentOrder[dishIDfromMenu].quantity--;
+            if ($('.selected-dish')[0].childElementCount === 0) {
+              $('.place-order').addClass('disabled');
+            }
           }
           const total = calculateTotal();
           $('#cart-total').text(total);
@@ -112,7 +115,7 @@ $(() => {
       const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
       const $cartContainer = $('.selected-dish');
 
-      $('.place-order').removeAttr('disabled');
+      $('.place-order').removeClass('disabled');
       
       ajaxCall('PUT', '/orders')
         .then(() => {
@@ -133,6 +136,7 @@ $(() => {
           } else {
             $cartContainer.append(cartTemplate(item));
           }
+
           $('#cart-total').text(calculateTotal());
         }, (err) => {
           console.error('we have a problem!!!');
@@ -201,21 +205,21 @@ $(() => {
       scrollTop: $('#menu').offset().top }, 'slow');
   });
 
-   // affix cart
+  // affix cart
   const $attribute = $('[data-smart-affix]');
-  $attribute.each(function () {
-     $(this).affix({
-       offset: {
-         top: $(this).offset().top + 100,
-         right: $(this).offset().right,
-       },
-     });
+  $attribute.each(function() {
+    $(this).affix({
+      offset: {
+        top: $(this).offset().top + 70,
+        right: $(this).offset().right       
+      },
+    });
   });
 
   $(window).on('resize', () => {
-     $attribute.each(function () {
-       $(this).data('bs.affix').options.offset = $(this).offset().top;
-     });
+    $attribute.each(function () {
+      $(this).data('bs.affix').options.offset = $(this).offset().top;
+    });
   });
 });
 
