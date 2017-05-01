@@ -16,7 +16,7 @@ const client = require('twilio')(accountSid, authToken);
 function sendSMS(smsbody) {
   client.messages.create({
     to: resturantNumber,
-    from: '+17786519742',
+    from: '+16046703638',
     body: smsbody,
   }, (err, message) => {
     console.log(message.sid);
@@ -27,9 +27,9 @@ function sendSMS(smsbody) {
 function callResturant(name) {
   client.calls.create({
     method: 'POST',
-    url: `http://7e26570e.ngrok.io/orders/callcontent/${name}`,
+    url: `http://0a7c90f5.ngrok.io//orders/callcontent/${name}`,
     to: resturantNumber,
-    from: '+17786519742',
+    from: '+16046703638 ',
   }, (err, call) => {
     process.stdout.write(call.sid);
   });
