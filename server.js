@@ -47,8 +47,8 @@ app.get('/thankyou', (req, res) => {
 });
 
 // resturant page
-app.get('/resturant', (req, res) => {
-  res.render('resturant');
+app.get('/restaurant', (req, res) => {
+  res.render('restaurant');
 });
 
 app.listen(PORT, () => {

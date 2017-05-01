@@ -182,7 +182,7 @@ module.exports = (knex) => {
     you order number is ${req.body.ordernumber}
     and will be ready in ${req.body.preptime} minutes`;
     sendSMS(clientMessage);
-    res.redirect('/resturant');
+    res.redirect('/restaurant');
   });
   return router;
 };

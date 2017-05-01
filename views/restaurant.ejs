@@ -20,14 +20,14 @@
     <div class='landing text-center'>
       <div class='container-fluid landing-content'>
         <h1 class='animated fadeInDown'>INSERT ORDER INFO HERE !</h1>
-          <form action='/orders/customerupdate' method='POST'>
+          <form class='restaurant' action='/orders/customerupdate' method='POST'>
               <div class='form-group'>
                 <label for='name'>Order Number</label>
                 <input class='form-control' id='name' type='text' name='ordernumber' placeholder='Order Number'>
               </div>
               <div class='form-group'>
                 <label for='phone_number'>Prepration Time</label>
-                <input class='form-control' type='tel' id='phone_number' name='preptime' placeholder='Preperation time i.e. 30 mins'>
+                <input class='form-control' type='tel' id='phone_number' name='preptime' placeholder='Preperation time (e.g. 30 mins)'>
               </div>
             
               <input class='btn btn-primary pay-order' type='submit' role='button' value='Notify Customer'>

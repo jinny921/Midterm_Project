@@ -51,19 +51,34 @@ $(() => {
       return;
     }
     return `<form class='submit-payment' action='/orders/payment' method='POST'>
-              <div class='form-name'>
-                <div class='submit-total'>Your total: $${total}</div>
+              <div class='submit-total'>Your total: $${total}</div>
                 <div class='contact'>Contact info:</div>
-                  <label for='name'>Name:</label>
-                  <input class='form-control' id='name' type='text' name='name' placeholder='Name' required >
+                  <div class='form-name'>
+                    <label for='name'>Name:</label>
+                    <input class='form-control' id='name' type='text' name='name' placeholder='Name' required >
+                  </div>
+                  <div class='form-number'>
+                    <label for='phone_number'>Phone Number:</label>
+                    <input class='form-control' type='tel' min-length=10 id='phone_number' name='tel' pattern='[0-9,-]{10,12}' title='Please enter a valid phone number.' placeholder='555-555-5555' required >
+                  </div>
                 </div>
-              </div>
-              <div class='form-number'>
-                <label for='phone_number'>Phone Number:</label>
-                <input class='form-control' type='tel' min-length=10 id='phone_number' name='tel' pattern='[0-9,-]{10,12}' title='Please enter a valid phone number.' placeholder='555-555-5555' required >
-              </div>
               <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
+              </div>  
             </form>`;
+    // return `<form class='submit-payment' action='/orders/payment' method='POST'>
+    //           <div class='form-name'>
+    //             <div class='submit-total'>Your total: $${total}</div>
+    //             <div class='contact'>Contact info:</div>
+    //               <label for='name'>Name:</label>
+    //               <input class='form-control' id='name' type='text' name='name' placeholder='Name' required >
+    //             </div>
+    //           </div>
+    //           <div class='form-number'>
+    //             <label for='phone_number'>Phone Number:</label>
+    //             <input class='form-control' type='tel' min-length=10 id='phone_number' name='tel' pattern='[0-9,-]{10,12}' title='Please enter a valid phone number.' placeholder='555-555-5555' required >
+    //           </div>
+    //           <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
+    //         </form>`;
   }
 
   function calculateTotal() {
