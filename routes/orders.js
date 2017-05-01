@@ -41,11 +41,12 @@ module.exports = (knex) => {
   router.post('/payment', (req, res) => {
     const dataBody = req.body;
     const customerName = dataBody.name;
-    const customerPhone = dataBody.phone_number;
+    const customerPhone = dataBody.tel;
     const customerAddress = 'fake';
+    console.log('Phone Number: ', customerPhone);
     let nextID;
     console.log('passed in order:', dataGlobal);
-    knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err, rows) => {
+    knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err) => {
       if (err) {
         knex.destroy();
         return console.error('error inserting client', err);
@@ -87,10 +88,11 @@ module.exports = (knex) => {
       });
                   // knex.destroy();
     });
+
     console.log("Calling the restaurant");
     callResturant(customerName, customerPhone);
     res.redirect('/thankyou');
-    // $('.landing h1').text('Thank you for your order');
+
   });
 
     //Commented so it doesnt call while testing the app
@@ -100,18 +102,23 @@ module.exports = (knex) => {
 
     let reqName = req.params.name;
     let reqPhoneNumber = req.params.phoneNum;
+
+
     knex
     .select('orders.id')
     .from('orders')
     .join('clients', 'clients.id', '=', 'orders.client_id')
-    .where('name', 'Elvis')
-    .orderBy('id', 'desc').limit(1)
+    .where('name', reqName)
+    .andWhere('phone_number', reqPhoneNumber)
+    .orderBy('id', 'desc')
+    .limit(1)
     .asCallback((err, rows) => {
       if (err) {
         knex.destroy();
         return console.error('error inserting into order_quantity table', err);
       }
       console.log('New order successfully added order quantity');
+      console.log('row:', rows);
       let dbOrderNumber = rows[0].id;
       knex
       .select('dishes.name')
@@ -161,18 +168,10 @@ module.exports = (knex) => {
 
           res.set('Content-Type', 'text/xml');
           res.render('order', orderData);
-
         });
-        
       });
-
     });
-
   });
-
-
-
-
 
   router.post('/call', (req, res) => {
     res.send('calling');

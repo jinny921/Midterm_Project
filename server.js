@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 
 app.get('/thankyou', (req, res) => {
   res.render('thankyou');
-})
+});
 
 // resturant page
 app.get('/resturant', (req, res) => {
@@ -53,4 +53,9 @@ app.get('/resturant', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
+});
+
+// Pseudo login page
+app.get('/restaurant_login', (req, res) => {
+  res.render('restaurant_login');
 });

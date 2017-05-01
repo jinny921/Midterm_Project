@@ -9,7 +9,7 @@ $(() => {
       method,
       url,
       data,
-      dataType
+      dataType,
     });
   }
 
@@ -37,7 +37,7 @@ $(() => {
   function cartTemplate(item) {
     return `<div class='dish' data-dishid='${item.id}'>
               <div class='caption'>
-                <div class='dish-name'><i class="fa-li fa fa-check-circle-o"></i>${item.name}</div>
+                <div class='dish-name'><i class="fa-li fa fa-remove"></i>${item.name}</div>
                 <div class='dish-details'>
                   <span class='dish-price'>Price: $${item.price}</span>
                   <span class='counter'> X ${item.quantity}</span>
@@ -59,24 +59,12 @@ $(() => {
                 </div>
               </div>
               <div class='form-number'>
-                <label for='phone_number'>Phone:</label>
+                <label for='phone_number'>Phone Number:</label>
                 <input class='form-control' type='tel' min-length=10 id='phone_number' name='tel' pattern='[0-9,-]{10,12}' title='Please enter a valid phone number.' placeholder='555-555-5555' required >
               </div>
               <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
             </form>`;
   }
-
-  // function thankyouPage() {
-  //   return `<div class='thankyou'>
-  //             <h3>Thank you for your order!</h3>
-  //             <h4>The restaurant will contact you shortly with your order# and pick-up time!</h4>
-  //           </div>`
-  // }
-
-// // place order button
-//   $('.pay-order').on('click', (event) => {
-//     $('.cart-wrapper').empty().append(thankyouPage())
-//   })
 
   function calculateTotal() {
     let total = 0;
@@ -103,7 +91,7 @@ $(() => {
           if ($currentVal > 0) {
             const newVal = $currentVal - 1;
             $counter.text(newVal);
-            const $dishInCart = $cartContainer.find(`[data-dishid="${  dishIDfromMenu  }"]`);
+            const $dishInCart = $cartContainer.find(`[data-dishid="${dishIDfromMenu}"]`);
             const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
 
             if (currentQuantity > 1) {
@@ -111,6 +99,7 @@ $(() => {
             } else if (currentQuantity === 1) {
               $dishInCart.remove();
               delete currentOrder[dishIDfromMenu];
+              $('#cart-total').text(calculateTotal());
             }
             currentOrder[dishIDfromMenu].quantity--;
             if ($('.selected-dish')[0].childElementCount === 0) {
@@ -133,7 +122,7 @@ $(() => {
       const $cartContainer = $('.selected-dish');
 
       $('.place-order').removeClass('disabled');
-
+      
       ajaxCall('PUT', '/orders')
         .then(() => {
           const $currentVal = +$counter.text();
@@ -147,12 +136,21 @@ $(() => {
           };
           currentOrder[dishIDfromMenu] = item;
 
-          const $dishInCart = $cartContainer.find(`[data-dishid="${ dishIDfromMenu }"]`);
+          const $dishInCart = $cartContainer.find(`[data-dishid="${dishIDfromMenu}"]`);
           if ($dishInCart.length) {
             $dishInCart.find('.counter').text(` X ${newVal}`);
           } else {
             $cartContainer.append(cartTemplate(item));
           }
+
+          $('.fa-remove').on('click', function () {
+            let idToDelete = $(this).closest('[data-dishid]').data('dishid');
+            delete currentOrder[idToDelete];
+            let $correspItemInMenu = $('.menu-wrapper').find(`[data-dishid="${ idToDelete }"]`);
+            $correspItemInMenu.find('.counter').text('0');
+            $(this).closest('.dish').remove();
+            $('#cart-total').text(calculateTotal());
+          });
 
           $('#cart-total').text(calculateTotal());
         }, (err) => {
@@ -160,9 +158,9 @@ $(() => {
         });
 
       // remove all items in cart
-      $('.clear-order').on('click', function () {
+      $('.clear-order').on('click', () => {
         $('.selected-dish').empty();
-        Object.keys(currentOrder).forEach(function (prop) {
+        Object.keys(currentOrder).forEach((prop) => {
           delete currentOrder[prop];
         });
         $counter.text('0');
@@ -192,8 +190,6 @@ $(() => {
     }
   });
 
-
-
   // NavBar transition effects
   $(window).on('scroll', () => {
     const header = $('header');
@@ -222,7 +218,7 @@ $(() => {
   // page scroll animation
   $('.btn-down').click(() => {
     $('html,body').animate({
-      scrollTop: $('#menu').offset().top
+      scrollTop: $('#menu').offset().top,
     }, 'slow');
   });
 
@@ -232,7 +228,7 @@ $(() => {
     $(this).affix({
       offset: {
         top: $(this).offset().top + 70,
-        right: $(this).offset().right
+        right: $(this).offset().right,
       },
     });
   });

@@ -4,6 +4,7 @@ require('dotenv').load();
 const accountSid = process.env.PROJECT_ACCOUNT_SID;
 const authToken = process.env.PROJECT_AUTH_TOKEN;
 const resturantNumber = process.env.RESTURANT_NUMBER;
+const url = process.env.URL;
 console.log(accountSid, authToken);
 
 // //require the Twilio module and create a REST client
@@ -27,7 +28,7 @@ function sendSMS(smsbody) {
 function callResturant(name, phoneNum) {
   client.calls.create({
     method: 'POST',
-    url: `http://7e26570e.ngrok.io/orders/callcontent/${name}/${phoneNum}`,
+    url: `${url}/orders/callcontent/${name}/${phoneNum}`,
     to: resturantNumber,
     from: '+17786519742',
   }, (err, call) => {
