@@ -1,21 +1,14 @@
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-@import url('http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css');
-@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Rock+Salt|Lato');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
-$brand-color: #FF8C00;
-$disabled-color: #858585;
-$company-color: #745F5F;
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url("http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css");
+@import url("https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Rock+Salt|Lato");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
+
 body {
   box-sizing: border-box;
   width: 100%;
   font-family: 'Dosis', sans-serif;
   font-size: 15px;
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: 'Julius Sans One', sans-serif;
     letter-spacing: 1px;
   }
@@ -30,7 +23,7 @@ body {
     letter-spacing: 1px;
   }
   .hr {
-    border-bottom: 1px $disabled-color solid;
+    border-bottom: 1px #858585 solid;
     padding-bottom: 5px;
   }
   .btn {
@@ -61,7 +54,7 @@ body {
       position: absolute;
       left: 30px;
       font-size: 40px;
-      color: $company-color;
+      color: #745F5F;
       z-index: 3;
     }
     .social {
@@ -73,7 +66,7 @@ body {
   }
   .landing {
     position: relative;
-    background: url('../img/landing.jpeg') no-repeat center fixed;
+    background: url("../img/landing.jpeg") no-repeat center fixed;
     background-size: cover;
     width: 100%;
     height: 100vh;
@@ -89,19 +82,17 @@ body {
       position: absolute;
       font-size: 20px;
       width: 100%;
-      color: $brand-color;
+      color: #FF8C00;
       margin: 0 auto;
       bottom: -150px;
       z-index: 2;
     }
   }
-  .submit-payment {
-    .submit-total {
-      font-size: 2em;
-      margin-bottom: 25px;
-      padding-bottom: 10px;
-      border-bottom: 1px $company-color solid;
-    }
+  .submit-payment .submit-total {
+    font-size: 2em;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px #745F5F solid;
   }
   .cart-wrapper {
     margin: 130px auto;
@@ -115,10 +106,9 @@ body {
       font-size: 1.5em;
       margin-bottom: 10px;
     }
-      .form-number {
-        margin-top: 20px;
-      }
-    
+    .form-number {
+      margin-top: 20px;
+    }
     .caption {
       position: relative;
       left: 30px;
@@ -126,12 +116,10 @@ body {
         color: #F00;
       }
     }
-    .total,
-    .dish-details {
+    .total, .dish-details {
       font-weight: 400;
     }
-    .dish-name,
-    .dish-details {
+    .dish-name, .dish-details {
       font-family: 'Dosis', sans-serif;
       letter-spacing: 1px;
     }
@@ -174,8 +162,7 @@ body {
         }
       }
       &:hover {
-        .dish-name,
-        .dish-img-wrapper {
+        .dish-name, .dish-img-wrapper {
           opacity: 0.6;
         }
         .shop {
@@ -184,9 +171,7 @@ body {
         .dish-details {
           padding-top: 20px;
           height: 70%;
-          .dish-desc,
-          .dish-price,
-          .dish-prep {
+          .dish-desc, .dish-price, .dish-prep {
             margin-top: 15px;
           }
         }
@@ -215,7 +200,7 @@ body {
         width: 100%;
         height: 0;
         overflow: hidden;
-        background-color: $company-color;
+        background-color: #745F5F;
         color: #fff;
         transition: 0.6s ease-in-out;
         font-family: 'Coming Soon', sans-serif;
@@ -247,7 +232,7 @@ body {
     }
   }
   .navbar-bottom {
-    background: $brand-color;
+    background: #FF8C00;
     margin-top: 50px;
     margin-bottom: 0;
     .address {
@@ -258,22 +243,19 @@ body {
   }
   .restaurant {
     bottom-margin: 20px;
-    label {
-      font-size: 1.5em; // color: $disabled-color;
-    }
     width: 20%;
     margin-left: auto;
     margin-right: auto;
+    label {
+      font-size: 1.5em;
+    }
     .btn.pay-order {
       width: 50%;
-      ;
     }
   }
 }
 
-
 /* Wrapper */
-
 .icon-button {
   background-color: #eee;
   border-radius: 3.6rem;
@@ -290,33 +272,29 @@ body {
   -ms-user-select: none;
   user-select: none;
   width: 3.6rem;
+  span {
+    border-radius: 0;
+    display: block;
+    height: 0;
+    left: 50%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    width: 0;
+  }
+  &:hover span {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 3.6rem;
+    margin: -1.8rem;
+  }
 }
-
 
 /* Circle */
-
-.icon-button span {
-  border-radius: 0;
-  display: block;
-  height: 0;
-  left: 50%;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-  width: 0;
-}
-
-.icon-button:hover span {
-  width: 3.6rem;
-  height: 3.6rem;
-  border-radius: 3.6rem;
-  margin: -1.8rem;
-}
-
 .twitter span {
   background-color: #4099ff;
 }
@@ -329,59 +307,46 @@ body {
   background-color: #db5a3c;
 }
 
-
 /* Icons */
-
-.icon-button i {
-  background: none;
-  text-decoration: none;
-  height: 3.6rem;
-  left: 0;
-  line-height: 3.6rem;
-  position: absolute;
-  top: 0;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-  width: 3.6rem;
-  z-index: 10;
+.icon-button {
+  i {
+    background: none;
+    text-decoration: none;
+    height: 3.6rem;
+    left: 0;
+    line-height: 3.6rem;
+    position: absolute;
+    top: 0;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    width: 3.6rem;
+    z-index: 10;
+  }
+  .icon-twitter {
+    color: #4099ff;
+  }
+  .icon-facebook {
+    color: #3B5998;
+  }
+  .icon-google-plus {
+    color: #db5a3c;
+  }
+  &:hover {
+    .icon-twitter, .icon-facebook, .icon-google-plus {
+      color: #fff;
+    }
+  }
 }
 
-.icon-button .icon-twitter {
-  color: #4099ff;
-}
-
-.icon-button .icon-facebook {
-  color: #3B5998;
-}
-
-.icon-button .icon-google-plus {
-  color: #db5a3c;
-}
-
-.icon-button:hover .icon-twitter,
-.icon-button:hover .icon-facebook,
-.icon-button:hover .icon-google-plus {
-  color: #fff;
-}
-
-// large screen
 @media (min-width: 992px) {
-  .affix-top,
-  .affix {
+  .affix-top, .affix {
     width: 22.5%;
     top: 10px;
-  } // .affix-top {
-  //   // position: absolute;
-  //   top: 10px;
-  // }
-  // .affix {
-  //   top: 10px;
-  // }
+  }
 }
 
-// small screen
 @media (max-width: 991px) {
   body {
     font-size: 1.5em;
@@ -390,15 +355,12 @@ body {
         font-size: 2em;
       }
       .selected-dish {
-        .dish-name,
-        i,
-        span {
+        .dish-name, i, span {
           font-size: 1.2em;
         }
       }
     }
-    .affix-top,
-    .affix {
+    .affix-top, .affix {
       width: 100%;
       margin: 20px auto;
       position: static;
