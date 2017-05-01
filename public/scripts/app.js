@@ -1,8 +1,6 @@
-// appending dishes data, render order sidebar to home page
 $(() => {
   $(this).scrollTop(0);
   const currentOrder = {};
-  // const sms = require('send-sms').sendSMS;
 
   function ajaxCall(method, url, data, dataType) {
     return $.ajax({
@@ -14,7 +12,7 @@ $(() => {
   }
 
   function dishTemplate(dish) {
-    return `<section class='col-xs-6 col-md-4'>
+    return `<section class='col-xs-12 col-sm-6 col-md-4'>
               <div class='dish' data-dishid='${dish.id}'>
                 <div class='dish-img-wrapper'><img class='dish-img' src='${dish.img_url}'></div>
                 <div class='caption'>
@@ -65,20 +63,6 @@ $(() => {
               <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
               </div>  
             </form>`;
-    // return `<form class='submit-payment' action='/orders/payment' method='POST'>
-    //           <div class='form-name'>
-    //             <div class='submit-total'>Your total: $${total}</div>
-    //             <div class='contact'>Contact info:</div>
-    //               <label for='name'>Name:</label>
-    //               <input class='form-control' id='name' type='text' name='name' placeholder='Name' required >
-    //             </div>
-    //           </div>
-    //           <div class='form-number'>
-    //             <label for='phone_number'>Phone Number:</label>
-    //             <input class='form-control' type='tel' min-length=10 id='phone_number' name='tel' pattern='[0-9,-]{10,12}' title='Please enter a valid phone number.' placeholder='555-555-5555' required >
-    //           </div>
-    //           <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
-    //         </form>`;
   }
 
   function calculateTotal() {
@@ -189,7 +173,6 @@ $(() => {
       console.error(err);
     });
 
-  // proceed to checkout button
   $('.place-order').on('click', () => {
     if (Object.keys(currentOrder).length === 0) {
       $(this).attr('disabled', 'disabled');

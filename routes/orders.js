@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 
 const router = express.Router();
 module.exports = (knex) => {
-// getting dishes data from database for home page (/ = /orders)
   router.get('/', (req, res) => {
     knex
       .select('*')
@@ -14,7 +13,7 @@ module.exports = (knex) => {
         res.json(dishes);
       });
   });
-// update order list with selected dishes
+
   router.put('/', (req, res) => {
     knex
       .select('name', 'price')
@@ -43,16 +42,13 @@ module.exports = (knex) => {
     const customerName = dataBody.name;
     const customerPhone = dataBody.tel;
     const customerAddress = 'fake';
-    console.log('Phone Number: ', customerPhone);
     let nextID;
-    console.log('passed in order:', dataGlobal);
     knex('clients').insert({ name: customerName, phone_number: customerPhone, address: customerAddress }).asCallback((err) => {
       if (err) {
         knex.destroy();
         return console.error('error inserting client', err);
       }
 
-      console.log('New client successfully added');
       knex('clients').orderBy('id', 'desc').limit(1).asCallback((err, rows) => {
         const clientID = rows[0].id;
         knex('orders').insert({ client_id: clientID }).asCallback((err, rows) => {
@@ -60,18 +56,15 @@ module.exports = (knex) => {
             knex.destroy();
             return console.error('error inserting order', err);
           }
-          console.log('New order successfully added');
           knex('orders').orderBy('id', 'desc').limit(1).asCallback((err, rows) => {
             if (err) {
               knex.destroy();
               return console.error('error querying order id', err);
             }
-            console.log(' orderID successfully grabbed');
             if (!(rows[0].id)) {
               nextID = 1;
             } else {
               nextID = (rows[0].id);
-
               dataGlobal.id.forEach((id_num) => {
                 const qty = dataGlobal.quantity[id_num];
                 knex('order_quantity').insert({ quantity: qty, dish_id: id_num, order_id: nextID }).asCallback((err) => {
@@ -95,14 +88,9 @@ module.exports = (knex) => {
 
   });
 
-    //Commented so it doesnt call while testing the app
-
   router.post('/callcontent/:name/:phoneNum', (req, res) => {
-// this object will be filled with database values;
-
     let reqName = req.params.name;
     let reqPhoneNumber = req.params.phoneNum;
-
 
     knex
     .select('orders.id')
@@ -117,8 +105,6 @@ module.exports = (knex) => {
         knex.destroy();
         return console.error('error inserting into order_quantity table', err);
       }
-      console.log('New order successfully added order quantity');
-      console.log('row:', rows);
       let dbOrderNumber = rows[0].id;
       knex
       .select('dishes.name')
@@ -147,14 +133,12 @@ module.exports = (knex) => {
         .asCallback((err, rows)=> {
           if (err) {
             knex.destroy();
-            return console.error('error selecting name from dishes table', err);
+            return console.error('error selecting name from order quantities table', err);
           }
           let quantity = [];
           rows.forEach((item)=> {
             quantity.push(item.quantity);
           });
-          console.log("--------------Q:", quantity);
-          console.log("-----------Dished:", dishes);
           const orderData = {
             orderNumber: dbOrderNumber,
             clientInfo: {
