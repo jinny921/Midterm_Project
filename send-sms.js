@@ -28,9 +28,9 @@ function sendSMS(smsbody) {
 function callResturant(name, phoneNum) {
   client.calls.create({
     method: 'POST',
-    url: `http://0a7c90f5.ngrok.io//orders/callcontent/${name}`,
+    url: `${url}/orders/callcontent/${name}/${phoneNum}`,
     to: resturantNumber,
-    from: '+16046703638 ',
+    from: '+16046703638',
   }, (err, call) => {
     process.stdout.write(call.sid);
   });
