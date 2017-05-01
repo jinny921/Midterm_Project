@@ -141,14 +141,14 @@ body {
     position: relative;
     top: 80px;
     padding: 30px;
-    background: #eee;
+    background: #EEE;
     .dish {
       position: relative;
       height: 350px;
-      background: #fff;
+      background: #FFF;
       margin-bottom: 30px;
       border-radius: 5px;
-      border: 1px lightgrey solid;
+      border: 1px #D3D3D3 solid;
       .dish-img-wrapper {
         position: absolute;
         width: 100%;
@@ -166,7 +166,7 @@ body {
           opacity: 0.6;
         }
         .shop {
-          color: #fff;
+          color: #FFF;
         }
         .dish-details {
           padding-top: 20px;
@@ -201,7 +201,7 @@ body {
         height: 0;
         overflow: hidden;
         background-color: #745F5F;
-        color: #fff;
+        color: #FFF;
         transition: 0.6s ease-in-out;
         font-family: 'Coming Soon', sans-serif;
         text-align: center;
@@ -249,7 +249,7 @@ body {
     label {
       font-size: 1.5em;
     }
-    .btn.pay-order {
+    .btn.pay-order, .btn.login {
       width: 50%;
     }
   }
@@ -257,7 +257,7 @@ body {
 
 /* Wrapper */
 .icon-button {
-  background-color: #eee;
+  background-color: #EEE;
   border-radius: 3.6rem;
   cursor: pointer;
   display: inline-block;
@@ -335,7 +335,7 @@ body {
   }
   &:hover {
     .icon-twitter, .icon-facebook, .icon-google-plus {
-      color: #fff;
+      color: #FFF;
     }
   }
 }
