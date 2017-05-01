@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Say voice="alice"> Hello, Mietnaam. you have a new order numbered  <%= orderNumber %>.
-    from <%= clientInfo.name %> . phone number <%= clientInfo.phoneNumber %> at <%= clientInfo.address %>
-    the order is <%= dishes %>
+    <Say voice="alice">
+    
+         Hello, Mietnaam. you have a new order with the order number  <%= orderNumber %>.
+    from the client <%= clientInfo.name %> . the phone number is : <%= clientInfo.phoneNumber %> .
+    they are ordering  
+    <% for (let i = 0; i < dishes.length; i++) { %>
+       <%= quantity[i] %>  <%= dishes[i] %>,
+    <% } %> 
+    please specify the preparation time for the client on the website.
+
     </Say>
     
 </Response>
