@@ -25,7 +25,7 @@ module.exports = (knex) => {
   });
   const dataGlobal = {
     id: {},
-    quantity: {},
+    quantity: {}
   };
   router.post('/checkout', (req, res) => {
     const dataBody = req.body;
@@ -89,21 +89,27 @@ module.exports = (knex) => {
                   // knex.destroy();
     });
 
+    console.log("Calling the restaurant");
+    callResturant(customerName, customerPhone);
     res.redirect('/thankyou');
 
   });
 
+    //Commented so it doesnt call while testing the app
 
-  router.post('/callcontent/:name', (req, res) => {
+  router.post('/callcontent/:name/:phoneNum', (req, res) => {
 // this object will be filled with database values;
 
     let reqName = req.params.name;
-    let reqPhoneNumber = 89742;
+    let reqPhoneNumber = req.params.phoneNum;
+
+
     knex
     .select('orders.id')
     .from('orders')
     .join('clients', 'clients.id', '=', 'orders.client_id')
-    .where('name', 'Elvis')
+    .where('name', reqName)
+    .andWhere('phone_number', reqPhoneNumber)
     .orderBy('id', 'desc')
     .limit(1)
     .asCallback((err, rows) => {
@@ -112,28 +118,60 @@ module.exports = (knex) => {
         return console.error('error inserting into order_quantity table', err);
       }
       console.log('New order successfully added order quantity');
+      console.log('row:', rows);
       let dbOrderNumber = rows[0].id;
+      knex
+      .select('dishes.name')
+      .from('dishes')
+      .join('order_quantity', 'order_quantity.dish_id', '=', 'dishes.id')
+      .join('orders', 'orders.id', '=', 'order_quantity.order_id')
+      .join('clients', 'clients.id', '=', 'orders.client_id')
+      .where('clients.name', reqName)
+      .andWhere('clients.phone_number', reqPhoneNumber)
+      .asCallback((err, rows) => {
+        if (err) {
+          knex.destroy();
+          return console.error('error selecting name from dishes table', err);
+        }
+        let dishes = [];
+        rows.forEach((dish)=> {
+          dishes.push(dish.name);
+        });
+        knex
+        .select('order_quantity.quantity')
+        .from('order_quantity')
+        .join('orders', 'orders.id', '=', 'order_quantity.order_id')
+        .join('clients', 'clients.id', '=', 'orders.client_id')
+        .where('clients.name', reqName)
+        .andWhere('clients.phone_number', reqPhoneNumber)
+        .asCallback((err, rows)=> {
+          if (err) {
+            knex.destroy();
+            return console.error('error selecting name from dishes table', err);
+          }
+          let quantity = [];
+          rows.forEach((item)=> {
+            quantity.push(item.quantity);
+          });
+          console.log("--------------Q:", quantity);
+          console.log("-----------Dished:", dishes);
+          const orderData = {
+            orderNumber: dbOrderNumber,
+            clientInfo: {
+              name: reqName,
+              phoneNumber: reqPhoneNumber,
+              address: '128 W. Hastings Ave, Vancouver, BC'
+            },
+            dishes: dishes,
+            quantity: quantity
+          };
 
-      const orderData = {
-        orderNumber: dbOrderNumber,
-        clientInfo: {
-          name: reqName,
-          phoneNumber: reqPhoneNumber,
-          address: '128 W. Hastings Ave, Vancouver, BC',
-        },
-        dishes: ['Massaman Curry of Braised Beef', 2, 'Pad Thai', 2],
-      };
-
-      res.set('Content-Type', 'text/xml');
-      res.render('order', orderData);
-
+          res.set('Content-Type', 'text/xml');
+          res.render('order', orderData);
+        });
+      });
     });
-
   });
-
-
-
-
 
   router.post('/call', (req, res) => {
     res.send('calling');
