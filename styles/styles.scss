@@ -3,6 +3,10 @@
 @import url("https://fonts.googleapis.com/css?family=Julius+Sans+One|Dosis|Coming+Soon|Rock+Salt|Lato");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
 
+.disabled {
+  opacity: 0.25;
+}
+
 body {
   box-sizing: border-box;
   width: 100%;

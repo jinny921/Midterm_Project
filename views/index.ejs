@@ -42,23 +42,23 @@
   <main id='menu' class='container-fluid'>
     <div class='row'>
       <div class='col-xs-12 col-md-9'>
-        <div class='row menu-wrapper'>
+        <div class='row menu-wrapper' id="menuItems">
 
         </div>
       </div>
       <!--<div class='row'>-->
         <div class='col-xs-12 col-md-3'>
           <div data-spy='affix' data-smart-affix=''>
-            <section class='cart-wrapper'>
+            <section class='cart-wrapper' id='cart'>
               <h3>Your Cart</h3>
-              <section class='selected-dish'>
+              <section class='selected-dish' id="orderItems">
                 
               </section>
               <div class='hr'></div>
               <h4 class='total'>Total: $<span id="cart-total">0.00</span></h4>
               <div>
-                <button class='btn btn-primary place-order disabled' role='button'>Checkout</button>
-                <button class='btn btn-danger clear-order' role='button'>Clear Cart</button>
+                <button class='btn btn-primary place-order' role='button' id="checkoutButton">Checkout</button>
+                <button class='btn btn-danger clear-order' role='button' id="clearCart">Clear Cart</button>
               </div>
             </section>
           </div>

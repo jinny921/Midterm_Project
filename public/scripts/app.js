@@ -1,7 +1,17 @@
 // appending dishes data, render order sidebar to home page
 $(() => {
   $(this).scrollTop(0);
-  const currentOrder = {};
+
+  // Should use something like this!
+  // const state = {
+  //   currentOrder: {},
+  //   menu: [],
+  //   checkingOut: false
+  // };
+  
+  var currentOrder = {};
+  var menu = [];
+  var checkingOut = false;
   // const sms = require('send-sms').sendSMS;
 
   function ajaxCall(method, url, data, dataType) {
@@ -14,6 +24,9 @@ $(() => {
   }
 
   function dishTemplate(dish) {
+    const qty = currentOrder[dish.id] || 0;
+    const canAdd = !checkingOut && qty < 10;
+    const canRemove = !checkingOut && qty > 0;
     return `<section class='col-xs-6 col-md-4'>
               <div class='dish' data-dishid='${dish.id}'>
                 <div class='dish-img-wrapper'><img class='dish-img' src='${dish.img_url}'></div>
@@ -26,21 +39,27 @@ $(() => {
                   <p class='dish-prep'>Prep Time: ${dish.preptime} mins (approx.)</p>
                 </div>
                 <div class='shop'>
-                  <i class="fa fa-minus-square-o" aria-hidden="true"></i>
-                  <span class='counter'>0</span>
-                  <i class="fa fa-plus-square" aria-hidden="true"></i> 
+                  <i class="fa fa-minus-square-o ${canRemove ? '' : 'disabled'}" data-action="remove-dish" aria-hidden="true"></i>
+                  <span class='counter'>${qty}</span>
+                  <i class="fa fa-plus-square ${canAdd ? '' : 'disabled'}" data-action="add-dish" aria-hidden="true"></i> 
                 </div>
               </div>
             </section>`;
   }
 
-  function cartTemplate(item) {
-    return `<div class='dish' data-dishid='${item.id}'>
+  function cartTemplate(id, qty) {
+    const item = findItemById(id);
+    // const { name, price } = item;
+    // console.log(item, qty);
+    const name = item.name;
+    const price = item.price;
+
+    return `<div class='dish' data-dishid='${id}'>
               <div class='caption'>
-                <div class='dish-name'><i class="fa-li fa fa-remove"></i>${item.name}</div>
+                <div class='dish-name'><i class="fa-li fa fa-remove" data-action="remove-item"></i>${name}</div>
                 <div class='dish-details'>
-                  <span class='dish-price'>Price: $${item.price}</span>
-                  <span class='counter'> X ${item.quantity}</span>
+                  <span class='dish-price'>Price: $${price}</span>
+                  <span class='counter'> X ${qty}</span>
                 </div>
               </div>              
             </div>`;
@@ -59,7 +78,7 @@ $(() => {
                   </div>
                   <div class='form-number'>
                     <label for='phone_number'>Phone Number:</label>
-                    <input class='form-control' type='tel' min-length=10 id='phone_number' name='tel' pattern='[0-9,-]{10,12}' title='Please enter a valid phone number.' placeholder='555-555-5555' required >
+                    <input class='form-control' type='tel' min-length=10 id='phone_number' name='phone_number' pattern='[0-9,-]{10,12}' title='Please enter a valid phone number.' placeholder='555-555-5555' required >
                   </div>
                 </div>
               <input class='btn btn-primary btn-lg btn-block pay-order' type='submit' role='button' value='Place Order'>
@@ -81,128 +100,125 @@ $(() => {
     //         </form>`;
   }
 
-  function calculateTotal() {
-    let total = 0;
-    for (const prop in currentOrder) {
-      const currObj = currentOrder[prop];
-      total += currObj.price * currObj.quantity;
-    }
-    return total;
+  function findItemById(id) {
+    return menu.find(item => item.id == id); //eslint-disable-line strict-comapre
   }
 
-  function paintPage(res) {
-    $('.menu-wrapper').append(res.map(dishTemplate));
+  function calculateTotal() {
+    // let total = 0;
+    // for (const prop in currentOrder) {
+    //   const currObj = currentOrder[prop];
+    //   total += currObj.price * currObj.quantity;
+    // }
+    // return total;
+    return Object.entries(currentOrder).reduce((acc, [itemId, qty]) => {
+      const item = findItemById(itemId);
+      return acc + (item.price * qty);
+    }, 0);
+  }
 
-    $('.fa-minus-square-o').on('click', function () {
-      const $that = $(this);
-      const $counter = $that.siblings('.counter');
-      const $menuContainer = $that.closest('[data-dishid]');
-      const dishIDfromMenu = $menuContainer.data('dishid');
-      const $cartContainer = $('.selected-dish');
+  $('#menuItems').on('click', '[data-action="remove-dish"],[data-action="add-dish"]', function onPlusOrMinusClick(e) {
+    if(checkingOut) { return; }
+    const dishId = $(e.target).closest('[data-dishid]').data('dishid');
+    const action = $(e.target).data('action');
+    switch(action) {
+      case 'add-dish':
+        currentOrder[dishId] = (currentOrder[dishId] || 0) + 1;
+        if(currentOrder[dishId] >= 10) {
+          currentOrder[dishId] = 10;
+        }
+        break;
+      case 'remove-dish':
+        currentOrder[dishId] = (currentOrder[dishId] || 0) - 1;
+        if(currentOrder[dishId] <= 0) {
+          delete currentOrder[dishId];
+        }
+        break;
+    }
 
-      ajaxCall('PUT', '/orders')
-        .then(() => {
-          const $currentVal = 0 + $counter.text();
-          if ($currentVal > 0) {
-            const newVal = $currentVal - 1;
-            $counter.text(newVal);
-            const $dishInCart = $cartContainer.find(`[data-dishid="${dishIDfromMenu}"]`);
-            const currentQuantity = (!$dishInCart) ? 0 : currentOrder[dishIDfromMenu].quantity;
+    paintPage();
+  });
 
-            if (currentQuantity > 1) {
-              $dishInCart.find('.counter').text(` X ${newVal}`);
-            } else if (currentQuantity === 1) {
-              $dishInCart.remove();
-              delete currentOrder[dishIDfromMenu];
-              $('#cart-total').text(calculateTotal());
-            }
-            currentOrder[dishIDfromMenu].quantity--;
-            if ($('.selected-dish')[0].childElementCount === 0) {
-              $('.place-order').addClass('disabled');
-            }
-          }
-          $('#cart-total').text(calculateTotal());
-        }, (err) => {
-          console.error('we have a problem!!!');
-        });
-    });
+  $('#orderItems').on('click', '[data-action="remove-item"]', function onOrderItemRemoved(e) {
+    const dishId = $(e.target).closest('[data-dishid').data('dishid');
+    delete currentOrder[dishId];
 
-    $('.fa-plus-square').on('click', function () {
-      const $that = $(this);
-      const $counter = $that.siblings('.counter');
-      const $menuContainer = $that.closest('[data-dishid]');
-      const dishIDfromMenu = $menuContainer.data('dishid');
-      const dishName = $that.parent().siblings().children('.dish-name').text();
-      const dishPrice = +$that.parent().siblings().find('.dishPrice').text();
-      const $cartContainer = $('.selected-dish');
+    paintPage();
+  });
 
-      $('.place-order').removeClass('disabled');
-      
-      ajaxCall('PUT', '/orders')
-        .then(() => {
-          const $currentVal = +$counter.text();
-          const newVal = $currentVal + 1;
-          $counter.text(newVal);
-          const item = {
-            id: dishIDfromMenu,
-            name: dishName,
-            price: dishPrice,
-            quantity: newVal,
-          };
-          currentOrder[dishIDfromMenu] = item;
+  $('#menu').on('submit', '.submit-payment', function onCheckoutFormSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-          const $dishInCart = $cartContainer.find(`[data-dishid="${dishIDfromMenu}"]`);
-          if ($dishInCart.length) {
-            $dishInCart.find('.counter').text(` X ${newVal}`);
-          } else {
-            $cartContainer.append(cartTemplate(item));
-          }
+    const form = $(e.target).serializeArray().reduce((acc, { name, value }) => { acc[name] = value; return acc; }, {});
+    const data = { form, currentOrder };
 
-          $('.fa-remove').on('click', function () {
-            let idToDelete = $(this).closest('[data-dishid]').data('dishid');
-            delete currentOrder[idToDelete];
-            let $correspItemInMenu = $('.menu-wrapper').find(`[data-dishid="${ idToDelete }"]`);
-            $correspItemInMenu.find('.counter').text('0');
-            $(this).closest('.dish').remove();
-            $('#cart-total').text(calculateTotal());
-          });
+    $.post($(e.target).attr('action'), data)
+      .then(result => {
+        reset();
+      }, error => {
 
-          $('#cart-total').text(calculateTotal());
-        }, (err) => {
-          console.error('we have a problem!!!');
-        });
-
-      // remove all items in cart
-      $('.clear-order').on('click', () => {
-        $('.selected-dish').empty();
-        Object.keys(currentOrder).forEach((prop) => {
-          delete currentOrder[prop];
-        });
-        $counter.text('0');
-        $('#cart-total').text(calculateTotal());
       });
-    });
+  });
+
+  $('#clearCart').on('click', (e) => {
+    currentOrder = {};
+    paintPage();
+  })
+
+  function paintPage() {
+    // console.log(currentOrder);
+    renderMenu();
+    if(checkingOut){
+      renderCheckout();
+    } else {
+      renderCart();
+    }
+    const cartItemCount = Object.keys(currentOrder).length;
+    $('#checkoutButton').attr('disabled', cartItemCount > 0 ? null : 'disabled');
+  }
+  
+  function renderMenu() {
+    $('#menuItems').empty().append(menu.map(dishTemplate));
+  }
+
+  function renderCart() {
+    $('#orderItems').empty().append(Object.entries(currentOrder).map(([itemId, qty]) => {
+      return cartTemplate(itemId, qty);
+    }));
+    const orderTotal = calculateTotal();
+    $('#cart-total').text(orderTotal);
+  }
+
+  function renderCheckout() {
+    $('#cart').empty().append(checkoutTemplate(calculateTotal()));
+  }
+
+  function reset() {
+    currentOrder = {};
+    checkingOut = false;
+    paintPage();
   }
 
   ajaxCall('GET', '/orders')
-    .then(paintPage, (err) => {
-      console.error(err);
-    });
+    .then(res => {
+      menu = res;
+    })
+    .then(paintPage)
+    .catch(err => console.error(err));
 
   // proceed to checkout button
-  $('.place-order').on('click', () => {
-    if (Object.keys(currentOrder).length === 0) {
-      $(this).attr('disabled', 'disabled');
-      return;
-    }
-    const $cartContainer = $('.cart-wrapper');
-    const currentTotal = calculateTotal();
-    if (currentTotal !== 0) {
-      $('.shop').fadeOut('400');
-      ajaxCall('POST', '/orders/checkout', currentOrder);
-      console.log('orders in cart:', currentOrder);
-      $cartContainer.empty().append(checkoutTemplate(currentTotal));
-    }
+  $('#checkoutButton').on('click', () => {
+    checkingOut = true;
+    paintPage();
+    // const $cartContainer = $('.cart-wrapper');
+    // const currentTotal = calculateTotal();
+    // if (currentTotal !== 0) {
+      // $('.shop').fadeOut('400');
+    //   ajaxCall('POST', '/orders/checkout', currentOrder);
+    //   console.log('orders in cart:', currentOrder);
+      // $cartContainer.empty().append(checkoutTemplate(currentTotal));
+    // }
   });
 
   // NavBar transition effects
