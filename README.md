@@ -9,5 +9,10 @@ Web applcation for customers to efficiently order dishes from a restaurant onlin
 - Restaurant receive a phone call an order, and enter online the prep time needed
 - Customer receive a text message of the approximate prep time
 
+## Photos
+![alt text](https://snag.gy/FH5Jaz.jpg)
+![alt text](https://snag.gy/UDAKw2.jpg)
+![alt text](https://snag.gy/FIBLwo.jpg)
+
 ## Technologies
 Node.js, Express, Knex, Sass, PostgreSQL, HTML, CSS, Twilio
